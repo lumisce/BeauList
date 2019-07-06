@@ -16,9 +16,9 @@ class CreateBlistsTable extends Migration
         Schema::create('blists', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->unsignedBigInteger('user');
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
-            $table->foreign('user')
+            $table->foreign('user_id')
                 ->references('id')->on('users')
                 ->onDelete('cascade');
         });

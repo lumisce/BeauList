@@ -6,7 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
-    protected $fillable = [
-        'name', 'parent'
-    ];
+    public function scopeParents($query)
+    {
+    	return $query->whereNull('parent');
+    }
+
+    public function scopeChildren($query)
+    {
+    	return $query->where('parent', '>', 0);
+    }
+
+    public function products()
+    {
+    	return $this->hasMany('App\Product');
+    }
 }

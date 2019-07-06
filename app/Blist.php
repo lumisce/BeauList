@@ -7,4 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class Blist extends Model
 {
     protected $fillables = ['name'];
+
+    public function products()
+    {
+    	return $this->belongsToMany('App\Product')->withTimestamps();
+    }
+
+    public function user()
+    {
+    	return $this->belongsTo('App\User');
+    }
 }

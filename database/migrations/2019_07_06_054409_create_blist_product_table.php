@@ -15,12 +15,12 @@ class CreateBlistProductTable extends Migration
     {
         Schema::create('blist_product', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('blist');
-            $table->unsignedBigInteger('product');
+            $table->unsignedBigInteger('blist_id');
+            $table->unsignedBigInteger('product_id');
             $table->timestamps();
-            $table->foreign('blist')
+            $table->foreign('blist_id')
                 ->references('id')->on('blists');
-            $table->foreign('product')
+            $table->foreign('product_id')
                 ->references('id')->on('products');
         });
     }

@@ -32,7 +32,7 @@ class CategoriesTableSeeder extends Seeder
         	['id' => 16, 'parent' => 1, 'name' => 'Essence'],
         	['id' => 17, 'parent' => 1, 'name' => 'Cream'],
         	['id' => 18, 'parent' => 2, 'name' => 'Cleansing Water'],
-        	['id' => 19, 'parent' => 2, 'name' => 'Clearnsing Wipes'],
+        	['id' => 19, 'parent' => 2, 'name' => 'Cleansing Wipes'],
         	['id' => 20, 'parent' => 3, 'name' => 'Primer'],
         	['id' => 21, 'parent' => 3, 'name' => 'Foundation'],
         	['id' => 22, 'parent' => 3, 'name' => 'Concealer'],

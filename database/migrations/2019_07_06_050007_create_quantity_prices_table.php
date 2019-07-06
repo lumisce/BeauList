@@ -19,9 +19,9 @@ class CreateQuantityPricesTable extends Migration
             $table->string('unit');
             $table->double('price');
             $table->string('currency');
-            $table->unsignedBigInteger('product');
+            $table->unsignedBigInteger('product_id');
             $table->timestamps();
-            $table->foreign('product')
+            $table->foreign('product_id')
                 ->references('id')->on('products')
                 ->onDelete('cascade');
         });

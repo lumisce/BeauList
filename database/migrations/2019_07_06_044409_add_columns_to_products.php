@@ -15,15 +15,16 @@ class AddColumnsToProducts extends Migration
     {
         Schema::table('products', function (Blueprint $table) {
             $table->string('name');
-            $table->unsignedBigInteger('brand');
-            $table->unsignedBigInteger('category')->nullable();
+            $table->unsignedBigInteger('brand_id');
+            $table->unsignedBigInteger('category_id')->nullable();
             $table->string('image');
+            $table->string('description');
             $table->date('released_on');
-            $table->boolean('discontinued');
-            $table->foreign('brand')
+            $table->boolean('discontinued')->default(false);
+            $table->foreign('brand_id')
                 ->references('id')->on('brands')
                 ->onDelete('cascade');
-            $table->foreign('category')
+            $table->foreign('category_id')
                 ->references('id')->on('categories')
                 ->onDelete('set null');
         });
@@ -37,9 +38,9 @@ class AddColumnsToProducts extends Migration
     public function down()
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->dropForeign(['category']);
-            $table->dropForeign(['brand']);
-            $table->dropColumn(['brand', 'category', 'name', 'image','released_on', 'discontinued']);
+            $table->dropForeign(['category_id']);
+            $table->dropForeign(['brand_id']);
+            $table->dropColumn(['brand_id', 'category_id', 'name', 'description', 'image','released_on', 'discontinued']);
         });
     }
 }

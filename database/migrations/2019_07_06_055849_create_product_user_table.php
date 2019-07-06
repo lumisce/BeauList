@@ -15,13 +15,13 @@ class CreateProductUserTable extends Migration
     {
         Schema::create('product_user', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('product');
-            $table->unsignedBigInteger('user');
-            $table->integer('rating');
+            $table->unsignedBigInteger('product_id');
+            $table->unsignedBigInteger('user_id');
+            $table->integer('score');
             $table->timestamps();
-            $table->foreign('product')
+            $table->foreign('product_id')
                 ->references('id')->on('products');
-            $table->foreign('user')
+            $table->foreign('user_id')
                 ->references('id')->on('users');
         });
     }

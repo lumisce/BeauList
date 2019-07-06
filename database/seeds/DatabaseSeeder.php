@@ -12,5 +12,10 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(CategoriesTableSeeder::class);
+        factory(App\Brand::class, 10)->create()->each(function ($brand) {
+            $brand->products()->save(factory(App\Product::class)->make());
+            $brand->products()->save(factory(App\Product::class)->make());
+            $brand->products()->save(factory(App\Product::class)->make());
+        });
     }
 }
