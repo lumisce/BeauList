@@ -12,5 +12,27 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 });
+
+Route::resource('categories', 'CategoryController')->only([
+	'index', 'show'
+]);
+
+Route::resource('brands', 'BrandController')->only([
+	'index', 'show'
+]);
+
+Route::get('products/new', 'ProductController@new');
+
+Route::resource('products', 'ProductController')->only([
+	'show'
+]);
+
+Route::resource('lists', 'BlistController')->only([
+	'index', 'show'
+]);
+
+Route::resource('users', 'UserController')->only([
+	'show'
+]);

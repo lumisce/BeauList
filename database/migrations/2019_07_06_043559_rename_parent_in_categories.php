@@ -14,11 +14,7 @@ class RenameParentInCategories extends Migration
     public function up()
     {
         Schema::table('categories', function (Blueprint $table) {
-            $table->dropForeign(['parent_id']);
             $table->renameColumn('parent_id', 'parent');
-            $table->foreign('parent')
-                ->references('id')->on('categories')
-                ->onDelete('cascade');
         });
     }
 
@@ -30,11 +26,7 @@ class RenameParentInCategories extends Migration
     public function down()
     {
         Schema::table('categories', function (Blueprint $table) {
-            $table->dropForeign(['parent']);
             $table->renameColumn('parent', 'parent_id');
-            $table->foreign('parent_id')
-                ->references('id')->on('categories')
-                ->onDelete('cascade');
         });
     }
 }

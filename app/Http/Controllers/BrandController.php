@@ -6,5 +6,13 @@ use Illuminate\Http\Request;
 
 class BrandController extends Controller
 {
-    //
+	public function index()
+	{
+
+	}
+
+	public function show()
+	{
+		
+	}
 }

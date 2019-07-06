@@ -37,7 +37,8 @@ class AddColumnsToProducts extends Migration
     public function down()
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->dropForeign(['brand', 'category']);
+            $table->dropForeign(['category']);
+            $table->dropForeign(['brand']);
             $table->dropColumn(['brand', 'category', 'name', 'image','released_on', 'discontinued']);
         });
     }
