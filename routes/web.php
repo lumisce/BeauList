@@ -23,7 +23,7 @@ Route::resource('brands', 'BrandController')->only([
 	'index', 'show'
 ]);
 
-Route::get('products/new', 'ProductController@new');
+Route::post('products/new', 'ProductController@new')->name('products.new');
 
 Route::resource('products', 'ProductController')->only([
 	'show'
@@ -33,9 +33,12 @@ Route::resource('lists', 'BlistController')->only([
 	'index', 'show', 'create', 'store'
 ]);
 
+Route::post('users/rating', 'UserController@rating')->name('users.rating');
+
 Route::resource('users', 'UserController')->only([
 	'show'
 ]);
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

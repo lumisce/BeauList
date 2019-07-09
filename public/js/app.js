@@ -36928,6 +36928,21 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); // window
 // el: '#app',
 // });
 
+
+window.bootstrapAlert = function (message, type) {
+  var dismissible = "";
+
+  if (type != "success") {
+    dismissible = '<a class="close" data-dismiss="alert">×</a>';
+  }
+
+  if (type.length > 0) {
+    type = 'alert-' + type;
+  }
+
+  $(".alert-container").html('<div class="alert ' + type + ' fade show" role="alert">' + dismissible + '<span>' + message + '</span></div>');
+};
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
