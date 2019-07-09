@@ -1,8 +1,10 @@
 @extends('layouts.app')
 
-@section('content')
+@section('css')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+@endsection
 
+@section('content')
 <div class="container">
 	<div class="row justify-content-center">
 		<div class="col-md-8">
@@ -13,7 +15,7 @@
 				<h2>{{$item->name}}</h2>
 				<h4>{{$item->brand->name}}</h4>
 				<p>{{$item->description}}</p>
-				<span class="avg-rating"><i class="rating-icon rating-icon-star fa fa-star"></i> <span>{{ number_format($rating, 2)}} ({{$item->users->count()}})</span></span>
+				<span class="avg-rating"><i class="rating-icon rating-icon-star fa fa-star"></i> <span>{{ number_format($rating[0], 2)}} ({{$rating[1]}})</span></span>
 	
 				@guest
 				@else

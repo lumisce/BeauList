@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Brand;
+use App\Helpers\Common;
 
 class BrandController extends Controller
 {
@@ -15,7 +16,13 @@ class BrandController extends Controller
 
 	public function show($id)
 	{
-		$item = Brand::find($id);
-		return view('brands.show', compact('item'));
+		$item = Brand::findOrFail($id);
+		$products = $item->products->sortByDesc(function ($product, $key) {
+			return Common::rankscore($product);
+		});
+		$ratings = $products->map(function ($product, $key) {
+			return Common::avgrating($product);
+		});
+		return view('brands.show', compact('item', 'products', 'ratings'));
 	}
 }

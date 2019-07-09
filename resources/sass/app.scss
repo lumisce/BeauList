@@ -23,7 +23,7 @@
 }
 
 .rating-icon-star {
-	color: orange;
+	color: gold;
 }
 
 .rating-icon-none {
@@ -39,7 +39,7 @@
 }
 
 .rating-group:hover .rating-label .rating-icon-star {
-	color: orange;
+	color: gold;
 }
 
 .rating-input:hover ~ .rating-label .rating-icon-star {
@@ -52,4 +52,66 @@
 
 .rating-input-none:hover + .rating-label .rating-icon-none {
 	color: red;
+}
+
+
+
+
+
+.rank-bg {
+	color: gold;
+	font-size: 2em !important;
+	vertical-align: middle;
+
+	margin: auto 0 auto 0;
+}
+
+.rank-bg-1 {
+	color: gold;
+}
+
+.rank-bg-2 {
+	color: silver;
+}
+
+.rank-bg-3 {
+	color: chocolate;
+}
+
+.rank-top {
+	color: white;
+}
+
+.rank {
+	margin: auto 2em auto -1.1em;
+}
+
+.rank-list a {
+	text-decoration: none;
+}
+
+
+.product-list-item, .product-list-item a {
+	display: inline-flex;
+
+}
+
+.product-list-item .product-info {
+	margin-top: auto;
+	margin-bottom: auto;
+}
+
+.product-list-item .product-info .sub-info {
+	color: gray;
+	font-size: 0.9em;
+	margin-bottom: 0;
+}
+
+.product-list-item .product-info .name {
+	margin-bottom: 0.5rem;
+}
+
+.product-list-item .product-other {
+	margin-left: auto;
+	margin-right: 1.5em;
 }

@@ -5,15 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Product;
+use App\Helpers\Common;
 
 class ProductController extends Controller
 {
     public function show($id)
     {
         $item = Product::find($id);
-        $rating = $item->users->map(function ($user, $key) {
-        	return $user->rating->score;
-        })->avg();
+        $rating = Common::avgrating($item);
 
         $myscore = 0;
         if (Auth::check()) {
