@@ -3,16 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Product;
 
 class ProductController extends Controller
 {
-	public function show()
-	{
-		
-	}
+    public function show($id)
+    {
+        $item = Product::find($id);
+        return view('products.show', compact(['item']));
+    }
 
-	public function new()
-	{
+    public function new()
+    {
 
-	}
+    }
 }

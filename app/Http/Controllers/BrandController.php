@@ -13,8 +13,9 @@ class BrandController extends Controller
 		return view('brands.index', compact('items'));
 	}
 
-	public function show()
+	public function show($id)
 	{
-		
+		$item = Brand::find($id);
+		return view('brands.show', compact('item'));
 	}
 }

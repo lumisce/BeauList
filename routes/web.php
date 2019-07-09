@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('index');
+    return redirect()->route('home');
 });
 
 Route::resource('categories', 'CategoryController')->only([
@@ -30,9 +30,13 @@ Route::resource('products', 'ProductController')->only([
 ]);
 
 Route::resource('lists', 'BlistController')->only([
-	'index', 'show'
+	'index', 'show', 'create', 'store'
 ]);
 
 Route::resource('users', 'UserController')->only([
 	'show'
 ]);
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/profile', 'UserController@profile')->name('profile');

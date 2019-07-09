@@ -39,10 +39,15 @@ class User extends Authenticatable
 
     public function products()
     {
-        return $this->belongsToMany('App\Products')
+        return $this->belongsToMany('App\Product')
             ->using('App\ProductUser')
             ->as('rating')
             ->withPivot(['score'])
             ->withTimestamps();
+    }
+
+    public function blists()
+    {
+        return $this->hasMany('App\Blist');
     }
 }

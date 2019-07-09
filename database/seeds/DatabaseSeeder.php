@@ -17,5 +17,6 @@ class DatabaseSeeder extends Seeder
             $brand->products()->save(factory(App\Product::class)->make());
             $brand->products()->save(factory(App\Product::class)->make());
         });
+        factory(App\User::class)->create();
     }
 }

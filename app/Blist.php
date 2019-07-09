@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Blist extends Model
 {
-    protected $fillables = ['name'];
+    protected $fillable = ['name'];
 
     public function products()
     {

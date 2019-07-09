@@ -26,7 +26,7 @@ class Product extends Model
          return $this->hasMany('App\QuantityPrice');
       }
 
-      public function user()
+      public function users()
       {
          return $this->belongsToMany('App\User')
             ->using('App\ProductUser')
