@@ -11,7 +11,15 @@
 				<h2>{{$item->name}}</h2>
 				<a href="{{ route('brands.show', $item->brand->id) }}"><h5>{{$item->brand->name}}</h5></a>
 				<p>{{$item->description}}</p>
-				<span>Quantity / Price</span>
+				<div>
+					@foreach ($item->quantityprices as $qp)
+						@if ($loop->first)
+							<span>{{$qp->quantity}}{{$qp->unit}} / <i class="fa fa-krw" aria-hidden="true"></i>{{$qp->price}}</span>
+						@else
+							<span> | {{$qp->quantity}}{{$qp->unit}} / <i class="fa fa-krw" aria-hidden="true"></i>{{$qp->price}}</span>
+						@endif
+					@endforeach
+				</div>
 				<span class="avg-rating"><i class="rating-icon rating-icon-star fa fa-star"></i> <span>{{ number_format($rating[0], 2)}} ({{$rating[1]}})</span></span>
 				<a href="{{ route('categories.show', $item->category->id) }}"><h5>{{$item->category->name}}</h5></a>
 	

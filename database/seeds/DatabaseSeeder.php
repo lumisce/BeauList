@@ -13,10 +13,13 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(CategoriesTableSeeder::class);
         factory(App\Brand::class, 10)->create()->each(function ($brand) {
-            $brand->products()->save(factory(App\Product::class)->make());
-            $brand->products()->save(factory(App\Product::class)->make());
-            $brand->products()->save(factory(App\Product::class)->make());
+            for ($i=0; $i < 4; $i++) { 
+                $product = factory(App\Product::class)->make();
+                $brand->products()->save($product);
+                $product->quantityprices()->save(factory(App\QuantityPrice::class)->make());
+            }
         });
+        factory(App\User::class)->create();
         factory(App\User::class)->create();
     }
 }

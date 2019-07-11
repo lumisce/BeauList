@@ -15,13 +15,13 @@
 							<div class="product-list-item list-group-item">
 								@if ($loop->first)
 									<i class="fa fa-certificate rank-bg rank-bg-1"></i>
-									<span class="rank rank-top">{{$loop->iteration}}</span>
+									<span class="rank-top">{{$loop->iteration}}</span>
 								@elseif ($loop->iteration == 2)
 									<i class="fa fa-certificate rank-bg rank-bg-2"></i>
-									<span class="rank rank-top">{{$loop->iteration}}</span>
+									<span class="rank-top">{{$loop->iteration}}</span>
 								@elseif ($loop->iteration == 3)
 									<i class="fa fa-certificate rank-bg rank-bg-3"></i>
-									<span class="rank rank-top">{{$loop->iteration}}</span>
+									<span class="rank-top">{{$loop->iteration}}</span>
 								@else
 									<span class="rank">{{$loop->iteration}}</span>
 								@endif
@@ -29,7 +29,10 @@
 									<img src="{{$item->image}}" style="height:100px;width:100px;display:inline-block; margin-right:10px;">
 									<div class="product-info">
 										<p class="name"><b>{{$item->name}}</b></p>
-										<p class="sub-info">Quantity/Price</p>
+										@php
+											$qp = $item->quantityprices->first();
+										@endphp
+										<p class="sub-info">{{$qp->quantity}}{{$qp->unit}} / <i class="fa fa-krw" aria-hidden="true"></i>{{$qp->price}}</p>
 										<p class="sub-info"><span class="avg-rating"><i class="rating-icon rating-icon-star fa fa-star"></i> <span>{{ number_format($ratings[$item->id][0], 2)}} ({{$ratings[$item->id][1]}})</span></span></p>
 									</div>
 								</a>
