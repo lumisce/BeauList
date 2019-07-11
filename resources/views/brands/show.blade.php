@@ -43,15 +43,15 @@
 									<div class="dropdown add-to-list" data-product="{{$item->id}}">
 										<button class="btn btn-sm btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdown-menu-btn">Add to List</button>
 										<div class="dropdown-menu" aria-labelledby="dropdown-menu-btn">
-												@foreach (Auth::User()->blists as $blist)
-													<button type="button" class="dropdown-item" value="{{$blist->id}}">
-														@if ($item->blists->contains($blist->id))
-															<i class="fa fa-check-square-o text-primary"></i>
-														@else
-															<i class="fa fa-square-o text-primary"></i>
-														@endif
-														 {{$blist->name}}</button>
-												@endforeach
+											@foreach (Auth::User()->blists as $blist)
+												<button type="button" class="dropdown-item" value="{{$blist->id}}">
+												@if ($item->blists->contains($blist->id))
+													<i class="fa fa-check-square-o text-primary"></i>
+												@else
+													<i class="fa fa-square-o text-primary"></i>
+												@endif
+												 {{$blist->name}}</button>
+											@endforeach
 										</div>
 									</div>
 									@endguest

@@ -23,7 +23,28 @@
 				<span class="avg-rating"><i class="rating-icon rating-icon-star fa fa-star"></i> <span>{{ number_format($rating[0], 2)}} ({{$rating[1]}})</span></span>
 				<a href="{{ route('categories.show', $item->category->id) }}"><h5>{{$item->category->name}}</h5></a>
 	
+
 				@guest
+				<p class="sub-info">Login to Add to List</p>
+				@else
+				<div class="dropdown add-to-list" data-product="{{$item->id}}">
+					<button class="btn btn-sm btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdown-menu-btn">Add to List</button>
+					<div class="dropdown-menu" aria-labelledby="dropdown-menu-btn">
+						@foreach (Auth::User()->blists as $blist)
+							<button type="button" class="dropdown-item" value="{{$blist->id}}">
+							@if ($item->blists->contains($blist->id))
+								<i class="fa fa-check-square-o text-primary"></i>
+							@else
+								<i class="fa fa-square-o text-primary"></i>
+							@endif
+							 {{$blist->name}}</button>
+						@endforeach
+					</div>
+				</div>
+				@endguest
+
+				@guest
+				<p class="sub-info">Login to Rate</p>
 				@else
 				<div class="rating-group">
 					<form id="rating-form">
@@ -54,16 +75,22 @@
 		</div>
 	</div>
 </div>
+
+<form id="add-to-list-form">
+	@csrf
+	<input type="hidden" name="product" value="" id="product-id-input">
+	<input type="hidden" name="list" value="" id="list-id-input">
+</form>
+
 @endsection
 
 @section('js')
 <script>
-@guest
-@else
+@auth
 $("#rating-{{$myscore}}").click();
-@endguest
+@endauth
 
-$('.rating-input').change(function(){
+$('.rating-input').change(function() {
 	console.log($('#rating-form').serialize());
 	$.post("{{ route('products.rate')}}", $('#rating-form').serialize(), function(data) {
 		bootstrapAlert("Successfully Rated!", data.status);
@@ -71,6 +98,27 @@ $('.rating-input').change(function(){
 			$(this).alert('close');
 		});
 		$('.avg-rating span').text(data.rating.toFixed(2)+" ("+data.raters+")");
+	});
+});
+
+$('.add-to-list .dropdown-item').on('click', function() {
+	$('#product-id-input').val($(this).closest('.add-to-list').data('product'));
+	$('#list-id-input').val(this.value);
+	var name = $(this).text();
+	var formdata = $('#add-to-list-form').serialize();
+	var $this = $(this);
+	$.post("{{ route('products.addtolist') }}", formdata, function(data) {
+		var action = "Added to ";
+		if (data.action == 'removed') {
+			action = "Removed from ";
+			$this.find('i').removeClass('fa-check-square-o').addClass('fa-square-o');
+		} else {
+			$this.find('i').removeClass('fa-square-o').addClass('fa-check-square-o');
+		}
+		bootstrapAlert(action+name+"!", data.status);
+		$('.alert').delay(2000).slideUp(500, function() {
+			$(this).alert('close');
+		});
 	});
 });
 </script>

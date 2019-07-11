@@ -18,7 +18,7 @@ use Faker\Generator as Faker;
 
 $factory->define(Product::class, function (Faker $faker) {
     return [
-        'name' => $faker->colorName,
+        'name' => $faker->unique()->colorName,
         'category_id' => $faker->numberBetween(14,43),
         'image' => $faker->imageUrl(600, 600, 'abstract'),
         'description' => $faker->text(50),
