@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Blist;
+use App\Helpers\Common;
 
 class BlistController extends Controller
 {
@@ -37,9 +38,13 @@ class BlistController extends Controller
         return redirect('profile');
     }
 
-    public function show()
+    public function show($id)
     {
-        return view('lists.show');
+        $item = Blist::findOrFail($id);
+        $ratings = $item->products->mapWithKeys(function ($product, $key) {
+            return [$product->id => Common::avgrating($product)];
+        });
+        return view('lists.show', compact('item', 'ratings'));
     }
 
     public function update()

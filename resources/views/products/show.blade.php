@@ -1,9 +1,5 @@
 @extends('layouts.app')
 
-@section('css')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-@endsection
-
 @section('content')
 <div class="container">
 	<div class="row justify-content-center">
@@ -13,14 +9,16 @@
 			<div class="card text-center" style="padding:40px;">
 				<img src="{{$item->image}}" class="mx-auto" style="height:200px;width:200px;">
 				<h2>{{$item->name}}</h2>
-				<h4>{{$item->brand->name}}</h4>
+				<a href="{{ route('brands.show', $item->brand->id) }}"><h5>{{$item->brand->name}}</h5></a>
 				<p>{{$item->description}}</p>
+				<span>Quantity / Price</span>
 				<span class="avg-rating"><i class="rating-icon rating-icon-star fa fa-star"></i> <span>{{ number_format($rating[0], 2)}} ({{$rating[1]}})</span></span>
+				<a href="{{ route('categories.show', $item->category->id) }}"><h5>{{$item->category->name}}</h5></a>
 	
 				@guest
 				@else
 				<div class="rating-group">
-					<form action="{{ route('users.rating')}}" method="post" id="rating-form">
+					<form id="rating-form">
 						@csrf
 						<input type="hidden" name="product" value="{{$item->id}}">
 
@@ -59,7 +57,7 @@ $("#rating-{{$myscore}}").click();
 
 $('.rating-input').change(function(){
 	console.log($('#rating-form').serialize());
-	$.post("{{ route('users.rating')}}", $('#rating-form').serialize(), function(data) {
+	$.post("{{ route('products.rate')}}", $('#rating-form').serialize(), function(data) {
 		bootstrapAlert("Successfully Rated!", data.status);
 		$('.alert').delay(2000).slideUp(500, function() {
 			$(this).alert('close');

@@ -7,6 +7,8 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+@import '~font-awesome/scss/font-awesome.scss';
+
 .rating-icon {
 	pointer-events: none;
 }
@@ -62,7 +64,6 @@
 	color: gold;
 	font-size: 2em !important;
 	vertical-align: middle;
-
 	margin: auto 0 auto 0;
 }
 
@@ -101,7 +102,7 @@
 	margin-bottom: auto;
 }
 
-.product-list-item .product-info .sub-info {
+.sub-info {
 	color: gray;
 	font-size: 0.9em;
 	margin-bottom: 0;
@@ -112,6 +113,5 @@
 }
 
 .product-list-item .product-other {
-	margin-left: auto;
-	margin-right: 1.5em;
+	margin: auto 0 auto auto;
 }

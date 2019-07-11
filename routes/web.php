@@ -23,7 +23,9 @@ Route::resource('brands', 'BrandController')->only([
 	'index', 'show'
 ]);
 
-Route::post('products/new', 'ProductController@new')->name('products.new');
+Route::get('products/new', 'ProductController@new')->name('products.new');
+Route::post('products/rate', 'ProductController@rate')->name('products.rate');
+Route::post('products/addtolist', 'ProductController@addToList')->name('products.addtolist');
 
 Route::resource('products', 'ProductController')->only([
 	'show'
@@ -33,8 +35,7 @@ Route::resource('lists', 'BlistController')->only([
 	'index', 'show', 'create', 'store'
 ]);
 
-Route::post('users/rating', 'UserController@rating')->name('users.rating');
-
+Route::get('/profile', 'UserController@profile')->name('profile');
 Route::resource('users', 'UserController')->only([
 	'show'
 ]);
@@ -42,4 +43,3 @@ Route::resource('users', 'UserController')->only([
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/profile', 'UserController@profile')->name('profile');

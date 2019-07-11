@@ -10,7 +10,7 @@ class UserController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth', ['only' => ['profile', 'rating']]);
+        $this->middleware('auth', ['only' => ['profile']]);
     }
 
     public function show()
@@ -23,35 +23,4 @@ class UserController extends Controller
         return view('users.profile');
     }
 
-    public function rating(Request $request)
-    {
-        $request->validate([
-            'rating'=>'integer'
-        ]);
-
-        $rating = $request->input('rating');
-
-        $productid = $request->input('product');
-        $item = Product::findOrFail($productid);
-
-        if (Auth::user()->products->contains($productid)) {
-            if ($rating > 0) {
-                Auth::user()->products()->updateExistingPivot($productid, ['score'=>$rating]);
-            } else {
-                Auth::user()->products()->detach($productid);
-            }
-        } else if ($rating > 0) {
-            Auth::user()->products()->attach($productid, ['score'=>$rating]);
-        }
-
-        $rating = $item->users->map(function ($user, $key) {
-            return $user->rating->score;
-        })->avg();
-
-        return response()->json([
-            'status' => 'success',
-            'rating' => $rating,
-            'raters' => $item->users->count()
-        ]);
-    }
 }

@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
              <div class="card">
-	            <div class="card-header">{{ __('Brands') }}</div>
+	            <div class="card-header">{{ __('Categories') }}</div>
 					<div class="row m-0">
 						<div class="border-right" style="width:40%;">
 							<div class="list-group list-group-flush" id="list-tab" role="tablist">

@@ -20,9 +20,10 @@ class BrandController extends Controller
 		$products = $item->products->sortByDesc(function ($product, $key) {
 			return Common::rankscore($product);
 		});
-		$ratings = $products->map(function ($product, $key) {
-			return Common::avgrating($product);
+		$ratings = $products->mapWithKeys(function ($product, $key) {
+			return [$product->id => Common::avgrating($product)];
 		});
+
 		return view('brands.show', compact('item', 'products', 'ratings'));
 	}
 }
