@@ -7,7 +7,7 @@
 			<div class="alert-container">
 			</div>
 			<div class="card text-center" style="padding:40px;">
-				<img src="{{$item->image}}" class="mx-auto" style="height:200px;width:200px;">
+				<img src="/images/{{$item->image}}" class="mx-auto" style="height:200px;width:200px;">
 				<h2>{{$item->name}}</h2>
 				<a href="{{ route('brands.show', $item->brand->id) }}"><h5>{{$item->brand->name}}</h5></a>
 				<p>{{$item->description}}</p>
@@ -22,29 +22,20 @@
 				</div>
 				<span class="avg-rating"><i class="rating-icon rating-icon-star fa fa-star"></i> <span>{{ number_format($rating[0], 2)}} ({{$rating[1]}})</span></span>
 				<a href="{{ route('categories.show', $item->category->id) }}"><h5>{{$item->category->name}}</h5></a>
-	
-
+				<div>
 				@guest
-				<p class="sub-info">Login to Add to List</p>
+					<span class="fav on"><i class="fav-icon fa fa-heart"></i> <span class="count">{{$item->favoritedBy->count()}}</span></span>
 				@else
-				<div class="dropdown add-to-list" data-product="{{$item->id}}">
-					<button class="btn btn-sm btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdown-menu-btn">Add to List</button>
-					<div class="dropdown-menu" aria-labelledby="dropdown-menu-btn">
-						@foreach (Auth::User()->blists as $blist)
-							<button type="button" class="dropdown-item" value="{{$blist->id}}">
-							@if ($item->blists->contains($blist->id))
-								<i class="fa fa-check-square-o text-primary"></i>
-							@else
-								<i class="fa fa-square-o text-primary"></i>
-							@endif
-							 {{$blist->name}}</button>
-						@endforeach
-					</div>
-				</div>
+					@if (Auth::user()->favoriteProducts->contains($item->id))
+					<span class="fav on"><i class="fav-icon fa fa-heart"></i> <span class="count">{{$item->favoritedBy->count()}}</span></span>
+					@else
+					<span class="fav"><i class="fav-icon fa fa-heart"></i> <span class="count">{{$item->favoritedBy->count()}}</span></span>
+					@endif
 				@endguest
+				</div>
 
 				@guest
-				<p class="sub-info">Login to Rate</p>
+				<p class="sub-info">Login to Rate or Favorite </p>
 				@else
 				<div class="rating-group">
 					<form id="rating-form">
@@ -69,6 +60,25 @@
 						<label for="rating-5" aria-label="5 Star" class="rating-label"><i class="rating-icon rating-icon-star fa fa-star"></i></label>
 						<input class="rating-input" name="rating" id="rating-5" value="5" type="radio" />
 					</form>
+				</div>
+				@endguest
+
+				@guest
+				<p class="sub-info">Login to Add to List</p>
+				@else
+				<div class="dropdown add-to-list" data-product="{{$item->id}}">
+					<button class="btn btn-sm btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdown-menu-btn">Add to List</button>
+					<div class="dropdown-menu" aria-labelledby="dropdown-menu-btn">
+						@foreach (Auth::User()->blists as $blist)
+							<button type="button" class="dropdown-item" value="{{$blist->id}}">
+							@if ($item->blists->contains($blist->id))
+								<i class="fa fa-check-square-o text-primary"></i>
+							@else
+								<i class="fa fa-square-o text-primary"></i>
+							@endif
+							 {{$blist->name}}</button>
+						@endforeach
+					</div>
 				</div>
 				@endguest
 			</div>
@@ -97,7 +107,7 @@ $('.rating-input').change(function() {
 		$('.alert').delay(2000).slideUp(500, function() {
 			$(this).alert('close');
 		});
-		$('.avg-rating span').text(data.rating.toFixed(2)+" ("+data.raters+")");
+		$('.avg-rating span').text(data.rating[0].toFixed(2)+" ("+data.rating[1]+")");
 	});
 });
 
@@ -120,6 +130,30 @@ $('.add-to-list .dropdown-item').on('click', function() {
 			$(this).alert('close');
 		});
 	});
+});
+
+$('.fav').on('click', function() {
+	@auth
+	var formdata = {
+		'id': {{ request()->route('product') }}, 
+		'_token': "{{ csrf_token() }}"
+	};
+	var $this = $(this);
+	$.post("{{ route('products.favorite') }}", formdata, function(data) {
+		var action = "Added to ";
+		if (data.action == 'removed') {
+			action = "Removed from ";
+			$this.removeClass('on');
+		} else {
+			$this.addClass('on');
+		}
+		$this.find('.count').text(data.count);
+		bootstrapAlert(action+"Favorites!", data.status);
+		$('.alert').delay(2000).slideUp(500, function() {
+			$(this).alert('close');
+		});
+	});
+	@endauth
 });
 </script>
 @endsection

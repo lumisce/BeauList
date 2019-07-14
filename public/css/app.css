@@ -14200,6 +14200,28 @@ a.text-dark:focus {
   color: red;
 }
 
+.fav-icon {
+  font-size: 1.5rem;
+}
+
+.fav {
+  color: #ccc;
+}
+
+.fav:hover,
+.fav.on {
+  color: coral;
+}
+
+.bookmark {
+  color: #ccc;
+}
+
+.bookmark:hover,
+.bookmark.on {
+  color: #54daa6;
+}
+
 .rank-bg {
   color: gold;
   font-size: 2em !important;
@@ -14238,6 +14260,13 @@ a.text-dark:focus {
   display: inline-flex;
 }
 
+.product-list-item img {
+  height: 100px;
+  width: 100px;
+  display: inline-block;
+  margin-right: 10px;
+}
+
 .product-list-item .product-info {
   margin-top: auto;
   margin-bottom: auto;
@@ -14255,5 +14284,20 @@ a.text-dark:focus {
 
 .product-list-item .product-other {
   margin: auto 0 auto auto;
+  display: -webkit-box;
+  display: flex;
+}
+
+.other-info {
+  color: gray;
+  margin: auto 0;
+  margin-right: 1em;
+}
+
+.list-small img {
+  height: 32px;
+  width: 32px;
+  display: inline-block;
+  margin-right: 10px;
 }
 

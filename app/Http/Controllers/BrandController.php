@@ -3,11 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Brand;
 use App\Helpers\Common;
 
 class BrandController extends Controller
 {
+	public function __construct()
+    {
+        $this->middleware('auth', ['only' => ['favorite']]);
+    }
+
 	public function index()
 	{
 		$items = Brand::all();
@@ -26,4 +32,24 @@ class BrandController extends Controller
 
 		return view('brands.show', compact('item', 'products', 'ratings'));
 	}
+
+	public function favorite(Request $request)
+    {
+        $id = $request->input('id');
+        $item = Brand::findOrFail($id);
+
+        $action = 'added';
+        if (Auth::user()->favoriteBrands->contains($id)) {
+            Auth::user()->favoriteBrands()->detach($id);
+            $action = 'removed';
+        } else {
+            Auth::user()->favoriteBrands()->attach($id);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'action' => $action,
+            'count' => $item->favoritedBy->count(),
+        ]);
+    }
 }

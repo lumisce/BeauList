@@ -26,12 +26,19 @@ class Product extends Model
          return $this->hasMany('App\QuantityPrice');
       }
 
-      public function users()
+      public function ratedBy()
       {
-         return $this->belongsToMany('App\User')
+         return $this->belongsToMany('App\User', 'product_user_rated')
             ->using('App\ProductUser')
             ->as('rating')
             ->withPivot(['score'])
             ->withTimestamps();
       }
+
+      public function favoritedBy()
+      {
+         return $this->belongsToMany('App\User', 'product_user_favorite')
+            ->withTimestamps();
+      }
+
 }

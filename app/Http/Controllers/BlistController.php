@@ -32,7 +32,8 @@ class BlistController extends Controller
         ]);
 
         $item = new Blist([
-            'name' => $request->get('name'),
+            'name' => $request->input('name'),
+            'description' => $request->input('description'),
         ]);
         Auth::user()->blists()->save($item);
         return redirect('profile');
@@ -50,5 +51,26 @@ class BlistController extends Controller
     public function update()
     {
 
+    }
+
+    public function save(Request $request)
+    {
+        $id = $request->input('id');
+        $item = Blist::findOrFail($id);
+
+        $action = 'added';
+        if (Auth::user()->savedBlists->contains($id)) {
+            Auth::user()->savedBlists()->detach($id);
+            $action = 'removed';
+        } else {
+            Auth::user()->savedBlists()->attach($id);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'action' => $action,
+            'count' => $item->savedBy->count(),
+        ]);
+        return view('lists.show', compact('item'));
     }
 }
