@@ -14,8 +14,8 @@
 }
 
 .rating-input {
- position: absolute !important;
- left: -9999px !important;
+	position: absolute !important;
+	left: -9999px !important;
 }
 
 .rating-label {
@@ -58,6 +58,25 @@
 
 
 
+.fav-icon {
+	font-size: 1.5rem;
+}
+
+.fav {
+	color: #ccc;
+
+	&:hover, &.on {
+		color: coral;
+	}
+}
+
+.bookmark {
+	color: #ccc;
+
+	&:hover, &.on {
+		color: #54daa6;
+	}
+}
 
 
 .rank-bg {
@@ -95,8 +114,15 @@
 
 .product-list-item, .product-list-item a {
 	display: inline-flex;
-
 }
+
+.product-list-item img {
+	height: 100px;
+	width: 100px;
+	display: inline-block;
+	margin-right: 10px;
+}
+
 
 .product-list-item .product-info {
 	margin-top: auto;
@@ -115,4 +141,18 @@
 
 .product-list-item .product-other {
 	margin: auto 0 auto auto;
+	display: flex;
+}
+
+.other-info {
+	color: gray;
+	margin: auto 0;
+	margin-right: 1em;
+}
+
+.list-small img {
+	height: 32px;
+	width: 32px;
+	display: inline-block;
+	margin-right: 10px;
 }

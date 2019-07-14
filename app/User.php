@@ -37,17 +37,36 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function products()
+    public function blists()
     {
-        return $this->belongsToMany('App\Product')
+        return $this->hasMany('App\Blist');
+    }
+
+    public function savedBlists()
+    {
+        return $this->belongsToMany('App\Blist', 'blist_user_saved')
+            ->withTimestamps();
+    }
+    
+    public function ratedProducts()
+    {
+        return $this->belongsToMany('App\Product', 'product_user_rated')
             ->using('App\ProductUser')
             ->as('rating')
             ->withPivot(['score'])
             ->withTimestamps();
     }
 
-    public function blists()
+    public function favoriteProducts()
     {
-        return $this->hasMany('App\Blist');
+        return $this->belongsToMany('App\Product', 'product_user_favorite')
+            ->withTimestamps();
     }
+
+    public function favoriteBrands()
+    {
+        return $this->belongsToMany('App\Brand', 'brand_user_favorite')
+            ->withTimestamps();
+    }
+
 }

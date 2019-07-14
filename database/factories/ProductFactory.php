@@ -17,10 +17,12 @@ use Faker\Generator as Faker;
 */
 
 $factory->define(Product::class, function (Faker $faker) {
+	
+
     return [
         'name' => $faker->unique()->colorName,
         'category_id' => $faker->numberBetween(14,43),
-        'image' => $faker->imageUrl(600, 600, 'abstract'),
+        'image' => $faker->image('public/storage/images', 200, 200, 'abstract', false, false),
         'description' => $faker->text(50),
         'released_on' => $faker->dateTimeThisYear()
     ];

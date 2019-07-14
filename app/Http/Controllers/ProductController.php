@@ -14,6 +14,7 @@ class ProductController extends Controller
     {
         $this->middleware('auth', ['only' => ['rate', 'addToList']]);
     }
+    
     public function show($id)
     {
         $item = Product::find($id);
@@ -21,8 +22,8 @@ class ProductController extends Controller
 
         $myscore = 0;
         if (Auth::check()) {
-        	if ($item->users->contains(Auth::user()->id)) {
-        		$myscore = $item->users()->find(Auth::user()->id)->rating->score;
+        	if ($item->ratedBy->contains(Auth::user()->id)) {
+        		$myscore = $item->ratedBy()->find(Auth::user()->id)->rating->score;
         	}
         }
 
@@ -42,34 +43,31 @@ class ProductController extends Controller
 
         $rating = $request->input('rating');
 
-        $productid = $request->input('product');
-        $item = Product::findOrFail($productid);
+        $id = $request->input('product');
+        $item = Product::findOrFail($id);
 
-        if (Auth::user()->products->contains($productid)) {
+        if (Auth::user()->ratedProducts->contains($id)) {
             if ($rating > 0) {
-                Auth::user()->products()->updateExistingPivot($productid, ['score'=>$rating]);
+                Auth::user()->ratedProducts()->updateExistingPivot($id, ['score'=>$rating]);
             } else {
-                Auth::user()->products()->detach($productid);
+                Auth::user()->ratedProducts()->detach($id);
             }
         } else if ($rating > 0) {
-            Auth::user()->products()->attach($productid, ['score'=>$rating]);
+            Auth::user()->ratedProducts()->attach($id, ['score'=>$rating]);
         }
 
-        $rating = $item->users->map(function ($user, $key) {
-            return $user->rating->score;
-        })->avg();
+        $rating = Common::avgrating($item);
 
         return response()->json([
             'status' => 'success',
             'rating' => $rating,
-            'raters' => $item->users->count()
         ]);
     }
 
     public function addToList(Request $request)
     {
-        $productid = $request->input('product');
-        $product = Product::findOrFail($productid);
+        $id = $request->input('product');
+        $item = Product::findOrFail($id);
 
         $blistid = $request->input('list');
         $blist = Blist::findOrFail($blistid);
@@ -77,16 +75,36 @@ class ProductController extends Controller
         $this->authorize('update', $blist);
 
         $action = 'added';
-        if ($blist->products->contains($productid)) {
-            $blist->products()->detach($productid);
+        if ($blist->products->contains($id)) {
+            $blist->products()->detach($id);
             $action = 'removed';
         } else {
-            $blist->products()->attach($productid);
+            $blist->products()->attach($id);
         }
 
         return response()->json([
             'status' => 'success',
             'action' => $action,
+        ]);
+    }
+
+    public function favorite(Request $request)
+    {
+        $id = $request->input('id');
+        $item = Product::findOrFail($id);
+
+        $action = 'added';
+        if (Auth::user()->favoriteProducts->contains($id)) {
+            Auth::user()->favoriteProducts()->detach($id);
+            $action = 'removed';
+        } else {
+            Auth::user()->favoriteProducts()->attach($id);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'action' => $action,
+            'count' => $item->favoritedBy->count(),
         ]);
     }
 }

@@ -26,7 +26,7 @@
 									<span class="rank">{{$loop->iteration}}</span>
 								@endif
 								<a href="/products/{{$item->id}}">
-									<img src="{{$item->image}}" style="height:100px;width:100px;display:inline-block; margin-right:10px;">
+									<img src="/images/{{$item->image}}" style="height:100px;width:100px;display:inline-block; margin-right:10px;">
 									<div class="product-info">
 										<p class="name"><b>{{$item->name}}</b></p>
 										@php

@@ -19,6 +19,7 @@ use Faker\Generator as Faker;
 $factory->define(Brand::class, function (Faker $faker) {
     return [
         'name' => $faker->company,
-        'description' => $faker->catchPhrase
+        'description' => $faker->catchPhrase,
+		'image' => $faker->image('public/storage/images', 200, 200, 'cats', false, false),
     ];
 });

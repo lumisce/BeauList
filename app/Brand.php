@@ -12,6 +12,12 @@ class Brand extends Model
 
     public function products()
     {
-    	return $this->hasMany('App\Product');
+        return $this->hasMany('App\Product');
+    }
+
+    public function favoritedBy()
+    {
+        return $this->belongsToMany('App\User', 'brand_user_favorite')
+        ->withTimestamps();
     }
 }

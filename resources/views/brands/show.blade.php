@@ -6,9 +6,27 @@
 		<div class="col-md-8">
 			<div class="alert-container">
 			</div>
-			<h2>{{$item->name}}</h2>
-			<h4>{{$item->description}}</h4>
-			<div class="card">
+			<div class="card text-center" style="padding:40px;">
+				<img src="/images/{{$item->image}}" class="mx-auto" style="height:200px;width:200px;">
+				<h2>{{$item->name}}</h2>
+				<p>{{$item->description}}</p>
+				<div>
+				@guest
+					<span class="fav on"><i class="fav-icon fa fa-heart"></i> <span class="count">{{$item->favoritedBy->count()}}</span></span>
+				@else
+					@if (Auth::user()->favoriteBrands->contains($item->id))
+					<span class="fav on"><i class="fav-icon fa fa-heart"></i> <span class="count">{{$item->favoritedBy->count()}}</span></span>
+					@else
+					<span class="fav"><i class="fav-icon fa fa-heart"></i> <span class="count">{{$item->favoritedBy->count()}}</span></span>
+					@endif
+				@endguest
+				</div>
+				@guest
+				<p class="sub-info">Login to Favorite</p>
+				@endguest
+			</div>
+
+			<div class="card mt-4">
 				<div class="card-header">{{ __('Products') }} ({{$products->count()}})</div>
 					<div class="list-group list-group-flush rank-list" id="list-tab" role="tablist">
 						@foreach ($products as $item)
@@ -26,7 +44,7 @@
 									<span class="rank">{{$loop->iteration}}</span>
 								@endif
 								<a href="/products/{{$item->id}}">
-									<img src="{{$item->image}}" style="height:100px;width:100px;display:inline-block; margin-right:10px;">
+									<img src="/images/{{$item->image}}">
 									<div class="product-info">
 										<p class="name"><b>{{$item->name}}</b></p>
 										@php
@@ -69,6 +87,7 @@
 	<input type="hidden" name="product" value="" id="product-id-input">
 	<input type="hidden" name="list" value="" id="list-id-input">
 </form>
+
 @endsection
 
 @section('js')
@@ -92,6 +111,30 @@ $('.add-to-list .dropdown-item').on('click', function() {
 			$(this).alert('close');
 		});
 	});
+});
+
+$('.fav').on('click', function() {
+	@auth
+	var formdata = {
+		'id': {{ request()->route('brand') }}, 
+		'_token': "{{ csrf_token() }}"
+	};
+	var $this = $(this);
+	$.post("{{ route('brands.favorite') }}", formdata, function(data) {
+		var action = "Added to ";
+		if (data.action == 'removed') {
+			action = "Removed from ";
+			$this.removeClass('on');
+		} else {
+			$this.addClass('on');
+		}
+		$this.find('.count').text(data.count);
+		bootstrapAlert(action+"Favorites!", data.status);
+		$('.alert').delay(2000).slideUp(500, function() {
+			$(this).alert('close');
+		});
+	});
+	@endauth
 });
 </script>
 @endsection

@@ -6,20 +6,20 @@ class Common
 {
 	public static function rankscore($product)
 	{
-		$rating = $product->users->map(function ($user, $key) {
+		$rating = $product->ratedBy->map(function ($user, $key) {
 			return $user->rating->score;
 		})->avg();
-		return pow($product->users->count(), 1/3) * pow($rating, 3);
+
+		return pow($product->ratedBy->count(), 1/3) * pow($rating, 3);
 	}
 
 	public static function avgrating($product)
 	{
-		$score = $product->users->map(function ($user, $key) {
+		$score = $product->ratedBy->map(function ($user, $key) {
         	return $user->rating->score;
         })->avg();
 
-		$numraters = $product->users->count();
-
+		$numraters = $product->ratedBy->count();
 		return [$score, $numraters];
 	}
 }
