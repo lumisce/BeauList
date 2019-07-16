@@ -14301,3 +14301,8 @@ a.text-dark:focus {
   margin-right: 10px;
 }
 
+.right-nav {
+  display: -webkit-inline-box;
+  display: inline-flex;
+}
+

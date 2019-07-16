@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
                 $product->quantityprices()->save(factory(App\QuantityPrice::class)->make());
             }
         });
-        factory(App\User::class)->create();
-        factory(App\User::class)->create();
+        factory(App\User::class)->create(['email' => 'abc@abc.com']);
+        factory(App\User::class)->create(['email' => 'def@abc.com']);
     }
 }

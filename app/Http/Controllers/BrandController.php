@@ -16,8 +16,8 @@ class BrandController extends Controller
 
 	public function index()
 	{
-		$items = Brand::all();
-		return view('brands.index', compact('items'));
+		return response()
+            ->json(['items' => Brand::all()]);
 	}
 
 	public function show($id)
@@ -30,7 +30,8 @@ class BrandController extends Controller
 			return [$product->id => Common::avgrating($product)];
 		});
 
-		return view('brands.show', compact('item', 'products', 'ratings'));
+        return response()
+            ->json(compact('item', 'products', 'ratings'));
 	}
 
 	public function favorite(Request $request)
