@@ -135,7 +135,7 @@ const app = new Vue({
 	}, 
 	methods: {
 		updateAuth() {
-			if (this.token.length) {
+			if (this.isLoggedIn) {
 				axios.defaults.headers.common['Authorization'] = 'Bearer '+this.token;
 			} else {
 				delete axios.defaults.headers.common['Authorization'];
@@ -147,7 +147,7 @@ const app = new Vue({
 			})
 		},
 	},
-	mounted() {
+	created() {
 		this.updateAuth(this.token)
 		if (this.isLoggedIn) {
 			this.setUser()

@@ -11,7 +11,7 @@ class BrandController extends Controller
 {
 	public function __construct()
     {
-        $this->middleware('auth', ['only' => ['favorite']]);
+        $this->middleware('auth:api', ['only' => ['favorite']]);
     }
 
 	public function index()
@@ -23,15 +23,21 @@ class BrandController extends Controller
 	public function show($id)
 	{
 		$item = Brand::findOrFail($id);
-		$products = $item->products->sortByDesc(function ($product, $key) {
-			return Common::rankscore($product);
+		$products = $item->products()->with('quantityprices')->get()
+            ->sortByDesc(function ($product, $key) {
+			 return Common::rankscore($product);
 		});
 		$ratings = $products->mapWithKeys(function ($product, $key) {
 			return [$product->id => Common::avgrating($product)];
 		});
+        $favoritedBy = $item->favoritedBy;
+
+        if (Auth::check()) {
+            $isMyFav = $favoritedBy->contains('id', Auth::user()->id);
+        }
 
         return response()
-            ->json(compact('item', 'products', 'ratings'));
+            ->json(compact('item', 'products', 'ratings', 'favoritedBy', 'isMyFav'));
 	}
 
 	public function favorite(Request $request)

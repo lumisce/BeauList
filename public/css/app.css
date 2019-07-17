@@ -14306,3 +14306,20 @@ a.text-dark:focus {
   display: inline-flex;
 }
 
+.slide-fade-enter-active {
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+.slide-fade-leave-active {
+  -webkit-transition: all 0.8s cubic-bezier(0, 1, 0.5, 1);
+  transition: all 0.8s cubic-bezier(0, 1, 0.5, 1);
+}
+
+.slide-fade-enter,
+.slide-fade-leave-to {
+  -webkit-transform: translateY(-10px);
+          transform: translateY(-10px);
+  opacity: 0;
+}
+
