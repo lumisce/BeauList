@@ -12,19 +12,22 @@ class CategoryController extends Controller
 	{
 		$items = Category::parents()->get();
 		$children = Category::children()->get()->groupBy('parent');
-		return view('categories.index', compact('items', 'children'));
+		return response()
+			->json(compact('items', 'children'));
 	}
 
 	public function show($id)
 	{
 		$item = Category::findOrFail($id);
-		$products = $item->products->sortByDesc(function ($product, $key) {
-			return Common::rankscore($product);
+		$products = $item->products()->with('quantityprices', 'blists')->get()
+			->sortByDesc(function ($product, $key) {
+				return Common::rankscore($product);
 		});
 		$ratings = $products->mapWithKeys(function ($product, $key) {
 			return [$product->id => Common::avgrating($product)];
 		});
-		return view('categories.show', compact('item', 'products', 'ratings'));
+		return response()
+			->json(compact('item', 'products', 'ratings'));
 	}
 
 }

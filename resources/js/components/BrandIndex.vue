@@ -5,7 +5,12 @@
 				<div class="card">
 					<div class="card-header">Brands</div>
 						<div class="list-group list-group-flush list-small" id="list-tab" role="tablist">
-							<a v-for="item in items" :href="brandUrl(item.id)" class="list-group-item"><img :src="imageUrl(item.image)">{{item.name}}</a>
+							<router-link v-for="item in items" 
+								:to="{ name: 'brands.show', params: {id: item.id} }" 
+								:key="item.id" class="list-group-item">
+								<img :src="imageUrl(item.image)">
+								{{item.name}}
+							</router-link>
 						</div>
 					</div>
 				</div>
@@ -22,9 +27,6 @@
 			}
 		},
 		methods: {
-			brandUrl(id) {
-				return '/brands/'+id
-			},
 			imageUrl(path) {
 				return '/images/'+path
 			}

@@ -4,7 +4,7 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
+// require('./bootstrap');
 
 import Vue from 'vue';
 
@@ -34,6 +34,8 @@ import App from './components/App'
 import Login from './components/Login'
 import BrandIndex from './components/BrandIndex'
 import BrandShow from './components/BrandShow'
+import CategoryIndex from './components/CategoryIndex'
+import CategoryShow from './components/CategoryShow'
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -63,11 +65,11 @@ const router = new VueRouter({
 		}, {
 			path: '/categories',
 			name: 'categories.index',
-			component: BrandIndex,
+			component: CategoryIndex,
 		}, {
 			path: '/categories/:id',
 			name: 'categories.show',
-			component: BrandShow,
+			component: CategoryShow,
 		}, {
 			path: '/products/:id',
 			name: 'products.show',
