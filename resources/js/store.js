@@ -28,6 +28,9 @@ export default new Vuex.Store({
 			state.status = ''
 			state.token = ''
 			state.user = {}
+		},
+		refresh(state, user) {
+			state.user = user
 		}
 	},
 	actions: {
@@ -56,6 +59,9 @@ export default new Vuex.Store({
 				delete axios.defaults.headers.common['Authorization']
 				resolve()
 			})
+		},
+		refresh({commit}, user) {
+			commit('refresh', user)
 		}
 	},
 	getters: {

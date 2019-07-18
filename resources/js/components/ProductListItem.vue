@@ -12,14 +12,17 @@
 			</div>
 		</a>
 		<div class="product-other">
+			<AddToList :item="item"></AddToList>
 		</div>
 	</div>
 </template>
 
 <script>
+	import AddToList from './AddToList'
 
 	export default {
 		components: {
+			AddToList,
 		},
 		props: ['item', 'index', 'ratings'],
 		data() {
@@ -58,8 +61,4 @@
 			}
 		},
 	}
-
-
-
-
 </script>

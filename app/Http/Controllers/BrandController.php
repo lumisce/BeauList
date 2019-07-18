@@ -23,7 +23,7 @@ class BrandController extends Controller
 	public function show($id)
 	{
 		$item = Brand::findOrFail($id);
-		$products = $item->products()->with('quantityprices')->get()
+		$products = $item->products()->with('quantityprices', 'blists')->get()
             ->sortByDesc(function ($product, $key) {
 			 return Common::rankscore($product);
 		});

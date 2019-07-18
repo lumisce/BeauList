@@ -15,7 +15,7 @@ use App\User;
 */
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return ['user' => $request->user()];
+    return ['user' => $request->user()->load('blists')];
 });
 
 Route::post('login', 'Auth\LoginController@apiLogin');

@@ -144,6 +144,7 @@ const app = new Vue({
 		setUser() {
 			axios.get('/api/user').then(response => {
 				this.user = response.data.user
+				this.$store.dispatch('refresh', response.data.user)
 			})
 		},
 	},
