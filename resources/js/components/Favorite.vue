@@ -11,7 +11,7 @@
 
 <script>
 	export default {
-		props: ['brand', 'favoritedBy', 'isMyFav'],
+		props: ['isBrand', 'favoritedBy', 'isMyFav'],
 		data() {
 			return {
 				isFavorite: false,
@@ -23,21 +23,14 @@
 				return this.$store.getters.isLoggedIn
 			},
 		},
-		watch: {
-			isMyFav(newValue, oldValue) {
-				this.isFavorite = newValue
-			},
-			favoritedBy(newValue, oldValue) {
-				this.count = newValue.length
-			},
-		},
 		methods: {
 			favorite() {
 				if (this.isLoggedIn) {
 					let formdata = {
 						'id': this.$route.params.id, 
-					};
-					this.axios.post('/api/brands/favorite', formdata).then(response => {
+					}
+					let kind = this.isBrand == "true" ? 'brands' : 'products'
+					this.axios.post('/api/'+kind+'/favorite', formdata).then(response => {
 						let action = 'Added to Favorites!'
 						if (response.data.action == 'removed') {
 							action = 'Removed from Favorites!'
@@ -53,5 +46,9 @@
 				}
 			},
 		},
+		created() {
+			this.isFavorite = this.isMyFav
+			this.count = this.favoritedBy.length
+		}
 	}
 </script>

@@ -15,19 +15,9 @@
 					<img :src="imageUrl" class="mx-auto w-50 h-50">
 					<h2>{{item.name}}</h2>
 					<p>{{item.description}}</p>
-					<Favorite isBrand="true" :favoritedBy="favoritedBy" 
+					<Favorite isBrand="false" :favoritedBy="favoritedBy" 
 						:isMyFav="isMyFav" @bsAlert="bsAlert">
 					</Favorite>
-				</div>
-
-				<div class="card mt-4">
-					<div class="card-header">Products ({{products.length}})</div>
-						<div class="list-group list-group-flush rank-list" id="list-tab" role="tablist">
-							<ProductListItem v-for="(product, index) in products" 
-								:index="index" :key="product.id" 
-								:item="product" :ratings="ratings">
-							</ProductListItem>
-						</div>
 				</div>
 			</div>
 		</div>
@@ -76,11 +66,10 @@
 			}
 		},
 		created() {
-			let url = '/api/brands/'+this.$route.params.id;
+			let url = '/api/products/'+this.$route.params.id;
 			this.axios.get(url).then(response => {
 				this.item = response.data.item;
-				this.products = response.data.products;
-				this.ratings = response.data.ratings;
+				this.rating = response.data.rating;
 				this.favoritedBy = response.data.favoritedBy;
 				this.isMyFav = response.data.isMyFav;
 			});

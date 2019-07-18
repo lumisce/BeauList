@@ -26,8 +26,13 @@ class ProductController extends Controller
         		$myscore = $item->ratedBy()->find(Auth::user()->id)->rating->score;
         	}
         }
+        $favoritedBy = $item->favoritedBy;
 
-        return view('products.show', compact(['item', 'rating', 'myscore']));
+        if (Auth::check()) {
+            $isMyFav = $favoritedBy->contains('id', Auth::user()->id);
+        }
+
+        return response()->json(compact(['item', 'rating', 'myscore', 'favoritedBy', 'isMyFav']));
     }
 
     public function new()

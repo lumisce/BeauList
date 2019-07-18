@@ -36,6 +36,7 @@ import BrandIndex from './components/BrandIndex'
 import BrandShow from './components/BrandShow'
 import CategoryIndex from './components/CategoryIndex'
 import CategoryShow from './components/CategoryShow'
+import ProductShow from './components/ProductShow'
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -73,7 +74,7 @@ const router = new VueRouter({
 		}, {
 			path: '/products/:id',
 			name: 'products.show',
-			component: BrandShow,
+			component: ProductShow,
 		}, 
 	]
 

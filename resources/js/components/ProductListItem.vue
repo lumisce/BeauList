@@ -3,14 +3,14 @@
 		<i v-if="index < 3" class="fa fa-certificate rank-bg" :class="rankBgClass"></i>
 		<span :class="rankClass">{{index+1}}</span>
 
-		<a :href="productUrl">
+		<router-link :to="{ name: 'products.show', params: {id: item.id} }" :key="item.id">
 			<img :src="imageUrl">
 			<div class="product-info">
 				<p class="name"><b>{{item.name}}</b></p>
 				<p class="sub-info">{{qp.quantity}}{{qp.unit}} / <i class="fa fa-krw" aria-hidden="true"></i>{{qp.price}}</p>
 				<p class="sub-info"><span class="avg-rating"><i class="rating-icon rating-icon-star fa fa-star"></i> <span>{{ avgRating }} ({{ ratings[item.id][1] }})</span></span></p>
 			</div>
-		</a>
+		</router-link>
 		<div class="product-other">
 			<AddToList :item="item"></AddToList>
 		</div>
