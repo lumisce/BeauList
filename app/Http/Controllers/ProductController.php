@@ -12,12 +12,12 @@ class ProductController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth', ['only' => ['rate', 'addToList']]);
+        $this->middleware('auth:api', ['only' => ['rate', 'addToList']]);
     }
     
     public function show($id)
     {
-        $item = Product::find($id);
+        $item = Product::findOrFail($id)->load(['quantityprices', 'brand', 'category']);
         $rating = Common::avgrating($item);
 
         $myscore = 0;
@@ -30,9 +30,14 @@ class ProductController extends Controller
 
         if (Auth::check()) {
             $isMyFav = $favoritedBy->contains('id', Auth::user()->id);
+            $myRating = 0;
+            $r = $item->ratedBy->find(Auth::user()->id);
+            if ($r != null) {
+                $myRating = $r->rating->score;
+            }
         }
 
-        return response()->json(compact(['item', 'rating', 'myscore', 'favoritedBy', 'isMyFav']));
+        return response()->json(compact(['item', 'rating', 'myscore', 'favoritedBy', 'isMyFav', 'myRating']));
     }
 
     public function new()
@@ -48,7 +53,7 @@ class ProductController extends Controller
 
         $rating = $request->input('rating');
 
-        $id = $request->input('product');
+        $id = $request->input('id');
         $item = Product::findOrFail($id);
 
         if (Auth::user()->ratedProducts->contains($id)) {

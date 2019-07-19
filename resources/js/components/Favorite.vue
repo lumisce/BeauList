@@ -5,7 +5,7 @@
 				<i class="fav-icon fa fa-heart"></i> <span class="count">{{count}}</span>
 			</span>
 		</div>
-		<p v-if="!isLoggedIn" class="sub-info">Login to Favorite</p>
+		<p v-if="!isLoggedIn && isBrand" class="sub-info">Login to Favorite</p>
 	</div>
 </template>
 
@@ -14,8 +14,8 @@
 		props: ['isBrand', 'favoritedBy', 'isMyFav'],
 		data() {
 			return {
-				isFavorite: false,
-				count: 0,
+				isFavorite: this.isMyFav,
+				count: this.favoritedBy.length,
 			}
 		},
 		computed: {
@@ -46,9 +46,5 @@
 				}
 			},
 		},
-		created() {
-			this.isFavorite = this.isMyFav
-			this.count = this.favoritedBy.length
-		}
 	}
 </script>
