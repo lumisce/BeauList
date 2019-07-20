@@ -11,11 +11,14 @@
 		</div>
 		<div v-else class="right-nav">
 			<li class="nav-item dropdown">
-				<a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<a id="navbarDropdown" class="nav-link dropdown-toggle" 
+					href="#" role="button" aria-haspopup="true" 
+					aria-expanded="false" @click.prevent="dropdown">
 					{{ user.name }} <span class="caret"></span>
 				</a>
 
-				<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+				<div class="dropdown-menu dropdown-menu-right" 
+					:class="{'show' : showDropdown}" aria-labelledby="navbarDropdown">
 					<a class="dropdown-item" href="/profile">My Profile</a>
 					<a class="dropdown-item" href="/logout" @click.prevent="logout">Logout</a>
 				</div>
@@ -30,6 +33,7 @@
 		data() {
 			return {
 				csrf: this.$csrf,
+				showDropdown: false,
 			}
 		},
 		computed: {
@@ -39,11 +43,15 @@
 		},
 		methods: {
 			logout() {
+				this.showDropdown = false
 				this.$store.dispatch('logout')
 				.then(() => {
 					this.$router.push('/login')
 				})
 			},
+			dropdown() {
+				this.showDropdown = !this.showDropdown
+			}
 		}, 
 	}
 </script>
