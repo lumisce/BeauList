@@ -2141,7 +2141,7 @@ __webpack_require__.r(__webpack_exports__);
       item: null,
       products: [],
       ratings: [],
-      favoritedBy: [],
+      favoriteCount: 0,
       isMyFav: false,
       showAlert: false,
       alertSuccess: true,
@@ -2180,7 +2180,7 @@ __webpack_require__.r(__webpack_exports__);
       _this2.item = response.data.item;
       _this2.products = response.data.products;
       _this2.ratings = response.data.ratings;
-      _this2.favoritedBy = response.data.favoritedBy;
+      _this2.favoriteCount = response.data.favoriteCount;
       _this2.isMyFav = response.data.isMyFav;
     });
   }
@@ -2355,11 +2355,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['isBrand', 'favoritedBy', 'isMyFav'],
+  props: ['isBrand', 'favoriteCount', 'isMyFav'],
   data: function data() {
     return {
       isFavorite: this.isMyFav,
-      count: this.favoritedBy.length
+      count: this.favoriteCount
     };
   },
   computed: {
@@ -2636,7 +2636,7 @@ __webpack_require__.r(__webpack_exports__);
       item: null,
       rating: null,
       myRating: 0,
-      favoritedBy: [],
+      favoriteCount: 0,
       isMyFav: false,
       qps: [{
         quantity: '-',
@@ -2690,7 +2690,7 @@ __webpack_require__.r(__webpack_exports__);
     this.axios.get(url).then(function (response) {
       _this2.item = response.data.item;
       _this2.rating = response.data.rating;
-      _this2.favoritedBy = response.data.favoritedBy;
+      _this2.favoriteCount = response.data.favoriteCount;
       _this2.isMyFav = response.data.isMyFav;
       _this2.myRating = response.data.myRating;
 
@@ -3700,7 +3700,7 @@ var render = function() {
                 _c("Favorite", {
                   attrs: {
                     isBrand: "true",
-                    favoritedBy: _vm.favoritedBy,
+                    favoriteCount: _vm.favoriteCount,
                     isMyFav: _vm.isMyFav
                   },
                   on: { bsAlert: _vm.bsAlert }
@@ -4356,7 +4356,7 @@ var render = function() {
                 _c("Favorite", {
                   attrs: {
                     isBrand: "false",
-                    favoritedBy: _vm.favoritedBy,
+                    favoriteCount: _vm.favoriteCount,
                     isMyFav: _vm.isMyFav
                   },
                   on: { bsAlert: _vm.bsAlert }

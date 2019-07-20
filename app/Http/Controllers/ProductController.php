@@ -19,17 +19,10 @@ class ProductController extends Controller
     {
         $item = Product::findOrFail($id)->load(['quantityprices', 'brand', 'category']);
         $rating = Common::avgrating($item);
-
-        $myscore = 0;
-        if (Auth::check()) {
-        	if ($item->ratedBy->contains(Auth::user()->id)) {
-        		$myscore = $item->ratedBy()->find(Auth::user()->id)->rating->score;
-        	}
-        }
-        $favoritedBy = $item->favoritedBy;
+        $favoriteCount = $item->favoritedBy->count();
 
         if (Auth::check()) {
-            $isMyFav = $favoritedBy->contains('id', Auth::user()->id);
+            $isMyFav = $item->favoritedBy->contains('id', Auth::user()->id);
             $myRating = 0;
             $r = $item->ratedBy->find(Auth::user()->id);
             if ($r != null) {
@@ -37,7 +30,7 @@ class ProductController extends Controller
             }
         }
 
-        return response()->json(compact(['item', 'rating', 'myscore', 'favoritedBy', 'isMyFav', 'myRating']));
+        return response()->json(compact(['item', 'rating', 'favoriteCount', 'isMyFav', 'myRating']));
     }
 
     public function new()

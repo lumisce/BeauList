@@ -30,14 +30,14 @@ class BrandController extends Controller
 		$ratings = $products->mapWithKeys(function ($product, $key) {
 			return [$product->id => Common::avgrating($product)];
 		});
-		$favoritedBy = $item->favoritedBy;
+		$favoriteCount = $item->favoritedBy->count();
 
 		if (Auth::check()) {
-			$isMyFav = $favoritedBy->contains('id', Auth::user()->id);
+			$isMyFav = $item->favoritedBy->contains('id', Auth::user()->id);
 		}
 
 		return response()
-			->json(compact('item', 'products', 'ratings', 'favoritedBy', 'isMyFav'));
+			->json(compact('item', 'products', 'ratings', 'favoriteCount', 'isMyFav'));
 	}
 
 	public function favorite(Request $request)

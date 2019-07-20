@@ -11,11 +11,11 @@
 
 <script>
 	export default {
-		props: ['isBrand', 'favoritedBy', 'isMyFav'],
+		props: ['isBrand', 'favoriteCount', 'isMyFav'],
 		data() {
 			return {
 				isFavorite: this.isMyFav,
-				count: this.favoritedBy.length,
+				count: this.favoriteCount,
 			}
 		},
 		computed: {

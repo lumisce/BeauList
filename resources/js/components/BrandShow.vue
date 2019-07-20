@@ -15,7 +15,7 @@
 					<img :src="imageUrl" class="mx-auto w-50 h-50">
 					<h2>{{item.name}}</h2>
 					<p>{{item.description}}</p>
-					<Favorite isBrand="true" :favoritedBy="favoritedBy" 
+					<Favorite isBrand="true" :favoriteCount="favoriteCount" 
 						:isMyFav="isMyFav" @bsAlert="bsAlert">
 					</Favorite>
 				</div>
@@ -48,7 +48,7 @@
 				item: null,
 				products: [],
 				ratings: [],
-				favoritedBy: [],
+				favoriteCount: 0,
 				isMyFav: false,
 				showAlert: false,
 				alertSuccess: true,
@@ -81,7 +81,7 @@
 				this.item = response.data.item;
 				this.products = response.data.products;
 				this.ratings = response.data.ratings;
-				this.favoritedBy = response.data.favoritedBy;
+				this.favoriteCount = response.data.favoriteCount;
 				this.isMyFav = response.data.isMyFav;
 			});
 		}

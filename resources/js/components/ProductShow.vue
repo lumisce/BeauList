@@ -28,7 +28,7 @@
 						<i class="rating-icon rating-icon-star fa fa-star"></i> 
 						<span>{{ avgRating }} ({{ rating[1] }})</span>
 					</span>	
-					<Favorite isBrand="false" :favoritedBy="favoritedBy" 
+					<Favorite isBrand="false" :favoriteCount="favoriteCount" 
 						:isMyFav="isMyFav" @bsAlert="bsAlert">
 					</Favorite>
 					<Rate :myRating="myRating" @bsAlert="bsAlert"
@@ -57,7 +57,7 @@
 				item: null,
 				rating: null,
 				myRating: 0,
-				favoritedBy: [],
+				favoriteCount: 0,
 				isMyFav: false,
 				qps: [{
 					quantity : '-',
@@ -105,7 +105,7 @@
 			this.axios.get(url).then(response => {
 				this.item = response.data.item
 				this.rating = response.data.rating
-				this.favoritedBy = response.data.favoritedBy
+				this.favoriteCount = response.data.favoriteCount
 				this.isMyFav = response.data.isMyFav
 				this.myRating = response.data.myRating
 				this.setQP()
