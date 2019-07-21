@@ -25,8 +25,8 @@
 </template>
 
 <script>
-	import Favorite from './Favorite'
-	import ProductListItem from './ProductListItem'
+	import Favorite from '../components/Favorite'
+	import ProductListItem from '../components/ProductListItem'
 
 	export default {
 		components: {

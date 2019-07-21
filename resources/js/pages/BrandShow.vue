@@ -12,21 +12,20 @@
 					</transition>
 				</div>
 				<div class="card text-center" style="padding:40px;">
+					<img :src="imageUrl" class="mx-auto w-50 h-50">
 					<h2>{{item.name}}</h2>
-					<router-link v-if="!isMine" :to="{ name: 'users.show', params: {id: item.user.id} }" :key="item.user.id">{{item.user.name}}</router-link>
 					<p>{{item.description}}</p>
-					<Save :saveCount="saveCount" :isMySaved="isSaved" 
-						:isMine="isMine" @bsAlert="bsAlert">
-					</Save>
+					<Favorite :isBrand="true" :favoriteCount="favoriteCount" 
+						:isMyFav="isMyFav" @bsAlert="bsAlert">
+					</Favorite>
 				</div>
 
 				<div class="card mt-4">
-					<div class="card-header">Products ({{Object.keys(products).length}})</div>
-						<div class="list-group list-group-flush rank-list" role="tablist">
+					<div class="card-header">Products ({{products.length}})</div>
+						<div class="list-group list-group-flush rank-list" id="list-tab" role="tablist">
 							<ProductListItem v-for="(product, index) in products" 
 								:index="index" :key="product.id" :item="product" 
-								:ratings="ratings" :isRanked="false" 
-								@bsAlert="bsAlert" @reload="loadList">
+								:ratings="ratings" :isRanked="true" @bsAlert="bsAlert">
 							</ProductListItem>
 						</div>
 				</div>
@@ -36,12 +35,12 @@
 </template>
 
 <script>
-	import Save from './Save'
-	import ProductListItem from './ProductListItem'
+	import Favorite from '../components/Favorite'
+	import ProductListItem from '../components/ProductListItem'
 
 	export default {
 		components: {
-			Save,
+			Favorite,
 			ProductListItem,
 		},
 		data() {
@@ -49,9 +48,8 @@
 				item: null,
 				products: [],
 				ratings: [],
-				saveCount: 0,
-				isSaved: false,
-				isMine: false,
+				favoriteCount: 0,
+				isMyFav: false,
 				showAlert: false,
 				alertSuccess: true,
 				alertMessage: '',
@@ -75,21 +73,17 @@
 				setTimeout(() => {
 					this.showAlert = false
 				}, 3000);
-			},
-			loadList() {
-				let url = '/api/lists/'+this.$route.params.id;
-				this.axios.get(url).then(response => {
-					this.item = response.data.item;
-					this.products = response.data.products;
-					this.ratings = response.data.ratings;
-					this.saveCount = response.data.saveCount;
-					this.isSaved = response.data.isSaved;
-					this.isMine = response.data.isMine;
-				});
 			}
 		},
 		created() {
-			this.loadList()
+			let url = '/api/brands/'+this.$route.params.id;
+			this.axios.get(url).then(response => {
+				this.item = response.data.item;
+				this.products = response.data.products;
+				this.ratings = response.data.ratings;
+				this.favoriteCount = response.data.favoriteCount;
+				this.isMyFav = response.data.isMyFav;
+			});
 		}
 	}
 </script>

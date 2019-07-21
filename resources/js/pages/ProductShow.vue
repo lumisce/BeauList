@@ -42,9 +42,9 @@
 </template>
 
 <script>
-	import Favorite from './Favorite'
-	import Rate from './Rate'
-	import AddToList from './AddToList'
+	import Favorite from '../components/Favorite'
+	import Rate from '../components/Rate'
+	import AddToList from '../components/AddToList'
 
 	export default {
 		components: {

@@ -31,16 +31,16 @@ import store from './store.js';
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
 import App from './components/App'
-import Login from './components/Login'
-import BrandIndex from './components/BrandIndex'
-import BrandShow from './components/BrandShow'
-import CategoryIndex from './components/CategoryIndex'
-import CategoryShow from './components/CategoryShow'
-import ProductShow from './components/ProductShow'
-import BlistCreate from './components/BlistCreate'
-import BlistShow from './components/BlistShow'
-import UserShow from './components/UserShow'
-import UserSavedBlists from './components/UserSavedBlists'
+import Login from './pages/Login'
+import BrandIndex from './pages/BrandIndex'
+import BrandShow from './pages/BrandShow'
+import CategoryIndex from './pages/CategoryIndex'
+import CategoryShow from './pages/CategoryShow'
+import ProductShow from './pages/ProductShow'
+import BlistCreate from './pages/BlistCreate'
+import BlistShow from './pages/BlistShow'
+import UserShow from './pages/UserShow'
+import UserSavedBlists from './pages/UserSavedBlists'
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
