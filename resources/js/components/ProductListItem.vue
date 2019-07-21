@@ -2,8 +2,11 @@
 	<div v-if="item" class="product-list-item list-group-item">
 		<i v-if="isRanked && index < 3" class="fa fa-certificate rank-bg" :class="rankBgClass"></i>
 		<span v-if="isRanked" :class="rankClass">{{index+1}}</span>
-
-		<router-link :to="{ name: 'products.show', params: {id: item.id} }" :key="item.id">
+	
+		<router-link v-if="withBrand" :to="{ name: 'brands.show', params: {id: item.brand.id} }">
+			<img :src="brandImageUrl">
+		</router-link>
+		<router-link :to="{ name: 'products.show', params: {id: item.id} }">
 			<img :src="imageUrl">
 			<div class="product-info">
 				<p class="name"><b>{{item.name}}</b></p>
@@ -26,7 +29,7 @@
 		components: {
 			AddToList,
 		},
-		props: ['item', 'index', 'ratings', 'isRanked'],
+		props: ['item', 'index', 'ratings', 'isRanked', 'withBrand'],
 		data() {
 			return {
 			}
@@ -47,6 +50,9 @@
 			},
 			imageUrl() {
 				return '/images/'+this.item.image
+			},
+			brandImageUrl() {
+				return '/images/'+this.item.brand.image
 			},
 			productUrl() {
 				return '/products/'+this.item.id

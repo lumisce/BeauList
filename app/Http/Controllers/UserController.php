@@ -39,15 +39,23 @@ class UserController extends Controller
 
     public function favoriteProducts($id)
     {
-        $ratings = Auth::user()->ratedProducts->mapWithKeys(function ($product, $key) {
+        $user = User::findOrFail($id);
+        $items = $user->favoriteProducts()->with('quantityprices', 'brand', 'category', 'blists')->get();
+        $isMe = Auth::check() && Auth::user()->id == $id;
+
+        $ratings = Auth::user()->favoriteProducts->mapWithKeys(function ($product, $key) {
             return [$product->id => Common::avgrating($product)];
         });
-        return view('users.favproducts', compact('ratings'));
+        return response()->json(compact('user', 'items', 'isMe', 'ratings'));
     }
 
     public function favoriteBrands($id)
     {
-        return view('users.favbrands');
+        $user = User::findOrFail($id);
+        $items = $user->favoriteBrands;
+        $isMe = Auth::check() && Auth::user()->id == $id;
+
+        return response()->json(compact('user', 'items', 'isMe'));
     }
 
     public function savedBlists($id)

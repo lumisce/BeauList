@@ -29,7 +29,7 @@
 					let formdata = {
 						'id': this.$route.params.id, 
 					}
-					let kind = this.isBrand == "true" ? 'brands' : 'products'
+					let kind = this.isBrand ? 'brands' : 'products'
 					this.axios.post('/api/'+kind+'/favorite', formdata).then(response => {
 						let action = 'Added to Favorites!'
 						if (response.data.action == 'removed') {

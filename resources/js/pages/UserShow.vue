@@ -10,6 +10,14 @@
 					</div>
 					<div class="list-group list-group-flush list-small" id="list-tab" role="tablist">
 						<router-link class="list-group-item"
+							:to="{ name: 'users.favbrands', params: {id: user.id} }">
+							Favorite Brands
+						</router-link>
+						<router-link class="list-group-item"
+							:to="{ name: 'users.favproducts', params: {id: user.id} }">
+							Favorite Products
+						</router-link>
+						<router-link class="list-group-item"
 							:to="{ name: 'users.savedlists', params: {id: user.id} }">
 							Saved Lists
 						</router-link>

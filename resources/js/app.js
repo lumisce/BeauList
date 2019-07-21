@@ -41,6 +41,8 @@ import BlistCreate from './pages/BlistCreate'
 import BlistShow from './pages/BlistShow'
 import UserShow from './pages/UserShow'
 import UserSavedBlists from './pages/UserSavedBlists'
+import UserFavoriteBrands from './pages/UserFavoriteBrands'
+import UserFavoriteProducts from './pages/UserFavoriteProducts'
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -98,7 +100,15 @@ const router = new VueRouter({
 			path: '/users/:id/savedlists',
 			name: 'users.savedlists',
 			component: UserSavedBlists,
-		}
+		}, {
+			path: '/users/:id/favbrands',
+			name: 'users.favbrands',
+			component: UserFavoriteBrands,
+		}, {
+			path: '/users/:id/favproducts',
+			name: 'users.favproducts',
+			component: UserFavoriteProducts,
+		},
 	]
 
 });

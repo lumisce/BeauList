@@ -24,7 +24,7 @@
 					<div class="card-header">Products ({{products.length}})</div>
 						<div class="list-group list-group-flush rank-list" id="list-tab" role="tablist">
 							<ProductListItem v-for="(product, index) in products" 
-								:index="index" :key="product.id" :item="product" 
+								:index="index" :key="product.id" :item="product" :withBrand="false"
 								:ratings="ratings" :isRanked="true" @bsAlert="bsAlert">
 							</ProductListItem>
 						</div>

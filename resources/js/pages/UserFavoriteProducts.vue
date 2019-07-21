@@ -1,5 +1,5 @@
 <template>
-	<div v-if="item" class="container">
+	<div v-if="user" class="container">
 		<div class="row justify-content-center">
 			<div class="col-md-8">
 				<div class="alert-container">
@@ -11,15 +11,20 @@
 					</div>
 					</transition>
 				</div>
-				<h2>{{ item.name }}</h2>
-				<div class="card mt-4">
-					<div class="card-header">Products ({{products.length}})</div>
-						<div class="list-group list-group-flush rank-list" id="list-tab" role="tablist">
-							<ProductListItem v-for="(product, index) in products" 
-								:index="index" :key="product.id" :item="product" :withBrand="true"
-								:ratings="ratings" :isRanked="true" @bsAlert="bsAlert">
-							</ProductListItem>
-						</div>
+				<div class="card">
+					<div v-if="isMe" class="card-header">
+						My Favorite Products ({{items.length}})
+					</div>
+					<div v-else class="card-header">
+						{{user.name}}'s Favorite Products ({{items.length}})
+					</div>
+					<div class="list-group list-group-flush rank-list" role="tablist">
+						<ProductListItem v-for="(product, index) in items" 
+							:index="index" :key="product.id" :item="product" 
+							:ratings="ratings" :isRanked="false" :withBrand="true"
+							@bsAlert="bsAlert">
+						</ProductListItem>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -35,18 +40,16 @@
 		},
 		data() {
 			return {
-				item: null,
-				products: [],
+				items: [],
 				ratings: [],
+				user: null,
+				isMe: false,
 				showAlert: false,
 				alertSuccess: true,
 				alertMessage: '',
 			}
 		},
 		computed: {
-			imageUrl() {
-				return this.item ? '/images/'+this.item.image : ''
-			},
 		},
 		methods: {
 			bsAlert(status, msg) {
@@ -61,15 +64,19 @@
 				setTimeout(() => {
 					this.showAlert = false
 				}, 3000);
+			},
+			loadList() {
+				let url = '/api/users/'+this.$route.params.id+'/favproducts';
+				this.axios.get(url).then(response => {
+					this.items = response.data.items;
+					this.ratings = response.data.ratings;
+					this.user = response.data.user;
+					this.isMe = response.data.isMe;
+				});
 			}
 		},
 		created() {
-			let url = '/api/categories/'+this.$route.params.id;
-			this.axios.get(url).then(response => {
-				this.item = response.data.item;
-				this.products = response.data.products;
-				this.ratings = response.data.ratings;
-			});
+			this.loadList()
 		}
 	}
 </script>
