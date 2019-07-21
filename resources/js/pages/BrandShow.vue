@@ -35,10 +35,12 @@
 </template>
 
 <script>
+	import pageMixin from '../pageMixin'
 	import Favorite from '../components/Favorite'
 	import ProductListItem from '../components/ProductListItem'
 
 	export default {
+		mixins: [pageMixin],
 		components: {
 			Favorite,
 			ProductListItem,
@@ -59,21 +61,6 @@
 			imageUrl() {
 				return this.item ? '/images/'+this.item.image : ''
 			},
-		},
-		methods: {
-			bsAlert(status, msg) {
-				this.showAlert = true
-				this.alertMessage = msg
-				if (status == 'success') {
-					this.alertSuccess = true
-				} else if (status == 'error') {
-					this.alertSuccess = false
-					this.alertMessage = 'Something went wrong. Please try again.'
-				}
-				setTimeout(() => {
-					this.showAlert = false
-				}, 3000);
-			}
 		},
 		created() {
 			let url = '/api/brands/'+this.$route.params.id;

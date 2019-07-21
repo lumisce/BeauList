@@ -36,10 +36,12 @@
 </template>
 
 <script>
+	import pageMixin from '../pageMixin'
 	import Save from '../components/Save'
 	import ProductListItem from '../components/ProductListItem'
 
 	export default {
+		mixins: [pageMixin],
 		components: {
 			Save,
 			ProductListItem,
@@ -63,19 +65,6 @@
 			},
 		},
 		methods: {
-			bsAlert(status, msg) {
-				this.showAlert = true
-				this.alertMessage = msg
-				if (status == 'success') {
-					this.alertSuccess = true
-				} else if (status == 'error') {
-					this.alertSuccess = false
-					this.alertMessage = 'Something went wrong. Please try again.'
-				}
-				setTimeout(() => {
-					this.showAlert = false
-				}, 3000);
-			},
 			loadList() {
 				let url = '/api/lists/'+this.$route.params.id;
 				this.axios.get(url).then(response => {

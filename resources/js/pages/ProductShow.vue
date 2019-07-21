@@ -42,11 +42,13 @@
 </template>
 
 <script>
+	import pageMixin from '../pageMixin'
 	import Favorite from '../components/Favorite'
 	import Rate from '../components/Rate'
 	import AddToList from '../components/AddToList'
 
 	export default {
+		mixins: [pageMixin],
 		components: {
 			Favorite,
 			Rate,
@@ -86,19 +88,6 @@
 			setAvgRating(rating) {
 				this.rating = rating
 			},
-			bsAlert(status, msg) {
-				this.showAlert = true
-				this.alertMessage = msg
-				if (status == 'success') {
-					this.alertSuccess = true
-				} else if (status == 'error') {
-					this.alertSuccess = false
-					this.alertMessage = 'Something went wrong. Please try again.'
-				}
-				setTimeout(() => {
-					this.showAlert = false
-				}, 3000);
-			}, 
 		},
 		created() {
 			let url = '/api/products/'+this.$route.params.id;

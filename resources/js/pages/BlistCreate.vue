@@ -42,9 +42,10 @@
 </template>
 
 <script>
+	import pageMixin from '../pageMixin'
+
 	export default {
-		components: {
-		},
+		mixins: [pageMixin],
 		data() {
 			return {
 				name: '',
@@ -88,19 +89,6 @@
 					this.$store.dispatch('refresh', response.data.user)
 				})
 			},
-			bsAlert(status, msg) {
-				this.showAlert = true
-				this.alertMessage = msg
-				if (status == 'success') {
-					this.alertSuccess = true
-				} else if (status == 'error') {
-					this.alertSuccess = false
-					this.alertMessage = 'Something went wrong. Please try again.'
-				}
-				setTimeout(() => {
-					this.showAlert = false
-				}, 3000);
-			}
 		},
 	}
 </script>
