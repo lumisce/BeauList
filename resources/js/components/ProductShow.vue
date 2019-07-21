@@ -28,13 +28,13 @@
 						<i class="rating-icon rating-icon-star fa fa-star"></i> 
 						<span>{{ avgRating }} ({{ rating[1] }})</span>
 					</span>	
-					<Favorite isBrand="false" :favoriteCount="favoriteCount" 
+					<Favorite :isBrand="false" :favoriteCount="favoriteCount" 
 						:isMyFav="isMyFav" @bsAlert="bsAlert">
 					</Favorite>
 					<Rate :myRating="myRating" @bsAlert="bsAlert"
 						@setAvgRating="setAvgRating">
 					</Rate>
-					<AddToList :item="item"></AddToList>
+					<AddToList :item="item" @bsAlert="bsAlert"></AddToList>
 				</div>
 			</div>
 		</div>

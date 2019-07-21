@@ -37,6 +37,8 @@ import BrandShow from './components/BrandShow'
 import CategoryIndex from './components/CategoryIndex'
 import CategoryShow from './components/CategoryShow'
 import ProductShow from './components/ProductShow'
+import BlistCreate from './components/BlistCreate'
+import BlistShow from './components/BlistShow'
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -75,7 +77,18 @@ const router = new VueRouter({
 			path: '/products/:id',
 			name: 'products.show',
 			component: ProductShow,
-		}, 
+		}, {
+			path: '/lists/create',
+			name: 'lists.create',
+			component: BlistCreate,
+			meta: {
+				requiresAuth: true,
+			}
+		}, {
+			path: '/lists/:id',
+			name: 'lists.show',
+			component: BlistShow,
+		}
 	]
 
 });

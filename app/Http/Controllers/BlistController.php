@@ -12,17 +12,12 @@ class BlistController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['index','show']]);
+        $this->middleware('auth:api', ['except' => ['index','show']]);
     }
 
     public function index()
     {
         return view('lists.index');
-    }
-
-    public function create()
-    {
-        return view('lists.create');
     }
 
     public function store(Request $request)
@@ -36,16 +31,29 @@ class BlistController extends Controller
             'description' => $request->input('description'),
         ]);
         Auth::user()->blists()->save($item);
-        return redirect('profile');
+
+        return response()->json([
+            'status' => 'success',
+            'id' => $item->id,
+       ]);
     }
 
     public function show($id)
     {
         $item = Blist::findOrFail($id);
-        $ratings = $item->products->mapWithKeys(function ($product, $key) {
+        $products = $item->products()->with('quantityprices', 'blists')->get()
+            ->sortByDesc(function ($product, $key) {
+                return Common::rankscore($product);
+        });
+        $ratings = $products->mapWithKeys(function ($product, $key) {
             return [$product->id => Common::avgrating($product)];
         });
-        return view('lists.show', compact('item', 'ratings'));
+        $saveCount = $item->savedBy->count();
+        if (Auth::check()) {
+            $isSaved = $item->savedBy->contains('id', Auth::user()->id);
+            $isMine = $item->user->id == Auth::user()->id;
+        }
+        return response()->json(compact('item', 'products', 'ratings', 'saveCount', 'isSaved', 'isMine'));
     }
 
     public function update()
@@ -57,6 +65,10 @@ class BlistController extends Controller
     {
         $id = $request->input('id');
         $item = Blist::findOrFail($id);
+
+        if ($item->user->id == Auth::user()->id) {
+            // can't save own list
+        }
 
         $action = 'added';
         if (Auth::user()->savedBlists->contains($id)) {
@@ -71,6 +83,5 @@ class BlistController extends Controller
             'action' => $action,
             'count' => $item->savedBy->count(),
         ]);
-        return view('lists.show', compact('item'));
     }
 }

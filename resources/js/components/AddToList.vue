@@ -1,13 +1,19 @@
 <template>
-	<p v-if="!isLoggedIn" class="sub-info">Login to Add to List</p>
-	<p v-else-if="!lists.length" class="sub-info">Create a List to Add Item in</p>
-	<div v-else class="dropdown add-to-list">
-		<button v-if="lists.length" class="btn btn-sm btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdown-menu-btn">Add to List</button>
-		<div v-if="lists.length" class="dropdown-menu" aria-labelledby="dropdown-menu-btn">
-			<button v-for="list in lists" type="button" class="dropdown-item" :value="list.id">
-				<i class="fa text-primary" :class="checkListClass(list.id)"></i>
-			 	{{list.name}}
+	<div>
+		<p v-if="!isLoggedIn" class="sub-info">Login to Add to List</p>
+		<p v-else-if="!lists.length" class="sub-info">Create a List to Add Item in</p>
+		<div v-else class="btn-group">
+			<button class="btn btn-sm btn-primary dropdown-toggle" 
+				type="button" @click.prevent="dropdown" @blur="hideDropdown">
+				Add to List
 			</button>
+			<div class="dropdown-menu" :class="{'show': showDropdown}">
+				<button v-for="list in lists" type="button" 
+					class="dropdown-item" @mousedown="addToList(list.id)">
+					<i class="fa text-primary" :class="checkListClass(list.id)"></i>
+				 	{{list.name}}
+				</button>
+			</div>
 		</div>
 	</div>
 </template>
@@ -17,8 +23,8 @@
 		props: ['item'],
 		data() {
 			return {
-				isFavorite: false,
-				count: 0,
+				showDropdown: false,
+				itemLists: this.item.blists,
 			}
 		},
 		computed: {
@@ -29,35 +35,32 @@
 				return this.$store.state.user.blists
 			},
 		},
-		watch: {
-			isMyFav(newValue, oldValue) {
-				this.isFavorite = newValue
-			},
-			favoritedBy(newValue, oldValue) {
-				this.count = newValue.length
-			},
-		},
 		methods: {
 			checkListClass(id) {
-				var contains = (el, x) => {
-					return el.id == x
-				}
-				return item.blists.some(containsId(id)) ? 'fa-check-square-o' : 'fa-square-o'
+				var isInList = this.itemLists.some(el => el.id == id)
+				return isInList ? 'fa-check-square-o' : 'fa-square-o'
 			},
-			favorite() {
+			dropdown() {
+				this.showDropdown = !this.showDropdown
+			},
+			hideDropdown() {
+				this.showDropdown = false
+			},
+			addToList(listId) {
+				this.hideDropdown()
+
 				if (this.isLoggedIn) {
 					let formdata = {
-						'id': this.$route.params.id, 
+						'id': this.item.id,
+						'list': listId
 					};
-					this.axios.post('/api/brands/favorite', formdata).then(response => {
-						let action = 'Added to Favorites!'
+					this.axios.post('/api/products/addtolist', formdata).then(response => {
+						let action = 'Added to '+response.data.name+'!'
 						if (response.data.action == 'removed') {
-							action = 'Removed from Favorites!'
-							this.isFavorite = false
-						} else {
-							this.isFavorite = true
+							action = 'Removed from '+response.data.name+'!'
 						}
-						this.count = response.data.count
+						this.itemLists = response.data.lists
+						this.$emit('reload')
 						this.$emit('bsAlert', response.data.status, action)
 					}).catch(err => {
 						this.$emit('bsAlert', 'error', '')

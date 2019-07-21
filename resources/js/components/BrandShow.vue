@@ -15,7 +15,7 @@
 					<img :src="imageUrl" class="mx-auto w-50 h-50">
 					<h2>{{item.name}}</h2>
 					<p>{{item.description}}</p>
-					<Favorite isBrand="true" :favoriteCount="favoriteCount" 
+					<Favorite :isBrand="true" :favoriteCount="favoriteCount" 
 						:isMyFav="isMyFav" @bsAlert="bsAlert">
 					</Favorite>
 				</div>
@@ -24,8 +24,8 @@
 					<div class="card-header">Products ({{products.length}})</div>
 						<div class="list-group list-group-flush rank-list" id="list-tab" role="tablist">
 							<ProductListItem v-for="(product, index) in products" 
-								:index="index" :key="product.id" 
-								:item="product" :ratings="ratings">
+								:index="index" :key="product.id" :item="product" 
+								:ratings="ratings" :isRanked="true" @bsAlert="bsAlert">
 							</ProductListItem>
 						</div>
 				</div>

@@ -1,7 +1,7 @@
 <template>
 	<div v-if="item" class="product-list-item list-group-item">
-		<i v-if="index < 3" class="fa fa-certificate rank-bg" :class="rankBgClass"></i>
-		<span :class="rankClass">{{index+1}}</span>
+		<i v-if="isRanked && index < 3" class="fa fa-certificate rank-bg" :class="rankBgClass"></i>
+		<span v-if="isRanked" :class="rankClass">{{index+1}}</span>
 
 		<router-link :to="{ name: 'products.show', params: {id: item.id} }" :key="item.id">
 			<img :src="imageUrl">
@@ -12,7 +12,9 @@
 			</div>
 		</router-link>
 		<div class="product-other">
-			<AddToList :item="item"></AddToList>
+			<AddToList :item="item" @reload="$emit('reload')"
+				@bsAlert="(status, msg) => $emit('bsAlert', status, msg)">
+			</AddToList>
 		</div>
 	</div>
 </template>
@@ -24,7 +26,7 @@
 		components: {
 			AddToList,
 		},
-		props: ['item', 'index', 'ratings'],
+		props: ['item', 'index', 'ratings', 'isRanked'],
 		data() {
 			return {
 			}

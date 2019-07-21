@@ -17,7 +17,7 @@ class ProductController extends Controller
     
     public function show($id)
     {
-        $item = Product::findOrFail($id)->load(['quantityprices', 'brand', 'category']);
+        $item = Product::findOrFail($id)->load(['quantityprices', 'brand', 'category', 'blists']);
         $rating = Common::avgrating($item);
         $favoriteCount = $item->favoritedBy->count();
 
@@ -69,7 +69,7 @@ class ProductController extends Controller
 
     public function addToList(Request $request)
     {
-        $id = $request->input('product');
+        $id = $request->input('id');
         $item = Product::findOrFail($id);
 
         $blistid = $request->input('list');
@@ -88,6 +88,8 @@ class ProductController extends Controller
         return response()->json([
             'status' => 'success',
             'action' => $action,
+            'name' => $blist->name,
+            'lists' => $item->blists,
         ]);
     }
 
