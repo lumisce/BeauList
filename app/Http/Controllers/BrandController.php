@@ -17,7 +17,7 @@ class BrandController extends Controller
 	public function index()
 	{
 		return response()
-			->json(['items' => Brand::all()]);
+			->json(['items' => Brand::all()->sortBy('name')->values()]);
 	}
 
 	public function show($id)

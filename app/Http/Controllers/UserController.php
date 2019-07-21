@@ -31,19 +31,29 @@ class UserController extends Controller
 
     public function ratedProducts($id)
     {
-        $ratings = Auth::user()->ratedProducts->mapWithKeys(function ($product, $key) {
+        $user = User::findOrFail($id);
+        $items = $user->ratedProducts()->with('quantityprices', 'brand', 'category', 'blists')->get()
+            ->sortByDesc(function ($product, $key) {
+                return $product->rating->created_at;
+            })->values();
+        $isMe = Auth::check() && Auth::user()->id == $id;
+
+        $ratings = $user->ratedProducts->mapWithKeys(function ($product, $key) {
             return [$product->id => Common::avgrating($product)];
         });
-        return view('users.ratedproducts', compact('ratings'));
+        return response()->json(compact('user', 'items', 'isMe', 'ratings'));
     }
 
     public function favoriteProducts($id)
     {
         $user = User::findOrFail($id);
-        $items = $user->favoriteProducts()->with('quantityprices', 'brand', 'category', 'blists')->get();
+        $items = $user->favoriteProducts()->with('quantityprices', 'brand', 'category', 'blists')->get()
+            ->sortByDesc(function ($product, $key) {
+                return $product->pivot->created_at;
+            })->values();
         $isMe = Auth::check() && Auth::user()->id == $id;
 
-        $ratings = Auth::user()->favoriteProducts->mapWithKeys(function ($product, $key) {
+        $ratings = $user->favoriteProducts->mapWithKeys(function ($product, $key) {
             return [$product->id => Common::avgrating($product)];
         });
         return response()->json(compact('user', 'items', 'isMe', 'ratings'));
@@ -52,7 +62,10 @@ class UserController extends Controller
     public function favoriteBrands($id)
     {
         $user = User::findOrFail($id);
-        $items = $user->favoriteBrands;
+        $items = $user->favoriteBrands
+            ->sortByDesc(function ($brand, $key) {
+                return $brand->pivot->created_at;
+            })->values();
         $isMe = Auth::check() && Auth::user()->id == $id;
 
         return response()->json(compact('user', 'items', 'isMe'));
@@ -61,7 +74,10 @@ class UserController extends Controller
     public function savedBlists($id)
     {
         $user = User::findOrFail($id);
-        $items = $user->savedBlists->load('user');
+        $items = $user->savedBlists->load('user')
+            ->sortByDesc(function ($blist, $key) {
+                return $blist->pivot->created_at;
+            })->values();
         $isMe = Auth::check() && Auth::user()->id == $id;
 
         return response()->json(compact('user', 'items', 'isMe'));

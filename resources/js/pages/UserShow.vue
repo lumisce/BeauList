@@ -18,6 +18,10 @@
 							Favorite Products
 						</router-link>
 						<router-link class="list-group-item"
+							:to="{ name: 'users.ratedproducts', params: {id: user.id} }">
+							Rated Products
+						</router-link>
+						<router-link class="list-group-item"
 							:to="{ name: 'users.savedlists', params: {id: user.id} }">
 							Saved Lists
 						</router-link>

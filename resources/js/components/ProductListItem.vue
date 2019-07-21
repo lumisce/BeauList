@@ -15,6 +15,10 @@
 			</div>
 		</router-link>
 		<div class="product-other">
+			<p v-if="withMyRating" class="other-info">
+				<i class="rating-icon rating-icon-star fa fa-star"></i>
+				 {{item.rating.score}}
+			</p>
 			<AddToList :item="item" @reload="$emit('reload')"
 				@bsAlert="(status, msg) => $emit('bsAlert', status, msg)">
 			</AddToList>
@@ -29,7 +33,7 @@
 		components: {
 			AddToList,
 		},
-		props: ['item', 'index', 'ratings', 'isRanked', 'withBrand'],
+		props: ['item', 'index', 'ratings', 'isRanked', 'withBrand', 'withMyRating'],
 		data() {
 			return {
 			}

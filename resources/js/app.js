@@ -43,6 +43,7 @@ import UserShow from './pages/UserShow'
 import UserSavedBlists from './pages/UserSavedBlists'
 import UserFavoriteBrands from './pages/UserFavoriteBrands'
 import UserFavoriteProducts from './pages/UserFavoriteProducts'
+import UserRatedProducts from './pages/UserRatedProducts'
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -108,6 +109,10 @@ const router = new VueRouter({
 			path: '/users/:id/favproducts',
 			name: 'users.favproducts',
 			component: UserFavoriteProducts,
+		}, {
+			path: '/users/:id/ratedproducts',
+			name: 'users.ratedproducts',
+			component: UserRatedProducts,
 		},
 	]
 
