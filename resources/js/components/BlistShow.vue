@@ -13,6 +13,7 @@
 				</div>
 				<div class="card text-center" style="padding:40px;">
 					<h2>{{item.name}}</h2>
+					<router-link v-if="!isMine" :to="{ name: 'users.show', params: {id: item.user.id} }" :key="item.user.id">{{item.user.name}}</router-link>
 					<p>{{item.description}}</p>
 					<Save :saveCount="saveCount" :isMySaved="isSaved" 
 						:isMine="isMine" @bsAlert="bsAlert">
@@ -21,7 +22,7 @@
 
 				<div class="card mt-4">
 					<div class="card-header">Products ({{Object.keys(products).length}})</div>
-						<div class="list-group list-group-flush rank-list" id="list-tab" role="tablist">
+						<div class="list-group list-group-flush rank-list" role="tablist">
 							<ProductListItem v-for="(product, index) in products" 
 								:index="index" :key="product.id" :item="product" 
 								:ratings="ratings" :isRanked="false" 

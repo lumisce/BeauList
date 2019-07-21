@@ -10,23 +10,13 @@ use App\Helpers\Common;
 
 class UserController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth', ['only' => ['profile']]);
-    }
-
     public function show($id)
     {
-        if (Auth::check() && Auth::user()->id == $id ) {
-            return redirect('profile');
-        }
         $user = User::findOrFail($id);
-        return view('users.show', compact('user'));
-    }
+        $lists = $user->blists;
+        $isMe = Auth::check() && Auth::user()->id == $id;
 
-    public function profile()
-    {
-        return view('users.profile');
+        return response()->json(compact('user', 'lists', 'isMe'));
     }
 
     public function wishlist($id)
@@ -60,9 +50,13 @@ class UserController extends Controller
         return view('users.favbrands');
     }
 
-    public function savedLists($id)
+    public function savedBlists($id)
     {
-        return view('users.savedlists');
+        $user = User::findOrFail($id);
+        $items = $user->savedBlists->load('user');
+        $isMe = Auth::check() && Auth::user()->id == $id;
+
+        return response()->json(compact('user', 'items', 'isMe'));
     }
 
 }

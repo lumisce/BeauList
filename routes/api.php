@@ -49,7 +49,7 @@ Route::get('users/{user}/currentproducts', 'UserController@currentProducts')->na
 Route::get('users/{user}/ratedproducts', 'UserController@ratedProducts')->name('users.ratedproducts');
 Route::get('users/{user}/favproducts', 'UserController@favoriteProducts')->name('users.favproducts');
 Route::get('users/{user}/favbrands', 'UserController@favoriteBrands')->name('users.favbrands');
-Route::get('users/{user}/savedlists', 'UserController@savedLists')->name('users.savedlists');
+Route::get('users/{user}/savedlists', 'UserController@savedBlists')->name('users.savedlists');
 Route::resource('users', 'UserController')->only([
 	'show'
 ]);

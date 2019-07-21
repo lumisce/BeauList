@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div>
-			<span class="fav" :class="{on: isSaved || !isLoggedIn}" @click="save">
+			<span class="fav" :class="onClass" @click="save">
 				<i class="fav-icon fa fa-bookmark"></i> <span class="count">{{count}}</span>
 			</span>
 		</div>
@@ -22,6 +22,9 @@
 			isLoggedIn() {
 				return this.$store.getters.isLoggedIn
 			},
+			onClass() {
+				return {on: this.isSaved || !this.isLoggedIn || this.isMine}
+			}
 		},
 		methods: {
 			save() {

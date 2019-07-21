@@ -40,7 +40,7 @@ class BlistController extends Controller
 
     public function show($id)
     {
-        $item = Blist::findOrFail($id);
+        $item = Blist::findOrFail($id)->load('user');
         $products = $item->products()->with('quantityprices', 'blists')->get()
             ->sortByDesc(function ($product, $key) {
                 return Common::rankscore($product);

@@ -39,6 +39,8 @@ import CategoryShow from './components/CategoryShow'
 import ProductShow from './components/ProductShow'
 import BlistCreate from './components/BlistCreate'
 import BlistShow from './components/BlistShow'
+import UserShow from './components/UserShow'
+import UserSavedBlists from './components/UserSavedBlists'
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -88,6 +90,14 @@ const router = new VueRouter({
 			path: '/lists/:id',
 			name: 'lists.show',
 			component: BlistShow,
+		}, {
+			path: '/users/:id',
+			name: 'users.show',
+			component: UserShow,
+		}, {
+			path: '/users/:id/savedlists',
+			name: 'users.savedlists',
+			component: UserSavedBlists,
 		}
 	]
 
@@ -136,7 +146,7 @@ const app = new Vue({
 	},
 	data() {
 		return {
-			user: {}
+			user: null
 		}
 	},
 	watch: {

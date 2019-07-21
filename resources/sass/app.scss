@@ -161,6 +161,13 @@
 	display: inline-flex;
 }
 
+.card-header .nav-link {
+	padding: 0.25rem 0.5rem;
+}
+
+.card-header .nav-link.active {
+	padding: 0.25rem 1rem;
+}
 
 .slide-fade-enter-active {
   transition: all .3s ease;

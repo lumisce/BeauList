@@ -1,6 +1,5 @@
 <template>
 	<ul class="navbar-nav ml-auto">
-		<!-- Authentication Links -->
 		<div v-if="!isLoggedIn" class="right-nav">
 			<li class="nav-item">
 				<router-link :to="{ name: 'login' }" class="nav-link">Login</router-link>
@@ -10,17 +9,20 @@
 			</li>
 		</div>
 		<div v-else class="right-nav">
-			<li class="nav-item dropdown">
+			<li v-if="user" class="nav-item dropdown">
 				<a id="navbarDropdown" class="nav-link dropdown-toggle" 
 					href="#" role="button" aria-haspopup="true" 
-					aria-expanded="false" @click.prevent="dropdown">
+					aria-expanded="false" @click.prevent="dropdown" @blur="hideDropdown">
 					{{ user.name }} <span class="caret"></span>
 				</a>
 
 				<div class="dropdown-menu dropdown-menu-right" 
 					:class="{'show' : showDropdown}" aria-labelledby="navbarDropdown">
-					<a class="dropdown-item" href="/profile">My Profile</a>
-					<a class="dropdown-item" href="/logout" @click.prevent="logout">Logout</a>
+					<router-link :to="{ name: 'users.show', params: {id: user.id}}" 
+						class="dropdown-item" event="mousedown" @mousedown.native="hideDropdown">
+						My Profile
+					</router-link>
+					<a class="dropdown-item" href="/logout" @mousedown.prevent="logout">Logout</a>
 				</div>
 			</li>
 		</div>
@@ -51,7 +53,10 @@
 			},
 			dropdown() {
 				this.showDropdown = !this.showDropdown
-			}
+			},
+			hideDropdown() {
+				this.showDropdown = false
+			},
 		}, 
 	}
 </script>

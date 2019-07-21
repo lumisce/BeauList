@@ -14306,6 +14306,14 @@ a.text-dark:focus {
   display: inline-flex;
 }
 
+.card-header .nav-link {
+  padding: 0.25rem 0.5rem;
+}
+
+.card-header .nav-link.active {
+  padding: 0.25rem 1rem;
+}
+
 .slide-fade-enter-active {
   -webkit-transition: all 0.3s ease;
   transition: all 0.3s ease;
