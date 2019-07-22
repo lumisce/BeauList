@@ -5,7 +5,7 @@
 				<div class="card">
 					<div v-if="isMe" class="card-header">My Saved Lists ({{items.length}})</div>
 					<div v-else class="card-header">{{user.name}}'s Saved Lists ({{items.length}})</div>
-					<div class="list-group list-group-flush rank-list" id="list-tab" role="tablist">
+					<div v-if="items.length" class="list-group list-group-flush rank-list">
 						<div v-for="item in items" :key="item.id" class="list-group-item d-flex">
 							<router-link :to="{ name: 'lists.show', params: {id: item.id} }">
 								{{item.name}}
@@ -18,6 +18,7 @@
 							</span>
 						</div>
 					</div>
+					<EmptyList v-else></EmptyList>
 				</div>
 			</div>
 		</div>
@@ -27,11 +28,13 @@
 <script>
 	import Favorite from '../components/Favorite'
 	import ProductListItem from '../components/ProductListItem'
+	import EmptyList from '../components/EmptyList'
 
 	export default {
 		components: {
 			Favorite,
 			ProductListItem,
+			EmptyList,
 		},
 		data() {
 			return {

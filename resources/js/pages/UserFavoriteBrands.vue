@@ -9,15 +9,15 @@
 					<div v-else class="card-header">
 						{{user.name}}'s Favorite Brands ({{items.length}})
 					</div>
-						<div class="list-group list-group-flush list-small" id="list-tab" role="tablist">
-							<router-link v-for="item in items" 
-								:to="{ name: 'brands.show', params: {id: item.id} }" 
-								:key="item.id" class="list-group-item">
-								<img :src="imageUrl(item.image)">
-								{{item.name}}
-							</router-link>
-						</div>
+					<div v-if="items.length" class="list-group list-group-flush list-small">
+						<router-link v-for="item in items" 
+							:to="{ name: 'brands.show', params: {id: item.id} }" 
+							:key="item.id" class="list-group-item">
+							<img :src="imageUrl(item.image)">
+							{{item.name}}
+						</router-link>
 					</div>
+					<EmptyList v-else></EmptyList>
 				</div>
 			</div>
 		</div>
@@ -25,7 +25,12 @@
 </template>
 
 <script>
+	import EmptyList from '../components/EmptyList'
+	
 	export default {
+		components: {
+			EmptyList,
+		},
 		data() {
 			return {
 				items: [],

@@ -22,12 +22,13 @@
 
 				<div class="card mt-4">
 					<div class="card-header">Products ({{products.length}})</div>
-						<div class="list-group list-group-flush rank-list" id="list-tab" role="tablist">
-							<ProductListItem v-for="(product, index) in products" 
-								:index="index" :key="product.id" :item="product" :withBrand="false"
-								:ratings="ratings" :isRanked="true" @bsAlert="bsAlert">
-							</ProductListItem>
-						</div>
+					<div v-if="products.length" class="list-group list-group-flush rank-list">
+						<ProductListItem v-for="(product, index) in products" 
+							:index="index" :key="product.id" :item="product" :withBrand="false"
+							:ratings="ratings" :isRanked="true" @bsAlert="bsAlert">
+						</ProductListItem>
+					</div>
+					<EmptyList v-else></EmptyList>
 				</div>
 			</div>
 		</div>
@@ -38,12 +39,14 @@
 	import pageMixin from '../pageMixin'
 	import Favorite from '../components/Favorite'
 	import ProductListItem from '../components/ProductListItem'
+	import EmptyList from '../components/EmptyList'
 
 	export default {
 		mixins: [pageMixin],
 		components: {
 			Favorite,
 			ProductListItem,
+			EmptyList,
 		},
 		data() {
 			return {

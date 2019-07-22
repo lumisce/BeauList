@@ -38,12 +38,13 @@
 							</li>
 						</ul>
 					</div>
-					<div class="list-group list-group-flush list-small" id="list-tab" role="tablist">
+					<div v-if="lists.length" class="list-group list-group-flush list-small">
 						<router-link v-for="list in lists" :key="list.id" class="list-group-item"
 							:to="{ name: 'lists.show', params: {id: list.id} }">
 							{{list.name}}
 						</router-link>
 					</div>
+					<EmptyList v-else></EmptyList>
 				</div>
 			</div>
 		</div>
@@ -53,10 +54,12 @@
 <script>
 	import Favorite from '../components/Favorite'
 	import ProductListItem from '../components/ProductListItem'
+	import EmptyList from '../components/EmptyList'
 
 	export default {
 		components: {
 			ProductListItem,
+			EmptyList,
 		},
 		data() {
 			return {

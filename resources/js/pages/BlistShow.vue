@@ -13,7 +13,10 @@
 				</div>
 				<div class="card text-center" style="padding:40px;">
 					<h2>{{item.name}}</h2>
-					<router-link v-if="!isMine" :to="{ name: 'users.show', params: {id: item.user.id} }" :key="item.user.id">{{item.user.name}}</router-link>
+					<router-link v-if="!isMine"
+						:to="{ name: 'users.show', params: {id: item.user.id} }">
+						{{item.user.name}}
+					</router-link>
 					<p>{{item.description}}</p>
 					<Save :saveCount="saveCount" :isMySaved="isSaved" 
 						:isMine="isMine" @bsAlert="bsAlert">
@@ -22,13 +25,14 @@
 
 				<div class="card mt-4">
 					<div class="card-header">Products ({{Object.keys(products).length}})</div>
-						<div class="list-group list-group-flush rank-list" role="tablist">
-							<ProductListItem v-for="(product, index) in products" 
-								:index="index" :key="product.id" :item="product" 
-								:ratings="ratings" :isRanked="false" :withBrand="true"
-								@bsAlert="bsAlert" @reload="loadList">
-							</ProductListItem>
-						</div>
+					<div v-if="products.length" class="list-group list-group-flush rank-list">
+						<ProductListItem v-for="(product, index) in products" 
+							:index="index" :key="product.id" :item="product" 
+							:ratings="ratings" :isRanked="false" :withBrand="true"
+							@bsAlert="bsAlert" @reload="loadList">
+						</ProductListItem>
+					</div>
+					<EmptyList v-else></EmptyList>
 				</div>
 			</div>
 		</div>
@@ -39,12 +43,14 @@
 	import pageMixin from '../pageMixin'
 	import Save from '../components/Save'
 	import ProductListItem from '../components/ProductListItem'
+	import EmptyList from '../components/EmptyList'
 
 	export default {
 		mixins: [pageMixin],
 		components: {
 			Save,
 			ProductListItem,
+			EmptyList,
 		},
 		data() {
 			return {

@@ -18,13 +18,14 @@
 					<div v-else class="card-header">
 						{{user.name}}'s Favorite Products ({{items.length}})
 					</div>
-					<div class="list-group list-group-flush rank-list" role="tablist">
+					<div v-if="items.length" class="list-group list-group-flush rank-list">
 						<ProductListItem v-for="(product, index) in items" 
 							:index="index" :key="product.id" :item="product" 
 							:ratings="ratings" :isRanked="false" :withBrand="true"
 							@bsAlert="bsAlert">
 						</ProductListItem>
 					</div>
+					<EmptyList v-else></EmptyList>
 				</div>
 			</div>
 		</div>
@@ -34,11 +35,13 @@
 <script>
 	import pageMixin from '../pageMixin'
 	import ProductListItem from '../components/ProductListItem'
+	import EmptyList from '../components/EmptyList'
 
 	export default {
 		mixins: [pageMixin],
 		components: {
 			ProductListItem,
+			EmptyList,
 		},
 		data() {
 			return {
