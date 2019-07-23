@@ -25,7 +25,7 @@
 
 				<div class="card mt-4">
 					<div class="card-header">Products ({{Object.keys(products).length}})</div>
-					<div v-if="products.length" class="list-group list-group-flush rank-list">
+					<div v-if="Object.keys(products).length" class="list-group list-group-flush rank-list">
 						<ProductListItem v-for="(product, index) in products" 
 							:index="index" :key="product.id" :item="product" 
 							:ratings="ratings" :isRanked="false" :withBrand="true"

@@ -16,6 +16,11 @@
 						<li class="nav-item">
 							<router-link :to="{ name: 'brands.index' }" class="nav-link">Brands</router-link>
 						</li>
+						<li class="nav-item">
+							<router-link :to="{ name: 'search' }" class="nav-link">
+								<i class="fa fa-search"></i>
+							</router-link>
+						</li>
 					</ul>
 
 					<!-- Right Side Of Navbar -->

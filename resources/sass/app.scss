@@ -7,6 +7,9 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+// InstantSearch
+@import '~instantsearch.css/themes/algolia-min';
+
 @import '~font-awesome/scss/font-awesome.scss';
 
 .rating-icon {
@@ -178,4 +181,15 @@
 .slide-fade-enter, .slide-fade-leave-to {
   transform: translateY(-10px);
   opacity: 0;
+}
+
+.ais-Hits-item {
+	width: 100%;
+}
+.input-inline {
+	margin-right: 1rem;
+}
+
+a:hover {
+	text-decoration: none;
 }

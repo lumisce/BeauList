@@ -11,7 +11,7 @@
 			<div class="product-info">
 				<p class="name"><b>{{item.name}}</b></p>
 				<p class="sub-info">{{qp.quantity}}{{qp.unit}} / <i class="fa fa-krw" aria-hidden="true"></i>{{qp.price}}</p>
-				<p class="sub-info"><span class="avg-rating"><i class="rating-icon rating-icon-star fa fa-star"></i> <span>{{ avgRating }} ({{ ratings[item.id][1] }})</span></span></p>
+				<p class="sub-info"><span class="avg-rating"><i class="rating-icon rating-icon-star fa fa-star"></i> <span>{{ avgRating }} ({{ numRaters }})</span></span></p>
 			</div>
 		</router-link>
 		<div class="product-other">
@@ -68,8 +68,20 @@
 				return this.index < 3 ? 'rank-top' : 'rank'
 			},
 			avgRating() {
-				let rating = this.ratings[this.item.id][0]
+				var rating = 0;
+				if (this.ratings.length || Object.keys(this.ratings).length) {
+					rating = this.ratings[this.item.id][0]
+				}  else {
+					rating = this.item.rating_score
+				}
 				return rating ? rating.toFixed(2) : '0.00'
+			},
+			numRaters() {
+				if (this.ratings.length || Object.keys(this.ratings).length) {
+					return this.ratings[this.item.id][1]
+				} else {
+					return this.item.rating_count
+				}
 			}
 		},
 	}

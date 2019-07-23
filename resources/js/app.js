@@ -8,6 +8,9 @@
 
 import Vue from 'vue';
 
+import VueInstantSearch from 'vue-instantsearch';
+Vue.use(VueInstantSearch);
+
 import VueRouter from 'vue-router';
 Vue.use(VueRouter);
 
@@ -44,6 +47,7 @@ import UserSavedBlists from './pages/UserSavedBlists'
 import UserFavoriteBrands from './pages/UserFavoriteBrands'
 import UserFavoriteProducts from './pages/UserFavoriteProducts'
 import UserRatedProducts from './pages/UserRatedProducts'
+import Search from './pages/Search'
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -113,7 +117,11 @@ const router = new VueRouter({
 			path: '/users/:id/ratedproducts',
 			name: 'users.ratedproducts',
 			component: UserRatedProducts,
-		},
+		}, {
+			path: '/search',
+			name: 'search',
+			component: Search,
+		}
 	]
 
 });
@@ -196,16 +204,3 @@ const app = new Vue({
 		}
 	}
 });
-
-
-
-window.bootstrapAlert = function (message, type) {
-	var dismissible = "";
-	if (type != "success") {
-		dismissible = '<a class="close" data-dismiss="alert">×</a>';
-	}
-	if (type.length > 0) {
-		type = 'alert-'+type;
-	}
-	$(".alert-container").html('<div class="alert '+type+' fade show" role="alert">'+dismissible+'<span>'+message+'</span></div>');
-}
