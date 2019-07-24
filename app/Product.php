@@ -49,7 +49,9 @@ class Product extends Model
     {
         $array = $this->toArray();
         $array['brand'] = $this->brand->toArray();
-        $array['category_name'] = $this->category->name;
+        $cat = $this->category;
+        $array['category0_name'] = Category::find($cat->parent)->name;
+        $array['category1_name'] = $array['category0_name'] . " > " .$cat->name;
         $rating = Common::avgrating($this);
         $array['rank_score'] = Common::rankscore($this);
         $array['rating_score'] = $rating[0] ? $rating[0] : 0;

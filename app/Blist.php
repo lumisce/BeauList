@@ -35,6 +35,7 @@ class Blist extends Model
         $array['user_name'] = $this->user->name;
         $products = $this->products->toArray();
         $array['products'] = $products;
+        $array['product_count'] = $this->products->count();
         $array['savedBy'] = $this->savedBy;
         $array['saved_count'] = $this->savedBy->count();
         

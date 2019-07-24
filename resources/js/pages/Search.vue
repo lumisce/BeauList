@@ -2,7 +2,7 @@
 	<ais-instant-search :search-client="searchClient" :index-name="index">
 		<div class="container">
 			<div class="row justify-content-center">
-				<div class="col-md-8">
+				<div class="col-md-8 offset-md-4">
 					<ais-search-box :placeholder="'Search '+indexName+'...'"></ais-search-box>
 					<div class="d-flex mt-2">
 						<div class="form-check input-inline">
@@ -27,6 +27,15 @@
 							</label>
 						</div>
 					</div>
+				</div>
+			</div>
+			<div class="row justify-content-center">
+				<div class="col-md-4">
+					<RefineBrandSearch v-if="index == 'brands'" />
+					<RefineBlistSearch v-else-if="index == 'blists'" />
+					<RefineProductSearch v-else-if="index == 'products'" />
+				</div>
+				<div class="col-md-8">
 					<ais-hits class="mt-4">
 						<div slot-scope="{items}">
 							<div v-if="items.length">
@@ -82,6 +91,9 @@
 	import Save from '../components/Save'
 	import ProductListItem from '../components/ProductListItem'
 	import EmptyList from '../components/EmptyList'
+	import RefineBrandSearch from '../components/RefineBrandSearch'
+	import RefineBlistSearch from '../components/RefineBlistSearch'
+	import RefineProductSearch from '../components/RefineProductSearch'
 
 	export default {
 		mixins: [pageMixin],
@@ -89,6 +101,9 @@
 			Save,
 			ProductListItem,
 			EmptyList,
+			RefineBrandSearch,
+			RefineBlistSearch,
+			RefineProductSearch,
 		},
 		data() {
 			return {
