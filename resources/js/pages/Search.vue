@@ -1,109 +1,38 @@
 <template>
-	<ais-instant-search :search-client="searchClient" :index-name="index">
-		<div class="container">
-			<div class="row justify-content-center">
-				<div class="col-md-8 offset-md-4">
-					<ais-search-box :placeholder="'Search '+indexName+'...'"></ais-search-box>
-					<div class="d-flex mt-2">
-						<div class="form-check input-inline">
-							<input v-model="index" class="form-check-input" 
-								type="radio" id="index" value="products" checked>
-							<label class="form-check-label" for="index">
-								Products
-							</label>
-						</div>
-						<div class="form-check input-inline">
-							<input v-model="index" class="form-check-input" 
-								type="radio" id="index" value="brands">
-							<label class="form-check-label" for="index">
-								Brands
-							</label>
-						</div>
-						<div class="form-check input-inline">
-							<input v-model="index" class="form-check-input" 
-								type="radio" id="index" value="blists">
-							<label class="form-check-label" for="index">
-								Lists
-							</label>
-						</div>
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-md-8 offset-md-4">
+				<ais-instant-search :search-client="searchClient" :index-name="index">
+					<ais-search-box :placeholder="'Search '+indexName+'...'" v-model="query" />
+				</ais-instant-search>
+				<div class="d-flex mt-2">
+					<div class="form-check input-inline" v-for="(item, idx) in indices" >
+						<input v-model="index" class="form-check-input" 
+							type="radio" :id="item" :value="item" checked>
+						<label class="form-check-label" :for="item">
+							{{indexNames[idx]}}
+						</label>
 					</div>
 				</div>
 			</div>
-			<div class="row justify-content-center">
-				<div class="col-md-4">
-					<RefineBrandSearch v-if="index == 'brands'" />
-					<RefineBlistSearch v-else-if="index == 'blists'" />
-					<RefineProductSearch v-else-if="index == 'products'" />
-				</div>
-				<div class="col-md-8">
-					<ais-hits class="mt-4">
-						<div slot-scope="{items}">
-							<div v-if="items.length">
-								<div v-if="index == 'products' && Number.isInteger(items[0].rating_count)" >
-									<ProductListItem v-for="(item, index) in items" class="w-100"
-										:index="index" :key="item.id" :item="item" :withBrand="true"
-										:ratings="[]" :isRanked="false" @bsAlert="bsAlert">
-									</ProductListItem>
-								</div>
-								<div v-else-if="index == 'brands'">
-									<div class="list-group list-small">
-										<router-link v-for="item in items" 
-											:to="{ name: 'brands.show', params: {id: item.id} }" 
-											:key="item.id" class="list-group-item">
-											<img :src="imageUrl(item.image)">
-											{{item.name}}
-										</router-link>
-									</div>
-								</div>
-								<div v-else-if="index == 'blists'">
-									<div class="list-group list-small">
-										<div v-for="item in items" :key="item.id" class="list-group-item d-flex">
-											<router-link :to="{ name: 'lists.show', params: {id: item.id} }">
-												{{item.name}} 
-												<p v-if="item.products" class="sub-info d-inline">
-													({{item.products.length}})
-												</p>
-											</router-link>
-											<span v-if="item.user_id" class="ml-auto sub-info">by 
-												<router-link class="text-secondary"
-													:to="{ name: 'users.show', params: {id: item.user_id} }">
-													{{item.user_name}}
-												</router-link>
-											</span>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div v-else class="card">
-								<EmptyList></EmptyList>
-							</div>
-						</div>
-					</ais-hits>
-				</div>
-			</div>
 		</div>
-	</ais-instant-search>
+		<ProductSearch v-if="index==indices[0]" :query="query" :index="index" />
+		<BrandSearch v-else-if="index==indices[1]" :query="query" :index="index" />
+		<BlistSearch v-else-if="index==indices[2]" :query="query" :index="index" />
+	</div>
 </template>
 
 <script>
 	import algoliasearch from 'algoliasearch/lite'
-	import pageMixin from '../pageMixin'
-	import Save from '../components/Save'
-	import ProductListItem from '../components/ProductListItem'
-	import EmptyList from '../components/EmptyList'
-	import RefineBrandSearch from '../components/RefineBrandSearch'
-	import RefineBlistSearch from '../components/RefineBlistSearch'
-	import RefineProductSearch from '../components/RefineProductSearch'
+	import ProductSearch from '../components/ProductSearch'
+	import BrandSearch from '../components/BrandSearch'
+	import BlistSearch from '../components/BlistSearch'
 
 	export default {
-		mixins: [pageMixin],
 		components: {
-			Save,
-			ProductListItem,
-			EmptyList,
-			RefineBrandSearch,
-			RefineBlistSearch,
-			RefineProductSearch,
+			ProductSearch,
+			BrandSearch,
+			BlistSearch,
 		},
 		data() {
 			return {
@@ -112,12 +41,14 @@
 					process.env.MIX_ALGOLIA_SEARCH
 				),
 				index: 'products',
-				items: [],
+				query: '',
+				indices: ['products', 'brands', 'blists'],
+				indexNames: ['Products', 'Brands', 'Lists']
 			}
 		},
 		computed: {
 			indexName() {
-				return this.index == 'blists' ? 'lists' : this.index
+				return this.indexNames[this.indices.indexOf(this.index)]
 			},
 		},
 		methods: {
@@ -125,7 +56,5 @@
 				return '/images/'+path
 			}
 		},
-		created() {
-		}
 	}
 </script>
