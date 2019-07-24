@@ -28,7 +28,16 @@
 				<p>Number of Rating</p>
 			</template>
 			<template slot="default">
-				<ais-range-input attribute="rating_count" />
+				<ais-range-input attribute="rating_count">
+					<div slot-scope="{currentRefinement, range, refine}">
+						<vue-slider
+							:min="range.min"
+							:max="range.max"
+							:value="toValue(currentRefinement, range)"
+							@change="refine({ min: $event[0], max: $event[1] })">
+						</vue-slider>
+					</div>
+				</ais-range-input>
 			</template>
 		</ais-panel>
 
@@ -55,19 +64,25 @@
 </template>
 
 <script>
+	import VueSlider from 'vue-slider-component'
+	import 'vue-slider-component/theme/antd.css'
+
 	export default {
+		components: {
+			VueSlider,
+		},
 		computed: {
 			now() {
 				return new Date()
 			}
 		},
 		methods: {
-			transformDates(items) {
-				return items.map(item => this.toDaystamp(new Date(item)))
-			},
-			toDaystamp(dt) {
-				return Math.round(dt.getTime()/1000)
-			},
+			toValue(value, range) {
+				return [
+					value.min !== null ? value.min : range.min,
+					value.max !== null ? value.max : range.max,
+				];
+			}
 		}
 	}
 </script>
