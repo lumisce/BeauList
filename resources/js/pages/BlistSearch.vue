@@ -56,7 +56,6 @@
 			EmptyList,
 		},
 		data() {
-			const vueRouter = this.$router
 			return {
 				searchClient: algoliasearch(
 					process.env.MIX_ALGOLIA_APP_ID,
@@ -64,63 +63,6 @@
 				),
 				index: 'blists',
 				query: this.$route.query.q ? this.$route.query.q : '',
-				routing: {
-					router: this.searchRouter(this.$router),
-					stateMapping: {
-						stateToRoute(uiState) {
-							let routeState = {
-								q: uiState.query,
-								products:
-									uiState.refinementList &&
-									uiState.refinementList['products.name'] &&
-									uiState.refinementList['products.name'].join('~'),
-								users:
-									uiState.refinementList &&
-									uiState.refinementList['user_name'] &&
-									uiState.refinementList['user_name'].join('~'),
-								category:
-									uiState.hierarchicalMenu &&
-									uiState.hierarchicalMenu['category0_name'] &&
-									uiState.hierarchicalMenu['category0_name'].join('~'),
-								numproduct:
-									uiState.range &&
-									uiState.range['product_count'] &&
-									uiState.range['product_count'].replace(':', '~'),
-								numsaved:
-									uiState.range &&
-									uiState.range['saved_count'] &&
-									uiState.range['saved_count'].replace(':', '~'),
-							}
-							if (uiState.toggle && uiState.toggle['discontinued'] &&
-								uiState.toggle['discontinued'] == true) {
-								routeState['status'] = 'discontinued'
-							}
-							return routeState
-						},
-						routeToState(routeState) {
-							return {
-								query: routeState.q,
-								refinementList: {
-									'products.name': routeState.products && routeState.products.split('~'),
-									'user_name': routeState.users && routeState.users.split('~'),
-								},
-								hierarchicalMenu: {
-									'category0_name': routeState.category && routeState.category.split('~'),
-								},
-								range: {
-									'product_count': routeState.numproduct && routeState.numproduct.replace('~', ':'),
-									'saved_count': routeState.numsaved && routeState.numsaved.replace('~', ':'),
-								},
-								ratingMenu: {
-									'rating_score': routeState.rating,
-								},
-								toggle: {
-									'discontinued': routeState.status == 'discontinued',
-								},
-							}
-						},
-					},
-				}
 			}
 		},
 	}

@@ -48,8 +48,6 @@
 			EmptyList,
 		},
 		data() {
-			const vueRouter = this.$router
-			
 			return {
 				searchClient: algoliasearch(
 					process.env.MIX_ALGOLIA_APP_ID,
@@ -57,34 +55,6 @@
 				),
 				index: 'brands',
 				query: this.$route.query.q ? this.$route.query.q : '',
-				routing: {
-					router: this.searchRouter(this.$router),
-					stateMapping: {
-						stateToRoute(uiState) {
-							let routeState = {
-								q: uiState.query,
-								numproduct:
-									uiState.range &&
-									uiState.range['product_count'] &&
-									uiState.range['product_count'].replace(':', '~'),
-								numfav:
-									uiState.range &&
-									uiState.range['fav_count'] &&
-									uiState.range['fav_count'].replace(':', '~'),
-							}
-							return routeState
-						},
-						routeToState(routeState) {
-							return {
-								query: routeState.q,
-								range: {
-									'product_count': routeState.numproduct && routeState.numproduct.replace('~', ':'),
-									'fav_count': routeState.numfav && routeState.numfav.replace('~', ':'),
-								},
-							}
-						},
-					},
-				}
 			}
 		},
 		methods: {

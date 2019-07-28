@@ -10839,54 +10839,10 @@ __webpack_require__.r(__webpack_exports__);
     EmptyList: _components_EmptyList__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   data: function data() {
-    var vueRouter = this.$router;
     return {
       searchClient: algoliasearch_lite__WEBPACK_IMPORTED_MODULE_0___default()("VE7S55KATD", "eb97adc044f089763dc3e097ed3ea5af"),
       index: 'blists',
-      query: this.$route.query.q ? this.$route.query.q : '',
-      routing: {
-        router: this.searchRouter(this.$router),
-        stateMapping: {
-          stateToRoute: function stateToRoute(uiState) {
-            var routeState = {
-              q: uiState.query,
-              products: uiState.refinementList && uiState.refinementList['products.name'] && uiState.refinementList['products.name'].join('~'),
-              users: uiState.refinementList && uiState.refinementList['user_name'] && uiState.refinementList['user_name'].join('~'),
-              category: uiState.hierarchicalMenu && uiState.hierarchicalMenu['category0_name'] && uiState.hierarchicalMenu['category0_name'].join('~'),
-              numproduct: uiState.range && uiState.range['product_count'] && uiState.range['product_count'].replace(':', '~'),
-              numsaved: uiState.range && uiState.range['saved_count'] && uiState.range['saved_count'].replace(':', '~')
-            };
-
-            if (uiState.toggle && uiState.toggle['discontinued'] && uiState.toggle['discontinued'] == true) {
-              routeState['status'] = 'discontinued';
-            }
-
-            return routeState;
-          },
-          routeToState: function routeToState(routeState) {
-            return {
-              query: routeState.q,
-              refinementList: {
-                'products.name': routeState.products && routeState.products.split('~'),
-                'user_name': routeState.users && routeState.users.split('~')
-              },
-              hierarchicalMenu: {
-                'category0_name': routeState.category && routeState.category.split('~')
-              },
-              range: {
-                'product_count': routeState.numproduct && routeState.numproduct.replace('~', ':'),
-                'saved_count': routeState.numsaved && routeState.numsaved.replace('~', ':')
-              },
-              ratingMenu: {
-                'rating_score': routeState.rating
-              },
-              toggle: {
-                'discontinued': routeState.status == 'discontinued'
-              }
-            };
-          }
-        }
-      }
+      query: this.$route.query.q ? this.$route.query.q : ''
     };
   }
 });
@@ -11114,33 +11070,10 @@ __webpack_require__.r(__webpack_exports__);
     EmptyList: _components_EmptyList__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   data: function data() {
-    var vueRouter = this.$router;
     return {
       searchClient: algoliasearch_lite__WEBPACK_IMPORTED_MODULE_0___default()("VE7S55KATD", "eb97adc044f089763dc3e097ed3ea5af"),
       index: 'brands',
-      query: this.$route.query.q ? this.$route.query.q : '',
-      routing: {
-        router: this.searchRouter(this.$router),
-        stateMapping: {
-          stateToRoute: function stateToRoute(uiState) {
-            var routeState = {
-              q: uiState.query,
-              numproduct: uiState.range && uiState.range['product_count'] && uiState.range['product_count'].replace(':', '~'),
-              numfav: uiState.range && uiState.range['fav_count'] && uiState.range['fav_count'].replace(':', '~')
-            };
-            return routeState;
-          },
-          routeToState: function routeToState(routeState) {
-            return {
-              query: routeState.q,
-              range: {
-                'product_count': routeState.numproduct && routeState.numproduct.replace('~', ':'),
-                'fav_count': routeState.numfav && routeState.numfav.replace('~', ':')
-              }
-            };
-          }
-        }
-      }
+      query: this.$route.query.q ? this.$route.query.q : ''
     };
   },
   methods: {
@@ -11565,51 +11498,10 @@ __webpack_require__.r(__webpack_exports__);
     EmptyList: _components_EmptyList__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
   data: function data() {
-    var vueRouter = this.$router;
     return {
       searchClient: algoliasearch_lite__WEBPACK_IMPORTED_MODULE_0___default()("VE7S55KATD", "eb97adc044f089763dc3e097ed3ea5af"),
       index: 'products',
-      query: this.$route.query.q ? this.$route.query.q : '',
-      routing: {
-        router: this.searchRouter(this.$router),
-        stateMapping: {
-          stateToRoute: function stateToRoute(uiState) {
-            var routeState = {
-              q: uiState.query || '',
-              brands: uiState.refinementList && uiState.refinementList['brand.name'] && uiState.refinementList['brand.name'].join('~'),
-              category: uiState.hierarchicalMenu && uiState.hierarchicalMenu['category0_name'] && uiState.hierarchicalMenu['category0_name'].join('~'),
-              numrating: uiState.range && uiState.range['rating_count'] && uiState.range['rating_count'].replace(':', '~'),
-              rating: uiState.ratingMenu && uiState.ratingMenu['rating_score']
-            };
-
-            if (uiState.toggle && uiState.toggle['discontinued'] && uiState.toggle['discontinued'] == true) {
-              routeState['status'] = 'discontinued';
-            }
-
-            return routeState;
-          },
-          routeToState: function routeToState(routeState) {
-            return {
-              query: routeState.q,
-              refinementList: {
-                'brand.name': routeState.brands && routeState.brands.split('~')
-              },
-              hierarchicalMenu: {
-                'category0_name': routeState.category && routeState.category.split('~')
-              },
-              range: {
-                'rating_count': routeState.numrating && routeState.numrating.replace('~', ':')
-              },
-              ratingMenu: {
-                'rating_score': routeState.rating
-              },
-              toggle: {
-                'discontinued': routeState.status == 'discontinued'
-              }
-            };
-          }
-        }
-      }
+      query: this.$route.query.q ? this.$route.query.q : ''
     };
   }
 });
@@ -60901,45 +60793,6 @@ module.exports = {
   computed: {
     indexName: function indexName() {
       return this.indexNames[this.indices.indexOf(this.index)];
-    }
-  },
-  methods: {
-    searchRouter: function searchRouter(vRouter) {
-      return {
-        read: function read() {
-          console.log(vRouter.currentRoute.query);
-          return vRouter.currentRoute.query;
-        },
-        write: function write(routeState) {
-          vRouter.push({
-            query: routeState
-          });
-        },
-        createURL: function createURL(routeState) {
-          return vRouter.resolve({
-            query: routeState
-          }).href;
-        },
-        onUpdate: function onUpdate(cb) {
-          var _this = this;
-
-          this._onPopState = function (event) {
-            var routeState = event.state;
-
-            if (!routeState) {
-              cb(_this.read());
-            } else {
-              cb(routeState);
-            }
-          };
-
-          window.addEventListener('popstate', this._onPopState);
-        },
-        dispose: function dispose() {
-          window.removeEventListener('popstate', this._onPopState);
-          this.write();
-        }
-      };
     }
   }
 };

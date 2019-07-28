@@ -50,8 +50,6 @@
 			EmptyList,
 		},
 		data() {
-			const vueRouter = this.$router
-
 			return {
 				searchClient: algoliasearch(
 					process.env.MIX_ALGOLIA_APP_ID,
@@ -59,57 +57,6 @@
 				),
 				index: 'products',
 				query: this.$route.query.q ? this.$route.query.q : '',
-				routing: {
-					router: this.searchRouter(this.$router),
-					stateMapping: {
-						stateToRoute(uiState) {
-							let routeState = {
-								q: uiState.query || '',
-								brands:
-									(uiState.refinementList &&
-										uiState.refinementList['brand.name'] &&
-										uiState.refinementList['brand.name'].join('~')),
-								category:
-									(uiState.hierarchicalMenu &&
-										uiState.hierarchicalMenu['category0_name'] &&
-										uiState.hierarchicalMenu['category0_name'].join('~')),
-								numrating:
-									uiState.range &&
-									uiState.range['rating_count'] &&
-									uiState.range['rating_count'].replace(':', '~'),
-								rating:
-									uiState.ratingMenu &&
-									uiState.ratingMenu['rating_score'],
-							}
-							if (uiState.toggle && uiState.toggle['discontinued'] &&
-								uiState.toggle['discontinued'] == true) {
-								routeState['status'] = 'discontinued'
-							}
-
-							return routeState
-						},
-						routeToState(routeState) {
-							return {
-								query: routeState.q,
-								refinementList: {
-									'brand.name': routeState.brands && routeState.brands.split('~'),
-								},
-								hierarchicalMenu: {
-									'category0_name': routeState.category && routeState.category.split('~'),
-								},
-								range: {
-									'rating_count': routeState.numrating && routeState.numrating.replace('~', ':'),
-								},
-								ratingMenu: {
-									'rating_score': routeState.rating,
-								},
-								toggle: {
-									'discontinued': routeState.status == 'discontinued',
-								},
-							}
-						},
-					},
-				},
 			}
 		},
 	}
