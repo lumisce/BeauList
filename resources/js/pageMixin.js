@@ -12,6 +12,6 @@ module.exports = {
 			setTimeout(() => {
 				this.showAlert = false
 			}, 3000);
-		}
+		},
 	}
 };

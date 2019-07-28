@@ -1,6 +1,11 @@
 <template>
 	<div>
 		<ais-panel>
+			<ais-clear-refinements />
+			<ais-current-refinements :transform-items="transformItems"
+				:class-names="{'ais-CurrentRefinements-item': 'my-ais-CurrentRefinements-item'}"/>	
+		</ais-panel>
+		<ais-panel>
 			<template slot="header">
 				<p>Category</p>
 			</template>
@@ -71,17 +76,27 @@
 		components: {
 			VueSlider,
 		},
-		computed: {
-			now() {
-				return new Date()
-			}
-		},
 		methods: {
 			toValue(value, range) {
 				return [
 					value.min !== null ? value.min : range.min,
 					value.max !== null ? value.max : range.max,
 				];
+			},
+			transformItems(items) {
+				const labels = {
+					'brand.name': 'Brands', 
+					'category0_name': 'Category', 
+					'rating_count': 'Num. of Rating', 
+					'rating_score': 'Rating Score'
+				}
+
+				items.forEach(item => {
+					if (labels[item.label]) {
+						item.label = labels[item.label]
+					}
+				})
+				return items
 			}
 		}
 	}

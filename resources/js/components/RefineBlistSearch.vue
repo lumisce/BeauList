@@ -1,6 +1,11 @@
 <template>
 	<div>
 		<ais-panel>
+			<ais-clear-refinements />
+			<ais-current-refinements :transform-items="transformItems"
+				:class-names="{'ais-CurrentRefinements-item': 'my-ais-CurrentRefinements-item'}"/>	
+		</ais-panel>
+		<ais-panel>
 			<template slot="header">
 				<p>Number of Products</p>
 			</template>
@@ -80,6 +85,21 @@
 					value.min !== null ? value.min : range.min,
 					value.max !== null ? value.max : range.max,
 				];
+			},
+			transformItems(items) {
+				const labels = {
+					'products.name': 'Products', 
+					'user_name': 'Users', 
+					'product_count': 'Num. of Products', 
+					'saved_count': 'Num. of Saved', 
+				}
+
+				items.forEach(item => {
+					if (labels[item.label]) {
+						item.label = labels[item.label]
+					}
+				})
+				return items
 			}
 		}
 	}

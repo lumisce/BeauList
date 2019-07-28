@@ -47,7 +47,9 @@ import UserSavedBlists from './pages/UserSavedBlists'
 import UserFavoriteBrands from './pages/UserFavoriteBrands'
 import UserFavoriteProducts from './pages/UserFavoriteProducts'
 import UserRatedProducts from './pages/UserRatedProducts'
-import Search from './pages/Search'
+import ProductSearch from './pages/ProductSearch'
+import BrandSearch from './pages/BrandSearch'
+import BlistSearch from './pages/BlistSearch'
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -120,10 +122,21 @@ const router = new VueRouter({
 		}, {
 			path: '/search',
 			name: 'search',
-			component: Search,
+			redirect: '/search/products',
+		}, {
+			path: '/search/products',
+			name: 'search.products',
+			component: ProductSearch,
+		}, {
+			path: '/search/brands',
+			name: 'search.brands',
+			component: BrandSearch,
+		}, {
+			path: '/search/lists',
+			name: 'search.lists',
+			component: BlistSearch,
 		}
-	]
-
+	],
 });
 
 router.beforeEach((to, from, next) => {
