@@ -15166,8 +15166,8 @@ a[class^=ais-] {
 
 .product-list-item,
 .product-list-item a {
-  display: -webkit-inline-box;
-  display: inline-flex;
+  display: -webkit-box;
+  display: flex;
 }
 
 .product-list-item img {
@@ -15175,6 +15175,11 @@ a[class^=ais-] {
   width: 100px;
   display: inline-block;
   margin-right: 10px;
+}
+
+.product-list-item .img-small {
+  height: 50px;
+  width: 50px;
 }
 
 .product-list-item .product-info {

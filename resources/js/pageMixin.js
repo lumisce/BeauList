@@ -7,7 +7,9 @@ module.exports = {
 				this.alertSuccess = true
 			} else if (status == 'error') {
 				this.alertSuccess = false
-				this.alertMessage = 'Something went wrong. Please try again.'
+				if (!this.alertMessage.length) {
+					this.alertMessage = 'Something went wrong. Please try again.'
+				}
 			}
 			setTimeout(() => {
 				this.showAlert = false

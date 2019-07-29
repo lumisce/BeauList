@@ -29,7 +29,7 @@
 						<ProductListItem v-for="(product, index) in products" 
 							:index="index" :key="product.id" :item="product" 
 							:ratings="ratings" :isRanked="false" :withBrand="true"
-							@bsAlert="bsAlert" @reload="loadList">
+							@bsAlert="bsAlert" @reload="loadList" :showNoteText="true">
 						</ProductListItem>
 					</div>
 					<EmptyList v-else></EmptyList>

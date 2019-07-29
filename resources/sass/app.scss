@@ -116,7 +116,7 @@
 
 
 .product-list-item, .product-list-item a {
-	display: inline-flex;
+	display: flex;
 }
 
 .product-list-item img {
@@ -126,6 +126,10 @@
 	margin-right: 10px;
 }
 
+.product-list-item .img-small {
+	height: 50px;
+	width: 50px;
+}
 
 .product-list-item .product-info {
 	margin-top: auto;

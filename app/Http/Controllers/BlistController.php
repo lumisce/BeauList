@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use App\Blist;
 use App\Helpers\Common;
 
@@ -22,15 +23,34 @@ class BlistController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name'=>'required'
+        $v = Validator::make($request->all(), [
+            'name' => [
+                'required',
+                'max:255',
+                function ($attribute, $value, $fail) {
+                    if (Auth::user()->blists->contains($attribute, $value)) {
+                        $fail($value.' already exists.');
+                    }
+                },
+            ],
         ]);
+        if ($v->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'errors' => $v->errors(),
+            ]);
+        }
 
         $item = new Blist([
             'name' => $request->input('name'),
             'description' => $request->input('description'),
         ]);
+
         Auth::user()->blists()->save($item);
+
+        foreach ($request->input('products') as $product) {
+            $item->products()->attach($product['id'], ['note' => $product['note']]);
+        }
 
         return response()->json([
             'status' => 'success',
