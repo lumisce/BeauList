@@ -17,7 +17,8 @@ class ProductController extends Controller
     
     public function show($id)
     {
-        $item = Product::findOrFail($id)->load(['quantityprices', 'brand', 'category', 'blists']);
+        $item = Product::findOrFail($id)
+            ->load(['quantityprices', 'brand', 'category', 'blists']);
         $rating = Common::avgrating($item);
         $favoriteCount = $item->favoritedBy->count();
 
@@ -30,7 +31,8 @@ class ProductController extends Controller
             }
         }
 
-        return response()->json(compact(['item', 'rating', 'favoriteCount', 'isMyFav', 'myRating']));
+        return response()->json(compact(['item', 'rating', 
+            'favoriteCount', 'isMyFav', 'myRating']));
     }
 
     public function new()
@@ -51,13 +53,16 @@ class ProductController extends Controller
 
         if (Auth::user()->ratedProducts->contains($id)) {
             if ($rating > 0) {
-                Auth::user()->ratedProducts()->updateExistingPivot($id, ['score'=>$rating]);
+                Auth::user()->ratedProducts()
+                    ->updateExistingPivot($id, ['score'=>$rating]);
             } else {
                 Auth::user()->ratedProducts()->detach($id);
             }
         } else if ($rating > 0) {
             Auth::user()->ratedProducts()->attach($id, ['score'=>$rating]);
         }
+
+        $item->save();
 
         $rating = Common::avgrating($item);
 
@@ -85,6 +90,9 @@ class ProductController extends Controller
             $blist->products()->attach($id);
         }
 
+        $blist->touch();
+        $item->save();
+
         return response()->json([
             'status' => 'success',
             'action' => $action,
@@ -105,6 +113,8 @@ class ProductController extends Controller
         } else {
             Auth::user()->favoriteProducts()->attach($id);
         }
+
+        $item->save();
 
         return response()->json([
             'status' => 'success',

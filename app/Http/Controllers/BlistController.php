@@ -49,8 +49,12 @@ class BlistController extends Controller
         Auth::user()->blists()->save($item);
 
         foreach ($request->input('products') as $product) {
-            $item->products()->attach($product['id'], ['note' => $product['note']]);
+            $item->products()->attach($product['id'], 
+                ['note' => $product['note'] ? $product['note'] : '']);
         }
+
+        $item->save();
+        $item->products()->searchable();
 
         return response()->json([
             'status' => 'success',
@@ -61,7 +65,8 @@ class BlistController extends Controller
     public function show($id)
     {
         $item = Blist::findOrFail($id)->load('user');
-        $products = $item->products()->with('quantityprices', 'brand', 'category', 'blists')->get()
+        $products = $item->products()
+            ->with('quantityprices', 'brand', 'category', 'blists')->get()
             ->sortByDesc(function ($product, $key) {
                 return Common::rankscore($product);
         });
@@ -73,7 +78,8 @@ class BlistController extends Controller
             $isSaved = $item->savedBy->contains('id', Auth::user()->id);
             $isMine = $item->user->id == Auth::user()->id;
         }
-        return response()->json(compact('item', 'products', 'ratings', 'saveCount', 'isSaved', 'isMine'));
+        return response()->json(compact('item', 'products', 'ratings', 
+            'saveCount', 'isSaved', 'isMine'));
     }
 
     public function update()
@@ -97,6 +103,8 @@ class BlistController extends Controller
         } else {
             Auth::user()->savedBlists()->attach($id);
         }
+
+        $item->save();
 
         return response()->json([
             'status' => 'success',

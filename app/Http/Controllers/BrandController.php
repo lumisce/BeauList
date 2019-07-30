@@ -23,7 +23,8 @@ class BrandController extends Controller
 	public function show($id)
 	{
 		$item = Brand::findOrFail($id);
-		$products = $item->products()->with('quantityprices', 'brand', 'category', 'blists')->get()
+		$products = $item->products()
+			->with('quantityprices', 'brand', 'category', 'blists')->get()
 			->sortByDesc(function ($product, $key) {
 				return Common::rankscore($product);
 		});
@@ -37,7 +38,8 @@ class BrandController extends Controller
 		}
 
 		return response()
-			->json(compact('item', 'products', 'ratings', 'favoriteCount', 'isMyFav'));
+			->json(compact('item', 'products', 'ratings', 
+				'favoriteCount', 'isMyFav'));
 	}
 
 	public function favorite(Request $request)
@@ -52,6 +54,8 @@ class BrandController extends Controller
 		} else {
 			Auth::user()->favoriteBrands()->attach($id);
 		}
+
+		$item->save();
 
 		return response()->json([
 			'status' => 'success',

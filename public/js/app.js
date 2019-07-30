@@ -10611,6 +10611,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -40825,7 +40843,60 @@ var render = function() {
         "ais-panel",
         [
           _c("template", { slot: "header" }, [
-            _c("p", [_vm._v("Number of Rating")])
+            _c("p", [_vm._v("Number of Favorites")])
+          ]),
+          _vm._v(" "),
+          _c(
+            "template",
+            { slot: "default" },
+            [
+              _c("ais-range-input", {
+                attrs: { attribute: "fav_count" },
+                scopedSlots: _vm._u([
+                  {
+                    key: "default",
+                    fn: function(ref) {
+                      var currentRefinement = ref.currentRefinement
+                      var range = ref.range
+                      var refine = ref.refine
+                      return _c(
+                        "div",
+                        {},
+                        [
+                          _c("vue-slider", {
+                            attrs: {
+                              min: range.min,
+                              max: range.max,
+                              value: _vm.toValue(currentRefinement, range)
+                            },
+                            on: {
+                              change: function($event) {
+                                return refine({
+                                  min: $event[0],
+                                  max: $event[1]
+                                })
+                              }
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    }
+                  }
+                ])
+              })
+            ],
+            1
+          )
+        ],
+        2
+      ),
+      _vm._v(" "),
+      _c(
+        "ais-panel",
+        [
+          _c("template", { slot: "header" }, [
+            _c("p", [_vm._v("Number of Ratings")])
           ]),
           _vm._v(" "),
           _c(
