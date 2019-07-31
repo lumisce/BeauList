@@ -7,9 +7,9 @@
 			<div class="alert-container">
 			</div>
 			<div class="card">
-				<div class="card-header">{{ __('Favorite Brands') }} (<span class="count">{{ $user->favoriteBrands->count() }}</span>)</div>
+				<div class="card-header">{{ __('Favorite Brands') }} (<span class="count">{{ Auth::user()->favoriteBrands->count() }}</span>)</div>
 					<div class="list-group list-group-flush list-small" id="list-tab" role="tablist">
-						@foreach ($user->favoriteBrands as $item)
+						@foreach (Auth::user()->favoriteBrands as $item)
 						@if ($loop->first)
 								<a href="/brands/{{$item->id}}" class="list-group-item"><img src="">{{$item->name}}</a>
 						@else

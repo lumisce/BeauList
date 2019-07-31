@@ -7,9 +7,9 @@
 			<div class="alert-container">
 			</div>
 			<div class="card">
-				<div class="card-header">{{ __('Rated Products') }} (<span class="count">{{$user->ratedProducts->count()}}</span>)</div>
+				<div class="card-header">{{ __('Rated Products') }} (<span class="count">{{Auth::user()->ratedProducts->count()}}</span>)</div>
 				<div class="list-group list-group-flush rank-list" id="list-tab" role="tablist">
-					@foreach ($user->ratedProducts->reverse() as $product)
+					@foreach (Auth::user()->ratedProducts->reverse() as $product)
 						<div class="product-list-item list-group-item">
 							<a href="/brands/{{$product->brand->id}}">
 								<img src="/images/{{$product->brand->image}}" style="height:100px;width:100px;display:inline-block; margin-right:10px;">

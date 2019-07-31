@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 
 class Blist extends Model
 {
+    use Searchable;
+
     protected $fillable = ['name', 'description'];
 
     public function products()
@@ -24,5 +27,18 @@ class Blist extends Model
     {
         return $this->belongsToMany('App\User', 'blist_user_saved')
             ->withTimestamps();
+    }
+
+    public function toSearchableArray()
+    {
+        $array = $this->toArray();
+        $array['user_name'] = $this->user->name;
+        $products = $this->products->toArray();
+        $array['products'] = $products;
+        $array['product_count'] = $this->products->count();
+        $array['savedBy'] = $this->savedBy;
+        $array['saved_count'] = $this->savedBy->count();
+        
+        return $array;
     }
 }

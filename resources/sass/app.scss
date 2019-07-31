@@ -7,6 +7,9 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+// InstantSearch
+@import '~instantsearch.css/themes/algolia-min';
+
 @import '~font-awesome/scss/font-awesome.scss';
 
 .rating-icon {
@@ -113,7 +116,7 @@
 
 
 .product-list-item, .product-list-item a {
-	display: inline-flex;
+	display: flex;
 }
 
 .product-list-item img {
@@ -121,6 +124,11 @@
 	width: 100px;
 	display: inline-block;
 	margin-right: 10px;
+}
+
+.product-list-item .img-small {
+	height: 50px;
+	width: 50px;
 }
 
 
@@ -155,4 +163,50 @@
 	width: 32px;
 	display: inline-block;
 	margin-right: 10px;
+}
+
+.right-nav {
+	display: inline-flex;
+}
+
+.card-header .nav-link {
+	padding: 0.25rem 0.5rem;
+}
+
+.card-header .nav-link.active {
+	padding: 0.25rem 1rem;
+}
+
+.slide-fade-enter-active {
+  transition: all .3s ease;
+}
+.slide-fade-leave-active {
+  transition: all .8s cubic-bezier(0, 1.0, 0.5, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to {
+  transform: translateY(-10px);
+  opacity: 0;
+}
+
+.ais-Hits-item {
+	width: 100%;
+}
+.input-inline {
+	margin-right: 1rem;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+.ais-Panel-header p {
+	margin-bottom: 0;
+}
+
+.ais-Panel {
+	margin-bottom: 1rem;
+}
+
+.my-ais-CurrentRefinements-item {
+	flex-wrap: wrap;
 }

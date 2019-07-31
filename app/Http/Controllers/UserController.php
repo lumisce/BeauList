@@ -10,23 +10,13 @@ use App\Helpers\Common;
 
 class UserController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth', ['only' => ['profile']]);
-    }
-
     public function show($id)
     {
-        if (Auth::check() && Auth::user()->id == $id ) {
-            return redirect('profile');
-        }
         $user = User::findOrFail($id);
-        return view('users.show', compact('user'));
-    }
+        $lists = $user->blists;
+        $isMe = Auth::check() && Auth::user()->id == $id;
 
-    public function profile()
-    {
-        return view('users.profile');
+        return response()->json(compact('user', 'lists', 'isMe'));
     }
 
     public function wishlist($id)
@@ -42,31 +32,55 @@ class UserController extends Controller
     public function ratedProducts($id)
     {
         $user = User::findOrFail($id);
+        $items = $user->ratedProducts()->with('quantityprices', 'brand', 'category', 'blists')->get()
+            ->sortByDesc(function ($product, $key) {
+                return $product->rating->created_at;
+            })->values();
+        $isMe = Auth::check() && Auth::user()->id == $id;
+
         $ratings = $user->ratedProducts->mapWithKeys(function ($product, $key) {
             return [$product->id => Common::avgrating($product)];
         });
-        return view('users.ratedproducts', compact(['user', 'ratings']));
+        return response()->json(compact('user', 'items', 'isMe', 'ratings'));
     }
 
     public function favoriteProducts($id)
     {
         $user = User::findOrFail($id);
+        $items = $user->favoriteProducts()->with('quantityprices', 'brand', 'category', 'blists')->get()
+            ->sortByDesc(function ($product, $key) {
+                return $product->pivot->created_at;
+            })->values();
+        $isMe = Auth::check() && Auth::user()->id == $id;
+
         $ratings = $user->favoriteProducts->mapWithKeys(function ($product, $key) {
             return [$product->id => Common::avgrating($product)];
         });
-        return view('users.favproducts', compact(['user', 'ratings']));
+        return response()->json(compact('user', 'items', 'isMe', 'ratings'));
     }
 
     public function favoriteBrands($id)
     {
         $user = User::findOrFail($id);
-        return view('users.favbrands', compact('user'));
+        $items = $user->favoriteBrands
+            ->sortByDesc(function ($brand, $key) {
+                return $brand->pivot->created_at;
+            })->values();
+        $isMe = Auth::check() && Auth::user()->id == $id;
+
+        return response()->json(compact('user', 'items', 'isMe'));
     }
 
-    public function savedLists($id)
+    public function savedBlists($id)
     {
         $user = User::findOrFail($id);
-        return view('users.savedlists', compact('user'));
+        $items = $user->savedBlists->load('user')
+            ->sortByDesc(function ($blist, $key) {
+                return $blist->pivot->created_at;
+            })->values();
+        $isMe = Auth::check() && Auth::user()->id == $id;
+
+        return response()->json(compact('user', 'items', 'isMe'));
     }
 
 }

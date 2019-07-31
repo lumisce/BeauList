@@ -10,27 +10,36 @@ use App\Helpers\Common;
 class BrandController extends Controller
 {
 	public function __construct()
-    {
-        $this->middleware('auth', ['only' => ['favorite']]);
-    }
+	{
+		$this->middleware('auth:api', ['only' => ['favorite']]);
+	}
 
 	public function index()
 	{
-		$items = Brand::all();
-		return view('brands.index', compact('items'));
+		return response()
+			->json(['items' => Brand::all()->sortBy('name')->values()]);
 	}
 
 	public function show($id)
 	{
 		$item = Brand::findOrFail($id);
-		$products = $item->products->sortByDesc(function ($product, $key) {
-			return Common::rankscore($product);
+		$products = $item->products()
+			->with('quantityprices', 'brand', 'category', 'blists')->get()
+			->sortByDesc(function ($product, $key) {
+				return Common::rankscore($product);
 		});
 		$ratings = $products->mapWithKeys(function ($product, $key) {
 			return [$product->id => Common::avgrating($product)];
 		});
+		$favoriteCount = $item->favoritedBy->count();
 
-		return view('brands.show', compact('item', 'products', 'ratings'));
+		if (Auth::check()) {
+			$isMyFav = $item->favoritedBy->contains('id', Auth::user()->id);
+		}
+
+		return response()
+			->json(compact('item', 'products', 'ratings', 
+				'favoriteCount', 'isMyFav'));
 	}
 
 	public function favorite(Request $request)

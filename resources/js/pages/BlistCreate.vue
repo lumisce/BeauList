@@ -1,0 +1,153 @@
+<template>
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-md-8">
+				<div class="alert-container">
+					<transition name="slide-fade">
+					<div v-if="showAlert" class="alert" 
+						:class="{'alert-success': alertSuccess, 'alert-danger': !alertSuccess}" 
+						role="alert">
+						<span>{{ alertMessage }}</span>
+					</div>
+					</transition>
+				</div>
+				<div class="card">
+					<div class="card-header">Create New List</div>
+					<div class="card-body">
+						<form @submit.prevent>
+							<div class="form-group row">
+								<label for="name" 
+									class="col-md-3 col-form-label text-md-right">
+									Name
+								</label>
+								<div class="col-md-8">
+									<input id="name" type="text" class="form-control" autofocus 
+										required v-model.trim="name" @keydown.enter.prevent>
+								</div>
+							</div>
+							 <div class="form-group row">
+								<label for="description" 
+									class="col-md-3 col-form-label text-md-right">
+									Description
+								</label>
+								<div class="col-md-8">
+									<textarea id="description" class="form-control" 
+										:rows="rowSize" v-model="description">
+									</textarea>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+
+				<ProductMiniSearch @add="add" />
+
+				<div class="card mt-4">
+					<div class="card-header">Products</div>
+					<div v-if="products.length" class="list-group list-group-flush rank-list">
+						<ProductListItem v-for="(product, index) in products" 
+							:index="index" :key="product.id" :item="product" 
+							:ratings="[]" :isRanked="false" :withBrand="true" 
+							:inListCreate="true" :noAdd="true" @addNote="addNote">
+						</ProductListItem>
+					</div>
+					<EmptyList v-else></EmptyList>
+				</div>
+			</div>
+		</div>
+		<div style="height:10rem"></div>
+		<div class="row justify-content-center fixed-bottom bg-white p-3 shadow-sm">
+			<div class="col-md-8 d-flex">
+				<button type="button" class="btn btn-primary ml-auto" 
+					@click="createList">
+					Create
+				</button>
+			</div>
+		</div>
+	</div>
+</template>
+
+<script>
+	import ProductMiniSearch from '../components/ProductMiniSearch'
+	import ProductListItem from '../components/ProductListItem'
+	import EmptyList from '../components/EmptyList'
+	import pageMixin from '../pageMixin'
+
+	export default {
+		mixins: [pageMixin],
+		components: {
+			ProductMiniSearch,
+			ProductListItem,
+			EmptyList,
+		},
+		data() {
+			return {
+				name: '',
+				description: '',
+				showAlert: false,
+				alertSuccess: true,
+				alertMessage: '',
+				products: [],
+			}
+		},
+		computed: {
+			isLoggedIn() {
+				return this.$store.getters.isLoggedIn
+			},
+			rowSize() {
+				return Math.max(5, this.description.split('\n').length)
+			}
+		},
+		methods: {
+			add(product) {
+				let hasId = this.products.some((item) => { return item.id == product.id })
+				if (this.products.length && hasId) {
+					this.bsAlert('error', product.name+" has already been added!")
+				} else {
+					product['note'] = ''
+					this.products.push(product)
+				}
+			},
+			addNote(id, note) {
+				let i = this.products.findIndex((item) => { return item.id == id })
+				if (i >= 0) {
+					this.products[i].note = note
+				}
+				console.log(this.products)
+			},
+			getProductsData() {
+				return this.products.map((item) => {
+					return {'id': item.id, 'note': item.note}
+				})
+			},
+			createList() {
+				if (this.isLoggedIn) {
+					let formdata = {
+						'id': this.$route.params.id, 
+						'_token': this.$csrf,
+						'name': this.name,
+						'description': this.description.trim(),
+						'products': this.getProductsData()
+					}
+					this.axios.post('/api/lists', formdata).then(response => {
+						if (response.data.status == 'success') {
+							this.setUser()
+							this.$router.push('/lists/'+response.data.id)
+						} else if (response.data.errors) {
+							this.bsAlert('error', response.data.errors.name[0])
+						} else {
+							this.bsAlert('error', '')
+						}
+					}).catch(err => {
+						this.bsAlert('error', '')
+					})
+				}
+			},
+			setUser() {
+				this.axios.get('/api/user').then(response => {
+					this.$store.dispatch('refresh', response.data.user)
+				})
+			},
+		},
+	}
+</script>

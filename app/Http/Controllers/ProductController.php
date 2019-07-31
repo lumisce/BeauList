@@ -12,22 +12,27 @@ class ProductController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth', ['only' => ['rate', 'addToList']]);
+        $this->middleware('auth:api', ['only' => ['rate', 'addToList']]);
     }
     
     public function show($id)
     {
-        $item = Product::find($id);
+        $item = Product::findOrFail($id)
+            ->load(['quantityprices', 'brand', 'category', 'blists']);
         $rating = Common::avgrating($item);
+        $favoriteCount = $item->favoritedBy->count();
 
-        $myscore = 0;
         if (Auth::check()) {
-        	if ($item->ratedBy->contains(Auth::user()->id)) {
-        		$myscore = $item->ratedBy()->find(Auth::user()->id)->rating->score;
-        	}
+            $isMyFav = $item->favoritedBy->contains('id', Auth::user()->id);
+            $myRating = 0;
+            $r = $item->ratedBy->find(Auth::user()->id);
+            if ($r != null) {
+                $myRating = $r->rating->score;
+            }
         }
 
-        return view('products.show', compact(['item', 'rating', 'myscore']));
+        return response()->json(compact(['item', 'rating', 
+            'favoriteCount', 'isMyFav', 'myRating']));
     }
 
     public function new()
@@ -43,18 +48,21 @@ class ProductController extends Controller
 
         $rating = $request->input('rating');
 
-        $id = $request->input('product');
+        $id = $request->input('id');
         $item = Product::findOrFail($id);
 
         if (Auth::user()->ratedProducts->contains($id)) {
             if ($rating > 0) {
-                Auth::user()->ratedProducts()->updateExistingPivot($id, ['score'=>$rating]);
+                Auth::user()->ratedProducts()
+                    ->updateExistingPivot($id, ['score'=>$rating]);
             } else {
                 Auth::user()->ratedProducts()->detach($id);
             }
         } else if ($rating > 0) {
             Auth::user()->ratedProducts()->attach($id, ['score'=>$rating]);
         }
+
+        $item->save();
 
         $rating = Common::avgrating($item);
 
@@ -66,7 +74,7 @@ class ProductController extends Controller
 
     public function addToList(Request $request)
     {
-        $id = $request->input('product');
+        $id = $request->input('id');
         $item = Product::findOrFail($id);
 
         $blistid = $request->input('list');
@@ -82,9 +90,14 @@ class ProductController extends Controller
             $blist->products()->attach($id);
         }
 
+        $blist->touch();
+        $item->save();
+
         return response()->json([
             'status' => 'success',
             'action' => $action,
+            'name' => $blist->name,
+            'lists' => $item->blists,
         ]);
     }
 
@@ -100,6 +113,8 @@ class ProductController extends Controller
         } else {
             Auth::user()->favoriteProducts()->attach($id);
         }
+
+        $item->save();
 
         return response()->json([
             'status' => 'success',
