@@ -55,12 +55,15 @@
 						'list': listId
 					};
 					this.axios.post('/api/products/addtolist', formdata).then(response => {
-						let action = 'Added to '+response.data.name+'!'
-						if (response.data.action == 'removed') {
-							action = 'Removed from '+response.data.name+'!'
+						let action = ''
+						if (response.data.status == 'success') {
+							action = 'Added to '+response.data.name+'!'
+							if (response.data.action == 'removed') {
+								action = 'Removed from '+response.data.name+'!'
+							}
+							this.itemLists = response.data.lists
+							this.$emit('reload')
 						}
-						this.itemLists = response.data.lists
-						this.$emit('reload')
 						this.$emit('bsAlert', response.data.status, action)
 					}).catch(err => {
 						this.$emit('bsAlert', 'error', '')

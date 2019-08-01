@@ -14,7 +14,7 @@ class Blist extends Model
     public function products()
     {
     	return $this->belongsToMany('App\Product')
-        ->withPivot(['note'])
+        ->withPivot('note', 'position')
         ->withTimestamps();
     }
 

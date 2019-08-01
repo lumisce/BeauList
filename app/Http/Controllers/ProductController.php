@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+
+use DB;
 use App\Product;
 use App\Blist;
 use App\Helpers\Common;
@@ -82,16 +85,28 @@ class ProductController extends Controller
 
         $this->authorize('update', $blist);
 
-        $action = 'added';
-        if ($blist->products->contains($id)) {
-            $blist->products()->detach($id);
-            $action = 'removed';
-        } else {
-            $blist->products()->attach($id);
-        }
+        DB::beginTransaction();
+        try {
+            $action = 'added';
+            if ($blist->products->contains($id)) {
+                $blist->products()->detach($id);
+                $action = 'removed';
+            } else {
+                $blist->products()->attach($id, [
+                    'position' => $blist->products->count() + 1
+                ]);
+            }
+            $blist->touch();
+            $item->save();
+            DB::commit();
 
-        $blist->touch();
-        $item->save();
+        } catch (\Exception $e) {
+            DB::rollback();
+            Log::error($e);
+            return response()->json([
+                'status' => 'error',
+            ]);
+        }
 
         return response()->json([
             'status' => 'success',

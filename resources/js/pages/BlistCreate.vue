@@ -5,8 +5,8 @@
 				<div class="alert-container">
 					<transition name="slide-fade">
 					<div v-if="showAlert" class="alert" 
-						:class="{'alert-success': alertSuccess, 'alert-danger': !alertSuccess}" 
-						role="alert">
+						:class="{'alert-success': alertSuccess, 
+						'alert-danger': !alertSuccess}" role="alert">
 						<span>{{ alertMessage }}</span>
 					</div>
 					</transition>
@@ -21,8 +21,9 @@
 									Name
 								</label>
 								<div class="col-md-8">
-									<input id="name" type="text" class="form-control" autofocus 
-										required v-model.trim="name" @keydown.enter.prevent>
+									<input id="name" type="text" class="form-control" 
+										autofocus required v-model.trim="name" 
+										@keydown.enter.prevent>
 								</div>
 							</div>
 							 <div class="form-group row">
@@ -45,11 +46,14 @@
 				<div class="card mt-4">
 					<div class="card-header">Products</div>
 					<div v-if="products.length" class="list-group list-group-flush rank-list">
-						<ProductListItem v-for="(product, index) in products" 
-							:index="index" :key="product.id" :item="product" 
-							:ratings="[]" :isRanked="false" :withBrand="true" 
-							:inListCreate="true" :noAdd="true" @addNote="addNote">
-						</ProductListItem>
+						<draggable v-model="products" group="products" 
+							@start="drag=true" @end="drag=false">
+							<ProductListItem v-for="(product, index) in products" 
+								:index="index" :key="product.id" :item="product" 
+								:ratings="[]" :isRanked="false" :withBrand="true" 
+								:inListCreate="true" :noAdd="true" @addNote="addNote" @remove="remove(index)">
+							</ProductListItem>
+						</draggable>
 					</div>
 					<EmptyList v-else></EmptyList>
 				</div>
@@ -72,6 +76,7 @@
 	import ProductListItem from '../components/ProductListItem'
 	import EmptyList from '../components/EmptyList'
 	import pageMixin from '../pageMixin'
+	import draggable from 'vuedraggable'
 
 	export default {
 		mixins: [pageMixin],
@@ -79,6 +84,7 @@
 			ProductMiniSearch,
 			ProductListItem,
 			EmptyList,
+			draggable,
 		},
 		data() {
 			return {
@@ -113,17 +119,19 @@
 				if (i >= 0) {
 					this.products[i].note = note
 				}
-				console.log(this.products)
+			},
+			remove(i) {
+				this.products.splice(i, 1);
 			},
 			getProductsData() {
-				return this.products.map((item) => {
-					return {'id': item.id, 'note': item.note}
+				return this.products.map((item, i) => {
+					return {'id': item.id, 'note': item.note, 
+						'position': i+1}
 				})
 			},
 			createList() {
 				if (this.isLoggedIn) {
 					let formdata = {
-						'id': this.$route.params.id, 
 						'_token': this.$csrf,
 						'name': this.name,
 						'description': this.description.trim(),
