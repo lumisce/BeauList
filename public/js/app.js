@@ -9834,9 +9834,9 @@ __webpack_require__.r(__webpack_exports__);
             _this.$emit('reload');
           }
 
-          _this.$emit('bsAlert', response.data.status, action);
+          _this.$emit('bsAlert', action, response.data.status);
         })["catch"](function (err) {
-          _this.$emit('bsAlert', 'error', '');
+          _this.$emit('bsError');
         });
       }
     }
@@ -10058,9 +10058,9 @@ __webpack_require__.r(__webpack_exports__);
 
           _this.count = response.data.count;
 
-          _this.$emit('bsAlert', response.data.status, action);
+          _this.$emit('bsAlert', action, response.data.status);
         })["catch"](function (err) {
-          _this.$emit('bsAlert', 'error', '');
+          _this.$emit('bsError');
         });
       }
     }
@@ -10336,12 +10336,12 @@ __webpack_require__.r(__webpack_exports__);
           if (response.data.status == 'success') {
             _this.$emit('setAvgRating', response.data.rating);
 
-            _this.$emit('bsAlert', 'success', action);
+            _this.$emit('bsAlert', action);
           } else {
-            _this.$emit('bsAlert', 'error', '');
+            _this.$emit('bsError');
           }
         })["catch"](function (err) {
-          _this.$emit('bsAlert', 'error', '');
+          _this.$emit('bsError');
         });
       }
     }
@@ -10738,9 +10738,9 @@ __webpack_require__.r(__webpack_exports__);
 
           _this.count = response.data.count;
 
-          _this.$emit('bsAlert', response.data.status, action);
+          _this.$emit('bsAlert', action, response.data.status);
         })["catch"](function (err) {
-          _this.$emit('bsAlert', 'error', '');
+          _this.$emit('bsError');
         });
       }
     }
@@ -10934,7 +10934,7 @@ __webpack_require__.r(__webpack_exports__);
       });
 
       if (this.products.length && hasId) {
-        this.bsAlert('error', product.name + " has already been added!");
+        this.bsError(product.name + " has already been added!");
       } else {
         product['note'] = '';
         this.products.push(product);
@@ -10954,12 +10954,12 @@ __webpack_require__.r(__webpack_exports__);
           if (response.data.status == 'success') {
             _this.$router.push('/lists/' + response.data.id);
           } else if (response.data.errors) {
-            _this.bsAlert('error', response.data.errors.name[0]);
+            _this.bsError(response.data.errors.name[0]);
           } else {
-            _this.bsAlert('error', '');
+            _this.bsError();
           }
         })["catch"](function (err) {
-          _this.bsAlert('error', '');
+          _this.bsError();
         });
       }
     }
@@ -11255,14 +11255,14 @@ __webpack_require__.r(__webpack_exports__);
         var url = '/api/lists/' + this.item.id + '/products';
         this.axios.post(url, formdata).then(function (response) {
           if (response.data.status == 'success') {
-            _this2.bsAlert('success', 'Successfully Updated!');
+            _this2.bsAlert('Successfully Updated!');
 
             _this2.editProductsMode = false;
           } else {
-            _this2.bsAlert('error', '');
+            _this2.bsError();
           }
         })["catch"](function (err) {
-          _this2.bsAlert('error', '');
+          _this2.bsError();
         });
       }
     },
@@ -11287,16 +11287,16 @@ __webpack_require__.r(__webpack_exports__);
         var url = '/api/lists/' + this.item.id;
         this.axios.post(url, formdata).then(function (response) {
           if (response.data.status == 'success') {
-            _this3.bsAlert('success', 'Successfully Updated!');
+            _this3.bsAlert('Successfully Updated!');
 
             _this3.editMode = false;
           } else if (response.data.errors) {
-            _this3.bsAlert('error', response.data.errors.name[0]);
+            _this3.bsError(response.data.errors.name[0]);
           } else {
-            _this3.bsAlert('error', '');
+            _this3.bsError();
           }
         })["catch"](function (err) {
-          _this3.bsAlert('error', '');
+          _this3.bsError();
         });
       }
     },
@@ -11319,10 +11319,10 @@ __webpack_require__.r(__webpack_exports__);
               }
             });
           } else {
-            _this4.bsAlert('error', '');
+            _this4.bsError();
           }
         })["catch"](function (err) {
-          _this4.bsAlert('error', '');
+          _this4.bsError();
         });
       }
     }
@@ -12406,15 +12406,11 @@ __webpack_require__.r(__webpack_exports__);
       isMe: false
     };
   },
-  computed: {},
-  methods: {},
   created: function created() {
     var _this = this;
 
-    console.log(this.fromDelete);
-
     if (this.fromDelete) {
-      this.bsAlert('success', 'Successfully deleted!');
+      this.bsAlert('Successfully deleted!');
     }
 
     var url = '/api/users/' + this.$route.params.id;
@@ -42655,8 +42651,8 @@ var render = function() {
                       reload: function($event) {
                         return _vm.$emit("reload")
                       },
-                      bsAlert: function(status, msg) {
-                        return _vm.$emit("bsAlert", status, msg)
+                      bsAlert: function(msg, status) {
+                        return _vm.$emit("bsAlert", msg, status)
                       }
                     }
                   })
@@ -65605,7 +65601,6 @@ module.exports = {
       }
     },
     editNote: function editNote(id, note) {
-      console.log('edit' + note);
       var i = this.products.findIndex(function (item) {
         return item.id == id;
       });
@@ -66553,24 +66548,37 @@ module.exports = {
     };
   },
   methods: {
-    bsAlert: function bsAlert(status, msg) {
+    bsError: function bsError() {
       var _this = this;
 
-      this.showAlert = true;
-      this.alertMessage = msg;
+      var msg = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
 
-      if (status == 'success') {
-        this.alertSuccess = true;
-      } else if (status == 'error') {
-        this.alertSuccess = false;
-
-        if (!this.alertMessage.length) {
-          this.alertMessage = 'Something went wrong. Please try again.';
-        }
+      if (!msg.length) {
+        this.alertMessage = 'Something went wrong. Please try again.';
+      } else {
+        this.alertMessage = msg;
       }
 
+      this.alertSuccess = false;
+      this.showAlert = true;
       setTimeout(function () {
         _this.showAlert = false;
+      }, 3000);
+    },
+    bsAlert: function bsAlert(msg) {
+      var _this2 = this;
+
+      var status = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'success';
+      this.alertMessage = msg;
+      this.alertSuccess = status == 'success';
+
+      if (!this.alertSuccess && !msg.length) {
+        this.alertMessage = 'Something went wrong. Please try again.';
+      }
+
+      this.showAlert = true;
+      setTimeout(function () {
+        _this2.showAlert = false;
       }, 3000);
     }
   }

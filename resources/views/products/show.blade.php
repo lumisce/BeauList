@@ -101,7 +101,6 @@ $("#rating-{{$myscore}}").click();
 @endauth
 
 $('.rating-input').change(function() {
-	console.log($('#rating-form').serialize());
 	$.post("{{ route('products.rate')}}", $('#rating-form').serialize(), function(data) {
 		bootstrapAlert("Successfully Rated!", data.status);
 		$('.alert').delay(2000).slideUp(500, function() {

@@ -7,7 +7,6 @@ module.exports = {
 			}
 		},
 		editNote(id, note) {
-			console.log('edit'+note)
 			let i = this.products.findIndex((item) => { return item.id == id })
 			if (i >= 0) {
 				this.products[i].pivot.note = note

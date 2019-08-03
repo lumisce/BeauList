@@ -51,12 +51,12 @@
 						}
 						if (response.data.status == 'success') {
 							this.$emit('setAvgRating', response.data.rating)
-							this.$emit('bsAlert', 'success', action)
+							this.$emit('bsAlert', action)
 						} else {
-							this.$emit('bsAlert', 'error', '')
+							this.$emit('bsError')
 						}
 					}).catch(err => {
-						this.$emit('bsAlert', 'error', '')
+						this.$emit('bsError')
 					})
 				}
 			},

@@ -64,9 +64,9 @@
 							this.itemLists = response.data.lists
 							this.$emit('reload')
 						}
-						this.$emit('bsAlert', response.data.status, action)
+						this.$emit('bsAlert', action, response.data.status)
 					}).catch(err => {
-						this.$emit('bsAlert', 'error', '')
+						this.$emit('bsError')
 					})
 				}
 			},

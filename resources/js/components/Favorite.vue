@@ -39,9 +39,9 @@
 							this.isFavorite = true
 						}
 						this.count = response.data.count
-						this.$emit('bsAlert', response.data.status, action)
+						this.$emit('bsAlert', action, response.data.status)
 					}).catch(err => {
-						this.$emit('bsAlert', 'error', '')
+						this.$emit('bsError')
 					})
 				}
 			},

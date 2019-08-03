@@ -107,7 +107,7 @@
 			add(product) {
 				let hasId = this.products.some((item) => { return item.id == product.id })
 				if (this.products.length && hasId) {
-					this.bsAlert('error', product.name+" has already been added!")
+					this.bsError(product.name+" has already been added!")
 				} else {
 					product['note'] = ''
 					this.products.push(product)
@@ -125,12 +125,12 @@
 						if (response.data.status == 'success') {
 							this.$router.push('/lists/'+response.data.id)
 						} else if (response.data.errors) {
-							this.bsAlert('error', response.data.errors.name[0])
+							this.bsError(response.data.errors.name[0])
 						} else {
-							this.bsAlert('error', '')
+							this.bsError()
 						}
 					}).catch(err => {
-						this.bsAlert('error', '')
+						this.bsError()
 					})
 				}
 			},

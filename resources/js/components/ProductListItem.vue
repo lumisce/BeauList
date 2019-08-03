@@ -38,7 +38,7 @@
 			<i v-else-if="isEditable" class="fa fa-times close" 
 				@click="$emit('remove')"></i>
 			<AddToList v-else :item="item" @reload="$emit('reload')"
-				@bsAlert="(status, msg) => $emit('bsAlert', status, msg)">
+				@bsAlert="(msg, status) => $emit('bsAlert', msg, status)">
 			</AddToList>
 		</div>
 		<div v-if="isEditable" class="d-block w-100 mt-2">

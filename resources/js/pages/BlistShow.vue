@@ -185,13 +185,13 @@
 					let url = '/api/lists/'+this.item.id+'/products'
 					this.axios.post(url, formdata).then(response => {
 						if (response.data.status == 'success') {
-							this.bsAlert('success', 'Successfully Updated!')
+							this.bsAlert('Successfully Updated!')
 							this.editProductsMode = false
 						} else {
-							this.bsAlert('error', '')
+							this.bsError()
 						}
 					}).catch(err => {
-						this.bsAlert('error', '')
+						this.bsError()
 					})
 				}
 			},
@@ -214,15 +214,15 @@
 					let url = '/api/lists/'+this.item.id
 					this.axios.post(url, formdata).then(response => {
 						if (response.data.status == 'success') {
-							this.bsAlert('success', 'Successfully Updated!')
+							this.bsAlert('Successfully Updated!')
 							this.editMode = false
 						} else if (response.data.errors) {
-							this.bsAlert('error', response.data.errors.name[0])
+							this.bsError(response.data.errors.name[0])
 						} else {
-							this.bsAlert('error', '')
+							this.bsError()
 						}
 					}).catch(err => {
-						this.bsAlert('error', '')
+						this.bsError()
 					})
 				}
 			},
@@ -243,10 +243,10 @@
 								}
 							})
 						} else {
-							this.bsAlert('error', '')
+							this.bsError()
 						}
 					}).catch(err => {
-						this.bsAlert('error', '')
+						this.bsError()
 					})
 				}
 			}

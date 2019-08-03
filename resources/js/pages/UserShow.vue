@@ -84,14 +84,9 @@
 				isMe: false,
 			}
 		},
-		computed: {
-		},
-		methods: {
-		},
 		created() {
-			console.log(this.fromDelete)
 			if (this.fromDelete) {
-				this.bsAlert('success', 'Successfully deleted!')
+				this.bsAlert('Successfully deleted!')
 			}
 
 			let url = '/api/users/'+this.$route.params.id;

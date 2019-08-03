@@ -7,17 +7,25 @@ module.exports = {
 		}
 	},
 	methods: {
-		bsAlert(status, msg) {
-			this.showAlert = true
-			this.alertMessage = msg
-			if (status == 'success') {
-				this.alertSuccess = true
-			} else if (status == 'error') {
-				this.alertSuccess = false
-				if (!this.alertMessage.length) {
-					this.alertMessage = 'Something went wrong. Please try again.'
-				}
+		bsError(msg='') {
+			if (!msg.length) {
+				this.alertMessage = 'Something went wrong. Please try again.'
+			} else {
+				this.alertMessage = msg
 			}
+			this.alertSuccess = false
+			this.showAlert = true
+			setTimeout(() => {
+				this.showAlert = false
+			}, 3000);
+		},
+		bsAlert(msg, status='success') {
+			this.alertMessage = msg
+			this.alertSuccess = status == 'success'
+			if (!this.alertSuccess && !msg.length) {
+				this.alertMessage = 'Something went wrong. Please try again.'
+			} 
+			this.showAlert = true
 			setTimeout(() => {
 				this.showAlert = false
 			}, 3000);
