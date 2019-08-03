@@ -55,9 +55,6 @@
 				ratings: [],
 				favoriteCount: 0,
 				isMyFav: false,
-				showAlert: false,
-				alertSuccess: true,
-				alertMessage: '',
 			}
 		},
 		computed: {

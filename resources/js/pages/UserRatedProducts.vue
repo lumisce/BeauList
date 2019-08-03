@@ -50,9 +50,6 @@
 				ratings: [],
 				user: null,
 				isMe: false,
-				showAlert: false,
-				alertSuccess: true,
-				alertMessage: '',
 			}
 		},
 		methods: {

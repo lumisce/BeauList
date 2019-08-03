@@ -103,6 +103,7 @@ const router = new VueRouter({
 			path: '/users/:id',
 			name: 'users.show',
 			component: UserShow,
+			props: true,
 		}, {
 			path: '/users/:id/savedlists',
 			name: 'users.savedlists',

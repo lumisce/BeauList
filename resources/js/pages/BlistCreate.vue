@@ -51,7 +51,8 @@
 							<ProductListItem v-for="(product, index) in products" 
 								:index="index" :key="product.id" :item="product" 
 								:ratings="[]" :isRanked="false" :withBrand="true" 
-								:inListCreate="true" :noAdd="true" @addNote="addNote" @remove="remove(index)">
+								:isEditable="true" @addNote="addNote" 
+								@remove="remove(index)">
 							</ProductListItem>
 						</draggable>
 					</div>
@@ -76,10 +77,11 @@
 	import ProductListItem from '../components/ProductListItem'
 	import EmptyList from '../components/EmptyList'
 	import pageMixin from '../pageMixin'
+	import blistMixin from '../blistMixin'
 	import draggable from 'vuedraggable'
 
 	export default {
-		mixins: [pageMixin],
+		mixins: [pageMixin, blistMixin],
 		components: {
 			ProductMiniSearch,
 			ProductListItem,
@@ -90,9 +92,6 @@
 			return {
 				name: '',
 				description: '',
-				showAlert: false,
-				alertSuccess: true,
-				alertMessage: '',
 				products: [],
 			}
 		},
@@ -114,21 +113,6 @@
 					this.products.push(product)
 				}
 			},
-			addNote(id, note) {
-				let i = this.products.findIndex((item) => { return item.id == id })
-				if (i >= 0) {
-					this.products[i].note = note
-				}
-			},
-			remove(i) {
-				this.products.splice(i, 1);
-			},
-			getProductsData() {
-				return this.products.map((item, i) => {
-					return {'id': item.id, 'note': item.note, 
-						'position': i+1}
-				})
-			},
 			createList() {
 				if (this.isLoggedIn) {
 					let formdata = {
@@ -139,7 +123,6 @@
 					}
 					this.axios.post('/api/lists', formdata).then(response => {
 						if (response.data.status == 'success') {
-							this.setUser()
 							this.$router.push('/lists/'+response.data.id)
 						} else if (response.data.errors) {
 							this.bsAlert('error', response.data.errors.name[0])
@@ -150,11 +133,6 @@
 						this.bsAlert('error', '')
 					})
 				}
-			},
-			setUser() {
-				this.axios.get('/api/user').then(response => {
-					this.$store.dispatch('refresh', response.data.user)
-				})
 			},
 		},
 	}

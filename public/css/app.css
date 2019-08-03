@@ -15270,3 +15270,22 @@ a:hover {
   flex-wrap: wrap;
 }
 
+.card-header .nav {
+  margin-bottom: -1rem;
+}
+
+.top-right {
+  font-size: 1rem;
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+}
+
+.card.text-center {
+  padding: 1rem;
+}
+
+.card.text-center.thick {
+  padding: 2rem;
+}
+

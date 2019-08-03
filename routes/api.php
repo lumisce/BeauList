@@ -39,9 +39,8 @@ Route::resource('products', 'ProductController')->only([
 ]);
 
 Route::post('lists/save', 'BlistController@save')->name('lists.save');
-Route::resource('lists', 'BlistController')->only([
-	'index', 'show', 'create', 'store'
-]);
+Route::post('lists/{list}/products', 'BlistController@syncProducts')->name('lists.syncproducts');
+Route::resource('lists', 'BlistController')->except('create', 'edit');
 
 Route::get('profile', 'UserController@profile')->name('profile');
 Route::get('users/{user}/wishlist', 'UserController@wishlist')->name('users.wishlist');

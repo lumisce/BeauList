@@ -11,7 +11,7 @@
 						<ProductListItem v-for="(item, index) in items" class="w-100"
 							:index="index" :key="item.id" :item="item" :withBrand="true"
 							:ratings="[]" :isRanked="false" :inListCreate="true" 
-							@add="$emit('add', item)">
+							@add="$emit('add', item)" hasAdd="true">
 						</ProductListItem>
 					</div>
 					<div v-else class="card">

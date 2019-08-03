@@ -1,6 +1,6 @@
 <template>
 	<div v-if="item" class="product-list-item list-group-item flex-wrap">
-		<i v-if="inListCreate && noAdd" class="fa fa-align-justify align-self-center mr-3"></i>
+		<i v-if="isEditable" class="fa fa-align-justify align-self-center mr-3"></i>
 		<i v-if="isRanked && index < 3" class="fa fa-certificate rank-bg" :class="rankBgClass"></i>
 		<span v-if="isRanked" :class="rankClass">{{index+1}}</span>
 	
@@ -31,22 +31,23 @@
 				<i class="rating-icon rating-icon-star fa fa-star"></i>
 				 {{item.rating.score}}
 			</p>
-			<button v-if="inListCreate && !noAdd" type="button" 
+			<button v-if="hasAdd" type="button" 
 				@click="$emit('add', item)" class="btn btn-primary">
 				Add
 			</button>
-			<i v-if="inListCreate && noAdd" class="fa fa-times close" 
+			<i v-else-if="isEditable" class="fa fa-times close" 
 				@click="$emit('remove')"></i>
-			<AddToList v-else-if="!inListCreate" :item="item" @reload="$emit('reload')"
+			<AddToList v-else :item="item" @reload="$emit('reload')"
 				@bsAlert="(status, msg) => $emit('bsAlert', status, msg)">
 			</AddToList>
 		</div>
-		<div v-if="showNote" class="d-block w-100 mt-2">
+		<div v-if="isEditable" class="d-block w-100 mt-2">
 			<textarea v-model="note" class="w-100" placeholder="Add a Note" 
 				@change="$emit('addNote', item.id, note)">
 			</textarea>
 		</div>
-		<div v-if="showNoteText && item.pivot.note.length" class="d-block w-100 mt-2 bg-light p-1">
+		<div v-else-if="showNoteText && item.pivot.note.length" 
+			class="d-block w-100 mt-2 bg-light p-1">
 			<p>{{item.pivot.note}}</p>
 		</div>
 	</div>
@@ -59,19 +60,16 @@
 		components: {
 			AddToList,
 		},
-		props: ['item', 'index', 'ratings', 'isRanked', 
-			'withBrand', 'withMyRating', 'inListCreate', 'noAdd', 'showNoteText'],
+		props: ['item', 'index', 'ratings', 'isRanked', 'withBrand', 
+			'withMyRating', 'isEditable', 'hasAdd', 'showNoteText'],
 		data() {
 			return {
-				note: '',
+				note: ''
 			}
 		},
 		computed: {
 			isLoggedIn() {
 				return this.$store.getters.isLoggedIn
-			},
-			showNote() {
-				return this.inListCreate && this.noAdd
 			},
 			qp() {
 				let qps = this.item.quantityprices
@@ -115,5 +113,22 @@
 				}
 			}
 		},
+		watch: {
+			isEditable(newval, oldval) {
+				this.setNote()
+			}
+		},
+		methods: {
+			setNote() {
+				if (this.item.pivot && this.item.pivot.note) {
+					this.note = this.item.pivot.note
+				} else {
+					this.note = ''
+				}
+			}
+		},
+		created() {
+			this.setNote()
+		}
 	}
 </script>

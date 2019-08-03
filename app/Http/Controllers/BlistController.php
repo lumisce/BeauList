@@ -55,8 +55,8 @@ class BlistController extends Controller
 
             foreach ($request->input('products') as $product) {
                 $item->products()->attach($product['id'], [
-                    'note' => $product['note'] ? $product['note'] : '', 
-                    'position' => $product['position'] ? $product['position'] : 0
+                    'note' => isset($product['note']) ? $product['note'] : '', 
+                    'position' => isset($product['position']) ? $product['position'] : 0
                 ]);
             }
             $item->save();
@@ -98,9 +98,84 @@ class BlistController extends Controller
             'saveCount', 'isSaved', 'isMine'));
     }
 
-    public function update()
-    {
+    public function update(Request $request, $id)
+    {   
+        $item = Blist::findOrFail($id);
 
+        $this->authorize('update', $item);
+        
+        $v = Validator::make($request->all(), [
+            'name' => [
+                'required',
+                'max:255',
+                function ($attribute, $value, $fail) use ($id) {
+                    if (Auth::user()->blists->except($id)->contains($attribute, $value)) {
+                        $fail($value.' already exists.');
+                    }
+                },
+            ],
+        ]);
+        if ($v->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'errors' => $v->errors(),
+            ]);
+        }
+
+        $item->name = $request->input('name', $item->name);
+        $item->description = $request->input('description', $item->description);
+        $item->save();
+
+        return response()->json([
+            'status' => 'success',
+        ]);
+    }
+
+    public function destroy($id)
+    {
+        $item = Blist::findOrFail($id);
+        $this->authorize('delete', $item);
+
+        $item->delete();
+
+        return response()->json([
+            'status' => 'success',
+            'action' => 'delete'
+        ]);
+    }
+
+    public function syncProducts(Request $request, $id)
+    {
+        $item = Blist::findOrFail($id);
+        $this->authorize('update', $item);
+
+        $products = $request->input('products');
+
+        $modifiedProducts = [];
+        foreach ($products as $product) {
+            $modifiedProducts[$product['id']] = [
+                'note' => isset($product['note']) ? $product['note'] : '', 
+                'position' => isset($product['position']) ? $product['position'] : 0
+            ];
+        }
+
+        DB::beginTransaction();
+        try {
+            $item->products()->sync($modifiedProducts);
+            $item->touch();
+            $item->save();
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            Log::error($e);
+            return response()->json([
+                'status' => 'error',
+            ]);
+        }
+
+        return response()->json([
+            'status' => 'success',
+        ]);
     }
 
     public function save(Request $request)

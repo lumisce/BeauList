@@ -1,4 +1,11 @@
 module.exports = {
+	data() {
+		return {
+			showAlert: false,
+			alertSuccess: true,
+			alertMessage: '',
+		}
+	},
 	methods: {
 		bsAlert(status, msg) {
 			this.showAlert = true

@@ -65,7 +65,7 @@ class BlistPolicy
      */
     public function delete(User $user, Blist $blist)
     {
-        //
+        return $user->id === $blist->user->id;
     }
 
     /**

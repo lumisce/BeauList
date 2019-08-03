@@ -43,9 +43,6 @@
 				item: null,
 				products: [],
 				ratings: [],
-				showAlert: false,
-				alertSuccess: true,
-				alertMessage: '',
 			}
 		},
 		computed: {

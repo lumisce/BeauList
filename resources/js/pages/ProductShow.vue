@@ -67,9 +67,6 @@
 					currency: '-',
 					price: '-'
 				}],
-				showAlert: false,
-				alertSuccess: true,
-				alertMessage: '',
 			}
 		},
 		computed: {
