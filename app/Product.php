@@ -25,7 +25,7 @@ class Product extends Model
         return $this->belongsToMany('App\Blist');
     }
 
-    public function quantityprices()
+    public function quantityPrices()
     {
         return $this->hasMany('App\QuantityPrice');
     }

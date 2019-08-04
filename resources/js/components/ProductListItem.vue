@@ -72,7 +72,7 @@
 				return this.$store.getters.isLoggedIn
 			},
 			qp() {
-				let qps = this.item.quantityprices
+				let qps = this.item.quantityPrices
 				let unknown = {
 					quantity : '-',
 					unit: '-',
