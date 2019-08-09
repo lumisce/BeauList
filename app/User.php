@@ -69,4 +69,10 @@ class User extends Authenticatable
             ->withTimestamps();
     }
 
+    public function productsHistory()
+    {
+        return $this->belongsToMany('App\Product')
+            ->using('App\ProductUserHistory');
+    }
+
 }
