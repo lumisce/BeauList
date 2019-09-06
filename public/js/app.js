@@ -10150,14 +10150,14 @@ __webpack_require__.r(__webpack_exports__);
       return this.$store.getters.isLoggedIn;
     },
     qp: function qp() {
-      var qps = this.item.quantityPrices;
+      var qps = this.item.quantityprices;
       var unknown = {
         quantity: '-',
         unit: '-',
         currency: '-',
         price: '-'
       };
-      return qps.length ? qps[0] : unknown;
+      return qps && qps.length ? qps[0] : unknown;
     },
     imageUrl: function imageUrl() {
       return '/images/' + this.item.image;
@@ -11974,7 +11974,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     setQP: function setQP() {
-      var qps = this.item.quantityPrices;
+      var qps = this.item.quantityprices;
       this.qps = qps.length ? qps : this.qps;
     },
     setAvgRating: function setAvgRating(rating) {

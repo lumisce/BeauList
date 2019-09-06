@@ -72,14 +72,14 @@
 				return this.$store.getters.isLoggedIn
 			},
 			qp() {
-				let qps = this.item.quantityPrices
+				let qps = this.item.quantityprices
 				let unknown = {
 					quantity : '-',
 					unit: '-',
 					currency: '-',
 					price: '-'
 				}
-				return qps.length ? qps[0] : unknown
+				return qps && qps.length ? qps[0] : unknown
 			},
 			imageUrl() {
 				return '/images/'+this.item.image

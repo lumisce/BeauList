@@ -79,7 +79,7 @@
 		},
 		methods: {
 			setQP() {
-				let qps = this.item.quantityPrices
+				let qps = this.item.quantityprices
 				this.qps =  qps.length ? qps : this.qps
 			},
 			setAvgRating(rating) {

@@ -19,10 +19,11 @@ class CategoryController extends Controller
 	public function show($id)
 	{
 		$item = Category::findOrFail($id);
-		$products = $item->products()->with('quantityprices', 'brand', 'category', 'blists')->get()
+		$products = $item->products()
+			->with('quantityprices', 'brand', 'category', 'blists')->get()
 			->sortByDesc(function ($product, $key) {
 				return Common::rankscore($product);
-		});
+		})->values();;
 		$ratings = $products->mapWithKeys(function ($product, $key) {
 			return [$product->id => Common::avgrating($product)];
 		});

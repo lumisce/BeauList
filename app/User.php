@@ -51,7 +51,6 @@ class User extends Authenticatable
     public function ratedProducts()
     {
         return $this->belongsToMany('App\Product', 'product_user_rated')
-            ->using('App\ProductUser')
             ->as('rating')
             ->withPivot(['score'])
             ->withTimestamps();

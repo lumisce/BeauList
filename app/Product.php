@@ -33,7 +33,6 @@ class Product extends Model
     public function ratedBy()
     {
         return $this->belongsToMany('App\User', 'product_user_rated')
-        ->using('App\ProductUser')
         ->as('rating')
         ->withPivot(['score'])
         ->withTimestamps();
