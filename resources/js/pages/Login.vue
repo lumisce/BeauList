@@ -3,7 +3,13 @@
 		<div class="row justify-content-center">
 			<div class="col-md-8">
 				<div class="alert-container">
-					<div v-if="errors" class="alert alert-danger" role="alert"><span>{{errors.email[0]}}</span></div>
+					<transition name="slide-fade">
+					<div v-if="showAlert" class="alert" 
+						:class="{'alert-success': alertSuccess, 
+						'alert-danger': !alertSuccess}" role="alert">
+						<span>{{ alertMessage }}</span>
+					</div>
+					</transition>
 				</div>
 				<div class="card">
 					<div class="card-header">Login</div>
@@ -54,7 +60,11 @@
 </template>
 
 <script>
+	import pageMixin from '../pageMixin'
+
 	export default {
+		props: ['fromRegister'],
+		mixins: [pageMixin],
 		data() {
 			return {
 				csrf: this.$csrf,
@@ -63,7 +73,6 @@
 					email: '',
 					password: '',				
 				},
-				errors: null
 			}
 		},
 		methods: {
@@ -71,10 +80,14 @@
 				this.$store.dispatch('login', {'email':this.user.email, 'password':this.user.password})
 				.then(() => this.$router.push('/'))
 				.catch(err => {
-					console.log(err.response)
-					this.errors = err.response.data.errors
+					this.bsError(err.response.data.errors.email[0])
 				})
 			}
 		},
+		created() {
+			if (this.fromRegister) {
+				this.bsAlert('Successfully registered!')
+			}
+		}
 	}
 </script>

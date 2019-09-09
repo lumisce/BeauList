@@ -18,6 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return ['user' => $request->user()->load('blists')];
 });
 
+Route::post('register', 'Auth\RegisterController@apiRegister');
 Route::post('login', 'Auth\LoginController@apiLogin');
 
 Route::resource('categories', 'CategoryController')->only([
