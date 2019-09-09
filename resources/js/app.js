@@ -155,7 +155,6 @@ router.beforeEach((to, from, next) => {
 Vue.prototype.$csrf = document.querySelector("meta[name='csrf-token']").getAttribute('content');
 Vue.prototype.$hasPasswordReset = false;
 
-axios.defaults.baseURL = 'http://beaulist.test';
 axios.defaults.headers.common['Accept'] = 'application/json';
 
 axios.interceptors.request.use(request => {

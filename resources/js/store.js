@@ -4,8 +4,6 @@ import axios from 'axios'
 
 Vue.use(Vuex)
 
-const domain = 'http://beaulist.test';
-
 export default new Vuex.Store({
 	state: {
 		status: '',
@@ -37,7 +35,7 @@ export default new Vuex.Store({
 		login({commit}, user) {
 			return new Promise((resolve, reject) => {
 				commit('auth_request')
-				axios.post(domain+'/api/login', user)
+				axios.post('/api/login', user)
 				.then(response => {
 					const token = response.data.token
 					const user = response.data.user

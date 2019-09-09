@@ -65513,7 +65513,6 @@ router.beforeEach(function (to, from, next) {
 });
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.prototype.$csrf = document.querySelector("meta[name='csrf-token']").getAttribute('content');
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.prototype.$hasPasswordReset = false;
-axios__WEBPACK_IMPORTED_MODULE_4___default.a.defaults.baseURL = 'http://beaulist.test';
 axios__WEBPACK_IMPORTED_MODULE_4___default.a.defaults.headers.common['Accept'] = 'application/json';
 axios__WEBPACK_IMPORTED_MODULE_4___default.a.interceptors.request.use(function (request) {
   console.log('Starting Request', request);
@@ -67731,7 +67730,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
-var domain = 'http://beaulist.test';
 /* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   state: {
     status: '',
@@ -67764,7 +67762,7 @@ var domain = 'http://beaulist.test';
       var commit = _ref.commit;
       return new Promise(function (resolve, reject) {
         commit('auth_request');
-        axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(domain + '/api/login', user).then(function (response) {
+        axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/api/login', user).then(function (response) {
           var token = response.data.token;
           var user = response.data.user;
           localStorage.setItem('token', token);
