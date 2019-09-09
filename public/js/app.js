@@ -65344,29 +65344,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vue_instantsearch__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-instantsearch */ "./node_modules/vue-instantsearch/dist/vue-instantsearch.esm.js");
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
-/* harmony import */ var vue_axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-axios */ "./node_modules/vue-axios/dist/vue-axios.min.js");
-/* harmony import */ var vue_axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue_axios__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var _store_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./store.js */ "./resources/js/store.js");
-/* harmony import */ var _components_App__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/App */ "./resources/js/components/App.vue");
-/* harmony import */ var _pages_Login__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./pages/Login */ "./resources/js/pages/Login.vue");
-/* harmony import */ var _pages_BrandIndex__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./pages/BrandIndex */ "./resources/js/pages/BrandIndex.vue");
-/* harmony import */ var _pages_BrandShow__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./pages/BrandShow */ "./resources/js/pages/BrandShow.vue");
-/* harmony import */ var _pages_CategoryIndex__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./pages/CategoryIndex */ "./resources/js/pages/CategoryIndex.vue");
-/* harmony import */ var _pages_CategoryShow__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./pages/CategoryShow */ "./resources/js/pages/CategoryShow.vue");
-/* harmony import */ var _pages_ProductShow__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./pages/ProductShow */ "./resources/js/pages/ProductShow.vue");
-/* harmony import */ var _pages_BlistCreate__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./pages/BlistCreate */ "./resources/js/pages/BlistCreate.vue");
-/* harmony import */ var _pages_BlistShow__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./pages/BlistShow */ "./resources/js/pages/BlistShow.vue");
-/* harmony import */ var _pages_UserShow__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./pages/UserShow */ "./resources/js/pages/UserShow.vue");
-/* harmony import */ var _pages_UserSavedBlists__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./pages/UserSavedBlists */ "./resources/js/pages/UserSavedBlists.vue");
-/* harmony import */ var _pages_UserFavoriteBrands__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./pages/UserFavoriteBrands */ "./resources/js/pages/UserFavoriteBrands.vue");
-/* harmony import */ var _pages_UserFavoriteProducts__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./pages/UserFavoriteProducts */ "./resources/js/pages/UserFavoriteProducts.vue");
-/* harmony import */ var _pages_UserRatedProducts__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./pages/UserRatedProducts */ "./resources/js/pages/UserRatedProducts.vue");
-/* harmony import */ var _pages_ProductSearch__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./pages/ProductSearch */ "./resources/js/pages/ProductSearch.vue");
-/* harmony import */ var _pages_BrandSearch__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./pages/BrandSearch */ "./resources/js/pages/BrandSearch.vue");
-/* harmony import */ var _pages_BlistSearch__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./pages/BlistSearch */ "./resources/js/pages/BlistSearch.vue");
+/* harmony import */ var _router_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./router.js */ "./resources/js/router.js");
+/* harmony import */ var vue_axios__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-axios */ "./node_modules/vue-axios/dist/vue-axios.min.js");
+/* harmony import */ var vue_axios__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(vue_axios__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _store_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./store.js */ "./resources/js/store.js");
+/* harmony import */ var _components_App__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/App */ "./resources/js/components/App.vue");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -65380,9 +65365,10 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_instantsearch__WEBPACK_IMPORT
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_2__["default"]);
 
 
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_axios__WEBPACK_IMPORTED_MODULE_3___default.a, axios__WEBPACK_IMPORTED_MODULE_4___default.a);
 
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_5__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_axios__WEBPACK_IMPORTED_MODULE_4___default.a, axios__WEBPACK_IMPORTED_MODULE_5___default.a);
+
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_6__["default"]);
 
 /**
  * The following block of code may be used to automatically register your
@@ -65395,113 +65381,17 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_5__
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-var router = new vue_router__WEBPACK_IMPORTED_MODULE_2__["default"]({
-  mode: 'history',
-  routes: [{
-    path: '/login',
-    name: 'login',
-    component: _pages_Login__WEBPACK_IMPORTED_MODULE_8__["default"]
-  }, {
-    path: '/home',
-    name: 'home',
-    component: _pages_BrandIndex__WEBPACK_IMPORTED_MODULE_9__["default"]
-  }, {
-    path: '/brands',
-    name: 'brands.index',
-    component: _pages_BrandIndex__WEBPACK_IMPORTED_MODULE_9__["default"]
-  }, {
-    path: '/brands/:id',
-    name: 'brands.show',
-    component: _pages_BrandShow__WEBPACK_IMPORTED_MODULE_10__["default"]
-  }, {
-    path: '/categories',
-    name: 'categories.index',
-    component: _pages_CategoryIndex__WEBPACK_IMPORTED_MODULE_11__["default"]
-  }, {
-    path: '/categories/:id',
-    name: 'categories.show',
-    component: _pages_CategoryShow__WEBPACK_IMPORTED_MODULE_12__["default"]
-  }, {
-    path: '/products/:id',
-    name: 'products.show',
-    component: _pages_ProductShow__WEBPACK_IMPORTED_MODULE_13__["default"]
-  }, {
-    path: '/lists/create',
-    name: 'lists.create',
-    component: _pages_BlistCreate__WEBPACK_IMPORTED_MODULE_14__["default"],
-    meta: {
-      requiresAuth: true
-    }
-  }, {
-    path: '/lists/:id',
-    name: 'lists.show',
-    component: _pages_BlistShow__WEBPACK_IMPORTED_MODULE_15__["default"]
-  }, {
-    path: '/users/:id',
-    name: 'users.show',
-    component: _pages_UserShow__WEBPACK_IMPORTED_MODULE_16__["default"],
-    props: true
-  }, {
-    path: '/users/:id/savedlists',
-    name: 'users.savedlists',
-    component: _pages_UserSavedBlists__WEBPACK_IMPORTED_MODULE_17__["default"]
-  }, {
-    path: '/users/:id/favbrands',
-    name: 'users.favbrands',
-    component: _pages_UserFavoriteBrands__WEBPACK_IMPORTED_MODULE_18__["default"]
-  }, {
-    path: '/users/:id/favproducts',
-    name: 'users.favproducts',
-    component: _pages_UserFavoriteProducts__WEBPACK_IMPORTED_MODULE_19__["default"]
-  }, {
-    path: '/users/:id/ratedproducts',
-    name: 'users.ratedproducts',
-    component: _pages_UserRatedProducts__WEBPACK_IMPORTED_MODULE_20__["default"]
-  }, {
-    path: '/search',
-    name: 'search',
-    redirect: '/search/products'
-  }, {
-    path: '/search/products',
-    name: 'search.products',
-    component: _pages_ProductSearch__WEBPACK_IMPORTED_MODULE_21__["default"]
-  }, {
-    path: '/search/brands',
-    name: 'search.brands',
-    component: _pages_BrandSearch__WEBPACK_IMPORTED_MODULE_22__["default"]
-  }, {
-    path: '/search/lists',
-    name: 'search.lists',
-    component: _pages_BlistSearch__WEBPACK_IMPORTED_MODULE_23__["default"]
-  }]
-});
-router.beforeEach(function (to, from, next) {
+_router_js__WEBPACK_IMPORTED_MODULE_3__["default"].beforeEach(function (to, from, next) {
   if (to.matched.some(function (record) {
     return record.meta.requiresAuth;
   })) {
-    if (_store_js__WEBPACK_IMPORTED_MODULE_6__["default"].getters.isLoggedIn) {
+    if (_store_js__WEBPACK_IMPORTED_MODULE_7__["default"].getters.isLoggedIn) {
       next();
       return;
     }
@@ -65513,22 +65403,22 @@ router.beforeEach(function (to, from, next) {
 });
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.prototype.$csrf = document.querySelector("meta[name='csrf-token']").getAttribute('content');
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.prototype.$hasPasswordReset = false;
-axios__WEBPACK_IMPORTED_MODULE_4___default.a.defaults.headers.common['Accept'] = 'application/json';
-axios__WEBPACK_IMPORTED_MODULE_4___default.a.interceptors.request.use(function (request) {
+axios__WEBPACK_IMPORTED_MODULE_5___default.a.defaults.headers.common['Accept'] = 'application/json';
+axios__WEBPACK_IMPORTED_MODULE_5___default.a.interceptors.request.use(function (request) {
   console.log('Starting Request', request);
   return request;
 });
-axios__WEBPACK_IMPORTED_MODULE_4___default.a.interceptors.response.use(function (response) {
+axios__WEBPACK_IMPORTED_MODULE_5___default.a.interceptors.response.use(function (response) {
   console.log('Response:', response);
   return response;
 });
 var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   el: '#app',
   components: {
-    App: _components_App__WEBPACK_IMPORTED_MODULE_7__["default"]
+    App: _components_App__WEBPACK_IMPORTED_MODULE_8__["default"]
   },
-  router: router,
-  store: _store_js__WEBPACK_IMPORTED_MODULE_6__["default"],
+  router: _router_js__WEBPACK_IMPORTED_MODULE_3__["default"],
+  store: _store_js__WEBPACK_IMPORTED_MODULE_7__["default"],
   computed: {
     token: function token() {
       return this.$store.state.token;
@@ -65555,15 +65445,15 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   methods: {
     updateAuth: function updateAuth() {
       if (this.isLoggedIn) {
-        axios__WEBPACK_IMPORTED_MODULE_4___default.a.defaults.headers.common['Authorization'] = 'Bearer ' + this.token;
+        axios__WEBPACK_IMPORTED_MODULE_5___default.a.defaults.headers.common['Authorization'] = 'Bearer ' + this.token;
       } else {
-        delete axios__WEBPACK_IMPORTED_MODULE_4___default.a.defaults.headers.common['Authorization'];
+        delete axios__WEBPACK_IMPORTED_MODULE_5___default.a.defaults.headers.common['Authorization'];
       }
     },
     setUser: function setUser() {
       var _this = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_4___default.a.get('/api/user').then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_5___default.a.get('/api/user').then(function (response) {
         _this.user = response.data.user;
 
         _this.$store.dispatch('refresh', response.data.user);
@@ -67686,6 +67576,136 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UserShow_vue_vue_type_template_id_5a1c73f1___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/router.js":
+/*!********************************!*\
+  !*** ./resources/js/router.js ***!
+  \********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
+/* harmony import */ var _pages_Login__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./pages/Login */ "./resources/js/pages/Login.vue");
+/* harmony import */ var _pages_BrandIndex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./pages/BrandIndex */ "./resources/js/pages/BrandIndex.vue");
+/* harmony import */ var _pages_BrandShow__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./pages/BrandShow */ "./resources/js/pages/BrandShow.vue");
+/* harmony import */ var _pages_CategoryIndex__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./pages/CategoryIndex */ "./resources/js/pages/CategoryIndex.vue");
+/* harmony import */ var _pages_CategoryShow__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./pages/CategoryShow */ "./resources/js/pages/CategoryShow.vue");
+/* harmony import */ var _pages_ProductShow__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./pages/ProductShow */ "./resources/js/pages/ProductShow.vue");
+/* harmony import */ var _pages_BlistCreate__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./pages/BlistCreate */ "./resources/js/pages/BlistCreate.vue");
+/* harmony import */ var _pages_BlistShow__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./pages/BlistShow */ "./resources/js/pages/BlistShow.vue");
+/* harmony import */ var _pages_UserShow__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./pages/UserShow */ "./resources/js/pages/UserShow.vue");
+/* harmony import */ var _pages_UserSavedBlists__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./pages/UserSavedBlists */ "./resources/js/pages/UserSavedBlists.vue");
+/* harmony import */ var _pages_UserFavoriteBrands__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./pages/UserFavoriteBrands */ "./resources/js/pages/UserFavoriteBrands.vue");
+/* harmony import */ var _pages_UserFavoriteProducts__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./pages/UserFavoriteProducts */ "./resources/js/pages/UserFavoriteProducts.vue");
+/* harmony import */ var _pages_UserRatedProducts__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./pages/UserRatedProducts */ "./resources/js/pages/UserRatedProducts.vue");
+/* harmony import */ var _pages_ProductSearch__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./pages/ProductSearch */ "./resources/js/pages/ProductSearch.vue");
+/* harmony import */ var _pages_BrandSearch__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./pages/BrandSearch */ "./resources/js/pages/BrandSearch.vue");
+/* harmony import */ var _pages_BlistSearch__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./pages/BlistSearch */ "./resources/js/pages/BlistSearch.vue");
+
+
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = (new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
+  mode: 'history',
+  routes: [{
+    path: '/login',
+    name: 'login',
+    component: _pages_Login__WEBPACK_IMPORTED_MODULE_2__["default"]
+  }, {
+    path: '/home',
+    name: 'home',
+    component: _pages_BrandIndex__WEBPACK_IMPORTED_MODULE_3__["default"]
+  }, {
+    path: '/brands',
+    name: 'brands.index',
+    component: _pages_BrandIndex__WEBPACK_IMPORTED_MODULE_3__["default"]
+  }, {
+    path: '/brands/:id',
+    name: 'brands.show',
+    component: _pages_BrandShow__WEBPACK_IMPORTED_MODULE_4__["default"]
+  }, {
+    path: '/categories',
+    name: 'categories.index',
+    component: _pages_CategoryIndex__WEBPACK_IMPORTED_MODULE_5__["default"]
+  }, {
+    path: '/categories/:id',
+    name: 'categories.show',
+    component: _pages_CategoryShow__WEBPACK_IMPORTED_MODULE_6__["default"]
+  }, {
+    path: '/products/:id',
+    name: 'products.show',
+    component: _pages_ProductShow__WEBPACK_IMPORTED_MODULE_7__["default"]
+  }, {
+    path: '/lists/create',
+    name: 'lists.create',
+    component: _pages_BlistCreate__WEBPACK_IMPORTED_MODULE_8__["default"],
+    meta: {
+      requiresAuth: true
+    }
+  }, {
+    path: '/lists/:id',
+    name: 'lists.show',
+    component: _pages_BlistShow__WEBPACK_IMPORTED_MODULE_9__["default"]
+  }, {
+    path: '/users/:id',
+    name: 'users.show',
+    component: _pages_UserShow__WEBPACK_IMPORTED_MODULE_10__["default"],
+    props: true
+  }, {
+    path: '/users/:id/savedlists',
+    name: 'users.savedlists',
+    component: _pages_UserSavedBlists__WEBPACK_IMPORTED_MODULE_11__["default"]
+  }, {
+    path: '/users/:id/favbrands',
+    name: 'users.favbrands',
+    component: _pages_UserFavoriteBrands__WEBPACK_IMPORTED_MODULE_12__["default"]
+  }, {
+    path: '/users/:id/favproducts',
+    name: 'users.favproducts',
+    component: _pages_UserFavoriteProducts__WEBPACK_IMPORTED_MODULE_13__["default"]
+  }, {
+    path: '/users/:id/ratedproducts',
+    name: 'users.ratedproducts',
+    component: _pages_UserRatedProducts__WEBPACK_IMPORTED_MODULE_14__["default"]
+  }, {
+    path: '/search',
+    name: 'search',
+    redirect: '/search/products'
+  }, {
+    path: '/search/products',
+    name: 'search.products',
+    component: _pages_ProductSearch__WEBPACK_IMPORTED_MODULE_15__["default"]
+  }, {
+    path: '/search/brands',
+    name: 'search.brands',
+    component: _pages_BrandSearch__WEBPACK_IMPORTED_MODULE_16__["default"]
+  }, {
+    path: '/search/lists',
+    name: 'search.lists',
+    component: _pages_BlistSearch__WEBPACK_IMPORTED_MODULE_17__["default"]
+  }]
+}));
 
 /***/ }),
 
