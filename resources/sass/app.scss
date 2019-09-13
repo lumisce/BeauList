@@ -1,10 +1,13 @@
 // Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
+@import url('https://fonts.googleapis.com/css?family=Gothic+A1|Lato&display=swap&subset=korean');
 
 // Variables
 @import 'variables';
 
 // Bootstrap
+$primary: #e25c6d;
+$secondary: #ffc9b4;
+$black: #333333;
 @import '~bootstrap/scss/bootstrap';
 
 // InstantSearch
@@ -69,7 +72,8 @@
 	color: #ccc;
 
 	&:hover, &.on {
-		color: coral;
+		color: $primary;
+		cursor: pointer;
 	}
 }
 
@@ -226,5 +230,136 @@ a:hover {
 	padding: 1rem;
 	&.thick {
 		padding: 2rem;
+	}
+}
+
+// colors and design tweaks
+
+*:focus {
+	&:focus {
+		outline: $primary auto 5px;
+	}
+}
+
+body {
+	background-color: #fffaf7;
+	color: $black;
+	font-family: 'Lato', 'Gothic A1', sans-serif;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover, 
+.navbar-dark .navbar-nav .nav-link:focus, 
+.navbar-dark .navbar-nav .nav-link.whiter {
+	color: rgba(255, 255, 255, 0.75)
+}
+
+.card {
+	border-radius: 0;
+	border-color: $secondary;
+	box-shadow: #fa866f30 2px 2px 3px;
+}
+
+.card-header {
+	background-color: $secondary;
+	border-bottom: 1px solid #fa866f40;
+
+	&:first-child {
+		border-radius: 0;
+	}
+}
+
+.list-group-item {
+	border-color: $secondary;
+
+	&.active {
+		color: #fff !important;
+	}
+
+	&:first-child, &:last-child {
+		border-radius: 0;
+	}
+}
+
+.btn-primary {
+	color: #fff;
+}
+
+.form-control {
+	border-radius: 0;
+}
+
+.remove-item {
+	cursor: pointer;
+	&:hover {
+		color: $red;
+	}
+}
+
+.order-item {
+	cursor: pointer;
+	&:hover {
+		color: $blue;
+	}
+}
+
+.ais-SearchBox svg path, 
+.ais-RefinementList-searchBox svg path {
+	fill: $primary;
+}
+
+.ais-SearchBox-input {
+	color: $black;
+	border: 1px solid $secondary;
+	border-radius: 0;
+	box-shadow: #fa866f30 2px 2px 3px;
+}
+
+.ais-Hits .list-group {
+	box-shadow: #fa866f30 2px 2px 3px;
+}
+
+.ais-HierarchicalMenu-label, .ais-RatingMenu-label,
+.ais-RefinementList-labelText, .ais-Panel-header {
+	color: $black;
+}
+
+.ais-ClearRefinements-button, .ais-CurrentRefinements-reset, 
+.ais-HierarchicalMenu-showMore, .ais-Menu-showMore, 
+.ais-RefinementList-showMore, .ais-CurrentRefinements-item {
+	background-color: $primary;
+}
+
+.ais-ClearRefinements-button:hover {
+	background-color: darken($primary, 10%)
+}
+
+.ais-RefinementList-checkbox, .ais-ToggleRefinement-checkbox {
+	border: 1px solid $primary;
+	filter: hue-rotate(135deg) brightness(1.5);
+}
+.ais-RefinementList-count, .ais-ToggleRefinement-count, 
+.ais-HierarchicalMenu-count {
+	color: darken($primary, 10%);
+	background-color: $secondary;
+}
+
+.ais-RangeInput {
+	.vue-slider-process {
+		background-color: $secondary;
+	}
+	.vue-slider:hover {
+		.vue-slider-process {
+			background-color: $primary;
+		}
+		.vue-slider-dot-handle {
+			border-color: $primary;
+		}
+	}
+	.vue-slider-dot-handle {
+		border: 2px solid $secondary;
+
+		&:hover {
+			border-color: $primary;
+		}
 	}
 }

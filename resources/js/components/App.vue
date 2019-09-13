@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm sticky-top">
+		<nav class="navbar navbar-expand-md navbar-dark bg-primary shadow-sm sticky-top">
 			<div class="container">
 				<router-link :to="{ name: 'home' }" class="navbar-brand">{{ title }}</router-link>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" 
@@ -13,13 +13,20 @@
 					<!-- Left Side Of Navbar -->
 					<ul class="navbar-nav mr-auto">
 						<li class="nav-item">
-							<router-link :to="{ name: 'categories.index' }" class="nav-link">Categories</router-link>
+							<router-link :to="{ name: 'categories.index' }"
+								class="nav-link" :class="{'whiter': onCategories}">
+								Categories
+							</router-link>
 						</li>
 						<li class="nav-item">
-							<router-link :to="{ name: 'brands.index' }" class="nav-link">Brands</router-link>
+							<router-link :to="{ name: 'brands.index' }"
+								class="nav-link" :class="{'whiter': onBrands}">
+								Brands
+							</router-link>
 						</li>
 						<li class="nav-item">
-							<router-link :to="{ name: 'search' }" class="nav-link">
+							<router-link :to="{ name: 'search' }" class="nav-link"
+								:class="{'whiter': onSearch}">
 								<i class="fa fa-search"></i>
 							</router-link>
 						</li>
@@ -48,8 +55,15 @@
 			}
 		},
 		computed: {
+			onBrands() {
+				return this.$route.name == 'brands.index'
+			},
+			onCategories() {
+				return this.$route.name == 'categories.index'
+			},
+			onSearch() {
+				return this.$route.name.split('.')[0] == 'search'
+			},
 		},
-		methods: {
-		}
 	}
 </script>

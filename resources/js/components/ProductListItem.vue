@@ -1,6 +1,6 @@
 <template>
 	<div v-if="item" class="product-list-item list-group-item flex-wrap">
-		<i v-if="isEditable" class="fa fa-align-justify align-self-center mr-3"></i>
+		<i v-if="isEditable" class="fa fa-align-justify align-self-center mr-3 order-item"></i>
 		<i v-if="isRanked && index < 3" class="fa fa-certificate rank-bg" :class="rankBgClass"></i>
 		<span v-if="isRanked" :class="rankClass">{{index+1}}</span>
 	
@@ -35,7 +35,7 @@
 				@click="$emit('add', item)" class="btn btn-primary">
 				Add
 			</button>
-			<i v-else-if="isEditable" class="fa fa-times close" 
+			<i v-else-if="isEditable" class="fa fa-times remove-item" 
 				@click="$emit('remove')"></i>
 			<AddToList v-else :item="item" @reload="$emit('reload')"
 				@bsAlert="(msg, status) => $emit('bsAlert', msg, status)">

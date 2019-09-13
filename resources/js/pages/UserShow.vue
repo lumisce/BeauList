@@ -36,7 +36,7 @@
 						</router-link>
 					</div>
 				</div>
-				<div class="card mt-2">
+				<div class="card mt-4">
 					<div class="card-header">
 						<ul class="nav card-header-pills">
 							<li class="nav-item">
