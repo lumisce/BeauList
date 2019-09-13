@@ -27,7 +27,7 @@
 						<li class="nav-item">
 							<router-link :to="{ name: 'search' }" class="nav-link"
 								:class="{'whiter': onSearch}">
-								<i class="fa fa-search"></i>
+								Browse
 							</router-link>
 						</li>
 					</ul>

@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 
 Vue.use(VueRouter);
 
+import Landing from './pages/Landing'
 import Register from './pages/Register'
 import Login from './pages/Login'
 import BrandIndex from './pages/BrandIndex'
@@ -36,9 +37,9 @@ export default new VueRouter({
 			props: true,
 		},
 		{
-			path: '/home',
+			path: '/',
 			name: 'home',
-			component: BrandIndex,
+			component: Landing,
 		}, {
 			path: '/brands',
 			name: 'brands.index',
