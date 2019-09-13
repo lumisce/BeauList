@@ -15428,3 +15428,63 @@ body {
   border-color: #e25c6d;
 }
 
+.jumbotron.landing {
+  overflow: hidden;
+}
+
+.jumbotron.landing::before {
+  z-index: 5;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(135, 24, 38, 0.5);
+}
+
+.jumbotron.landing::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url(/images/landing.jpg?5ce4824be0b2be50dfc3009284791e6b);
+  background-size: cover;
+  -webkit-filter: grayscale(80%);
+          filter: grayscale(80%);
+}
+
+.jumbotron.landing .container {
+  color: white;
+  z-index: 10;
+  height: 100%;
+  position: relative;
+}
+
+.jumbotron.landing .container .btn-light.btn-lg,
+.jumbotron.landing .container .btn-group-lg > .btn-light.btn {
+  color: #e25c6d;
+}
+
+.jumbotron.landing .container .btn-light.btn-lg:hover,
+.jumbotron.landing .container .btn-group-lg > .btn-light.btn:hover {
+  background-color: #ffefe9;
+  border: 1px #ffc9b4 solid;
+}
+
+.jumbotron.landing .container .btn-outline-light.btn-lg:hover,
+.jumbotron.landing .container .btn-group-lg > .btn-outline-light.btn:hover {
+  color: #e25c6d;
+}
+
+.jumbotron.landing .copyright {
+  z-index: 4;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  font-size: 0.9rem;
+  font-style: italic;
+}
+

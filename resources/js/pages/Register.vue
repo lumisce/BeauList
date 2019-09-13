@@ -59,7 +59,14 @@
 
 							<div class="form-group row mb-0">
 								<div class="col-md-8 offset-md-4">
-									<button type="submit" class="btn btn-primary">Register</button>
+									<button type="submit" class="btn btn-primary">
+										Register
+									</button>
+									or 
+									<router-link class=""
+										:to="{ name: 'login' }">
+										Login here
+									</router-link>
 								</div>
 							</div>
 						</form>

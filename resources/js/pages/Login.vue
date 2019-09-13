@@ -31,23 +31,14 @@
 								</div>
 							</div>
 
-							<!-- <div class="form-group row">
-								<div class="col-md-6 offset-md-4">
-									<div class="form-check">
-										<input class="form-check-input" type="checkbox" name="remember" id="remember">
-										<label class="form-check-label" for="remember">
-											Remember Me
-										</label>
-									</div>
-								</div>
-							</div> -->
-
 							<div class="form-group row mb-0">
 								<div class="col-md-8 offset-md-4">
 									<button type="submit" class="btn btn-primary">Login</button>
-
-									<a v-if="hasPasswordReset" class="btn btn-link" href="/password/request">
-										Forgot Your Password?
+									or
+									<router-link class=""
+										:to="{ name: 'register' }">
+										Click here to Register
+									</router-link>
 									</a>
 								</div>
 							</div>
@@ -68,7 +59,6 @@
 		data() {
 			return {
 				csrf: this.$csrf,
-				hasPasswordReset: this.$hasPasswordReset,
 				user: {
 					email: '',
 					password: '',				
@@ -78,7 +68,7 @@
 		methods: {
 			login() {
 				this.$store.dispatch('login', {'email':this.user.email, 'password':this.user.password})
-				.then(() => this.$router.push('/'))
+				.then(() => this.$router.push('/search'))
 				.catch(err => {
 					this.bsError(err.response.data.errors.email[0])
 				})
