@@ -9893,6 +9893,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -9902,8 +9909,17 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {};
   },
-  computed: {},
-  methods: {}
+  computed: {
+    onBrands: function onBrands() {
+      return this.$route.name == 'brands.index';
+    },
+    onCategories: function onCategories() {
+      return this.$route.name == 'categories.index';
+    },
+    onSearch: function onSearch() {
+      return this.$route.name.split('.')[0] == 'search';
+    }
+  }
 });
 
 /***/ }),
@@ -10780,18 +10796,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['query', 'index'],
+  props: ['index'],
   methods: {
     routeTo: function routeTo(routeName) {
-      if (this.query.length) {
-        return {
-          name: routeName,
-          query: {
-            q: this.query
-          }
-        };
-      }
-
       return {
         name: routeName
       };
@@ -11043,7 +11050,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       searchClient: algoliasearch_lite__WEBPACK_IMPORTED_MODULE_0___default()("VE7S55KATD", "eb97adc044f089763dc3e097ed3ea5af"),
       index: 'blists',
-      query: this.$route.query.q ? this.$route.query.q : ''
+      query: ''
     };
   }
 });
@@ -11452,7 +11459,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       searchClient: algoliasearch_lite__WEBPACK_IMPORTED_MODULE_0___default()("VE7S55KATD", "eb97adc044f089763dc3e097ed3ea5af"),
       index: 'brands',
-      query: this.$route.query.q ? this.$route.query.q : ''
+      query: ''
     };
   },
   methods: {
@@ -11834,7 +11841,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _pageMixin__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_pageMixin__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _searchMixin__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../searchMixin */ "./resources/js/searchMixin.js");
 /* harmony import */ var _searchMixin__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_searchMixin__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var instantsearch_js_es_lib_routers__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! instantsearch.js/es/lib/routers */ "./node_modules/instantsearch.js/es/lib/routers/index.js");
 //
 //
 //
@@ -11868,7 +11874,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
 
 
 
@@ -11888,7 +11893,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       searchClient: algoliasearch_lite__WEBPACK_IMPORTED_MODULE_0___default()("VE7S55KATD", "eb97adc044f089763dc3e097ed3ea5af"),
       index: 'products',
-      query: this.$route.query.q ? this.$route.query.q : ''
+      query: ''
     };
   }
 });
@@ -21974,22 +21979,6 @@ function () {
 
   return _construct(BrowserHistory, args);
 });
-
-/***/ }),
-
-/***/ "./node_modules/instantsearch.js/es/lib/routers/index.js":
-/*!***************************************************************!*\
-  !*** ./node_modules/instantsearch.js/es/lib/routers/index.js ***!
-  \***************************************************************/
-/*! exports provided: history */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _history__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./history */ "./node_modules/instantsearch.js/es/lib/routers/history.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "history", function() { return _history__WEBPACK_IMPORTED_MODULE_0__["default"]; });
-
-
 
 /***/ }),
 
@@ -42322,7 +42311,7 @@ var render = function() {
       "nav",
       {
         staticClass:
-          "navbar navbar-expand-md navbar-light bg-white shadow-sm sticky-top"
+          "navbar navbar-expand-md navbar-dark bg-primary shadow-sm sticky-top"
       },
       [
         _c(
@@ -42353,9 +42342,10 @@ var render = function() {
                         "router-link",
                         {
                           staticClass: "nav-link",
+                          class: { whiter: _vm.onCategories },
                           attrs: { to: { name: "categories.index" } }
                         },
-                        [_vm._v("Categories")]
+                        [_vm._v("\n\t\t\t\t\t\t\tCategories\n\t\t\t\t\t\t")]
                       )
                     ],
                     1
@@ -42369,9 +42359,10 @@ var render = function() {
                         "router-link",
                         {
                           staticClass: "nav-link",
+                          class: { whiter: _vm.onBrands },
                           attrs: { to: { name: "brands.index" } }
                         },
-                        [_vm._v("Brands")]
+                        [_vm._v("\n\t\t\t\t\t\t\tBrands\n\t\t\t\t\t\t")]
                       )
                     ],
                     1
@@ -42385,6 +42376,7 @@ var render = function() {
                         "router-link",
                         {
                           staticClass: "nav-link",
+                          class: { whiter: _vm.onSearch },
                           attrs: { to: { name: "search" } }
                         },
                         [_c("i", { staticClass: "fa fa-search" })]
@@ -42669,7 +42661,8 @@ var render = function() {
         [
           _vm.isEditable
             ? _c("i", {
-                staticClass: "fa fa-align-justify align-self-center mr-3"
+                staticClass:
+                  "fa fa-align-justify align-self-center mr-3 order-item"
               })
             : _vm._e(),
           _vm._v(" "),
@@ -42796,7 +42789,7 @@ var render = function() {
                   )
                 : _vm.isEditable
                 ? _c("i", {
-                    staticClass: "fa fa-times close",
+                    staticClass: "fa fa-times remove-item",
                     on: {
                       click: function($event) {
                         return _vm.$emit("remove")
@@ -44851,7 +44844,7 @@ var render = function() {
     "div",
     { staticClass: "container" },
     [
-      _c("SearchNav", { attrs: { query: _vm.query, index: "1" } }),
+      _c("SearchNav", { attrs: { index: "1" } }),
       _vm._v(" "),
       _c(
         "ais-instant-search",
@@ -46508,7 +46501,7 @@ var render = function() {
             _vm._v(" "),
             _c(
               "div",
-              { staticClass: "card mt-2" },
+              { staticClass: "card mt-4" },
               [
                 _c("div", { staticClass: "card-header" }, [
                   _c("ul", { staticClass: "nav card-header-pills" }, [

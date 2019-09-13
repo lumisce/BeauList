@@ -62,7 +62,7 @@
 					process.env.MIX_ALGOLIA_SEARCH
 				),
 				index: 'blists',
-				query: this.$route.query.q ? this.$route.query.q : '',
+				query: '',
 			}
 		},
 	}

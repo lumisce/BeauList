@@ -1,6 +1,6 @@
 <template>
 	<div class="container">
-		<SearchNav :query="query" index="1"/>
+		<SearchNav index="1"/>
 		<ais-instant-search :search-client="searchClient" :index-name="index">
 			<div class="row justify-content-center">
 				<div class="col-md-8 offset-md-4">
@@ -54,7 +54,7 @@
 					process.env.MIX_ALGOLIA_SEARCH
 				),
 				index: 'brands',
-				query: this.$route.query.q ? this.$route.query.q : '',
+				query: '',
 			}
 		},
 		methods: {

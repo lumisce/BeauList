@@ -21,12 +21,9 @@
 
 <script>
 	export default {
-		props: ['query', 'index'],
+		props: ['index'],
 		methods: {
 			routeTo(routeName) {
-				if (this.query.length) {
-					return { name: routeName, query: {q: this.query} }
-				}
 				return { name: routeName }
 			},
 			selectedClass(i) {

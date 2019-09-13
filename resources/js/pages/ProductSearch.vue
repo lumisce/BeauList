@@ -39,7 +39,6 @@
 	import EmptyList from '../components/EmptyList'
 	import pageMixin from '../pageMixin'
 	import searchMixin from '../searchMixin'
-	import { history as historyRouter } from 'instantsearch.js/es/lib/routers'
 
 	export default {
 		mixins: [searchMixin, pageMixin],
@@ -56,7 +55,7 @@
 					process.env.MIX_ALGOLIA_SEARCH
 				),
 				index: 'products',
-				query: this.$route.query.q ? this.$route.query.q : '',
+				query: '',
 			}
 		},
 	}
