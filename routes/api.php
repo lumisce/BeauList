@@ -19,7 +19,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('register', 'Auth\RegisterController@apiRegister');
-Route::post('login', 'Auth\LoginController@apiLogin');
+
+Route::post('login', 'APILoginController@login');
+Route::post('logout', 'APILoginController@logout');
 
 Route::resource('categories', 'CategoryController')->only([
 	'index', 'show'

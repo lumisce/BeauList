@@ -29,6 +29,9 @@ export default new Vuex.Store({
 		},
 		refresh(state, user) {
 			state.user = user
+		},
+		refresh_token(state, token) {
+			state.token = token
 		}
 	},
 	actions: {
@@ -53,9 +56,32 @@ export default new Vuex.Store({
 		logout({commit}) {
 			return new Promise((resolve, reject) => {
 				commit('logout')
-				localStorage.removeItem('token')
-				delete axios.defaults.headers.common['Authorization']
-				resolve()
+				axios.post('/api/logout')
+				.then(response => {
+					localStorage.removeItem('token')
+					delete axios.defaults.headers.common['Authorization']
+					resolve(response)
+				})
+				.catch(err => {
+					commit('auth_error')
+					reject(err)
+				})
+			})
+		},
+		refreshToken({commit}) {
+			return new Promise((resolve, reject) => {
+				axios.post('/api/refresh')
+				.then(response => {
+					const token = response.data.token
+					localStorage.setItem('token', token)
+					axios.defaults.headers.common['Authorization'] = 'Bearer '+state.token;
+					commit('refresh_token', token)
+					resolve(response)
+				})
+				.catch(err => {
+					commit('auth_error')
+					reject(err)
+				})
 			})
 		},
 		refresh({commit}, user) {
@@ -64,6 +90,6 @@ export default new Vuex.Store({
 	},
 	getters: {
 		isLoggedIn: state => !!state.token,
-		authStatus: state => state.status
+		authStatus: state => state.status,
 	}
 })

@@ -99,7 +99,7 @@
 			}
 		},
 		created() {
-			loadData(this.$route.params.id)
+			this.loadData(this.$route.params.id)
 		},
 		beforeRouteUpdate (to, from, next) {
 			const id = to.params.id

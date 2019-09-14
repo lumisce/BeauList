@@ -61,16 +61,21 @@
 				csrf: this.$csrf,
 				user: {
 					email: '',
-					password: '',				
+					password: '',
 				},
 			}
 		},
 		methods: {
 			login() {
-				this.$store.dispatch('login', {'email':this.user.email, 'password':this.user.password})
+				this.$store.dispatch('login', {'email':this.user.email, 
+					'password':this.user.password})
 				.then(() => this.$router.push('/search'))
 				.catch(err => {
-					this.bsError(err.response.data.errors.email[0])
+					if (err.response.data.error == "invalid credentials") {
+						this.bsError("Invalid Credentials")
+					} else {
+						this.bsError()
+					}
 				})
 			}
 		},

@@ -9964,6 +9964,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['user'],
   data: function data() {
@@ -9983,7 +9987,7 @@ __webpack_require__.r(__webpack_exports__);
 
       this.showDropdown = false;
       this.$store.dispatch('logout').then(function () {
-        _this.$router.push('/');
+        _this.$router.push('/login');
       });
     },
     dropdown: function dropdown() {
@@ -11885,7 +11889,11 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function () {
         return _this.$router.push('/search');
       })["catch"](function (err) {
-        _this.bsError(err.response.data.errors.email[0]);
+        if (err.response.data.error == "invalid credentials") {
+          _this.bsError("Invalid Credentials");
+        } else {
+          _this.bsError();
+        }
       });
     }
   },
@@ -12677,7 +12685,7 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function created() {
-    loadData(this.$route.params.id);
+    this.loadData(this.$route.params.id);
   },
   beforeRouteUpdate: function beforeRouteUpdate(to, from, next) {
     var id = to.params.id;
@@ -42602,6 +42610,23 @@ var render = function() {
                       {
                         staticClass: "dropdown-item",
                         attrs: {
+                          to: { name: "lists.create" },
+                          event: "mousedown"
+                        },
+                        nativeOn: {
+                          mousedown: function($event) {
+                            return _vm.hideDropdown($event)
+                          }
+                        }
+                      },
+                      [_vm._v("\n\t\t\t\t\tCreate List\n\t\t\t\t")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "router-link",
+                      {
+                        staticClass: "dropdown-item",
+                        attrs: {
                           to: {
                             name: "users.show",
                             params: { id: _vm.user.id }
@@ -66090,10 +66115,17 @@ _router_js__WEBPACK_IMPORTED_MODULE_3__["default"].beforeEach(function (to, from
   })) {
     if (_store_js__WEBPACK_IMPORTED_MODULE_7__["default"].getters.isLoggedIn) {
       next();
-      return;
+    } else {
+      next('/login');
     }
-
-    next('/login');
+  } else if (to.matched.some(function (record) {
+    return record.meta.guest;
+  })) {
+    if (_store_js__WEBPACK_IMPORTED_MODULE_7__["default"].getters.isLoggedIn) {
+      _router_js__WEBPACK_IMPORTED_MODULE_3__["default"].push(from);
+    } else {
+      next();
+    }
   } else {
     next();
   }
@@ -66108,6 +66140,16 @@ axios__WEBPACK_IMPORTED_MODULE_5___default.a.interceptors.request.use(function (
 axios__WEBPACK_IMPORTED_MODULE_5___default.a.interceptors.response.use(function (response) {
   console.log('Response:', response);
   return response;
+}, function (error) {
+  if (error.response.status == 401) {
+    _store_js__WEBPACK_IMPORTED_MODULE_7__["default"].commit('refreshToken').then(function (response) {
+      return axios__WEBPACK_IMPORTED_MODULE_5___default.a.request(error.config);
+    })["catch"](function (error) {
+      _store_js__WEBPACK_IMPORTED_MODULE_7__["default"].commit('logout');
+    });
+  }
+
+  return Promise.reject(error);
 });
 var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   el: '#app',
@@ -66143,6 +66185,7 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     updateAuth: function updateAuth() {
       if (this.isLoggedIn) {
         axios__WEBPACK_IMPORTED_MODULE_5___default.a.defaults.headers.common['Authorization'] = 'Bearer ' + this.token;
+        this.setUser();
       } else {
         delete axios__WEBPACK_IMPORTED_MODULE_5___default.a.defaults.headers.common['Authorization'];
       }
@@ -66158,11 +66201,7 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     }
   },
   created: function created() {
-    this.updateAuth(this.token);
-
-    if (this.isLoggedIn) {
-      this.setUser();
-    }
+    this.updateAuth();
   }
 });
 
@@ -68476,7 +68515,10 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
     path: '/login',
     name: 'login',
     component: _pages_Login__WEBPACK_IMPORTED_MODULE_4__["default"],
-    props: true
+    props: true,
+    meta: {
+      guest: true
+    }
   }, {
     path: '/',
     name: 'home',
@@ -68620,6 +68662,9 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     },
     refresh: function refresh(state, user) {
       state.user = user;
+    },
+    refresh_token: function refresh_token(state, token) {
+      state.token = token;
     }
   },
   actions: {
@@ -68644,13 +68689,33 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
       var commit = _ref2.commit;
       return new Promise(function (resolve, reject) {
         commit('logout');
-        localStorage.removeItem('token');
-        delete axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.headers.common['Authorization'];
-        resolve();
+        axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/api/logout').then(function (response) {
+          localStorage.removeItem('token');
+          delete axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.headers.common['Authorization'];
+          resolve(response);
+        })["catch"](function (err) {
+          commit('auth_error');
+          reject(err);
+        });
       });
     },
-    refresh: function refresh(_ref3, user) {
+    refreshToken: function refreshToken(_ref3) {
       var commit = _ref3.commit;
+      return new Promise(function (resolve, reject) {
+        axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/api/refresh').then(function (response) {
+          var token = response.data.token;
+          localStorage.setItem('token', token);
+          axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.headers.common['Authorization'] = 'Bearer ' + state.token;
+          commit('refresh_token', token);
+          resolve(response);
+        })["catch"](function (err) {
+          commit('auth_error');
+          reject(err);
+        });
+      });
+    },
+    refresh: function refresh(_ref4, user) {
+      var commit = _ref4.commit;
       commit('refresh', user);
     }
   },

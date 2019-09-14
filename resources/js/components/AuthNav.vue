@@ -18,6 +18,10 @@
 
 				<div class="dropdown-menu dropdown-menu-right" 
 					:class="{'show' : showDropdown}" aria-labelledby="navbarDropdown">
+					<router-link :to="{ name: 'lists.create'}" 
+						class="dropdown-item" event="mousedown" @mousedown.native="hideDropdown">
+						Create List
+					</router-link>
 					<router-link :to="{ name: 'users.show', params: {id: user.id}}" 
 						class="dropdown-item" event="mousedown" @mousedown.native="hideDropdown">
 						My Profile
@@ -48,7 +52,7 @@
 				this.showDropdown = false
 				this.$store.dispatch('logout')
 				.then(() => {
-					this.$router.push('/')
+					this.$router.push('/login')
 				})
 			},
 			dropdown() {

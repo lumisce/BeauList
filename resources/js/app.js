@@ -46,9 +46,15 @@ router.beforeEach((to, from, next) => {
 	if (to.matched.some(record => record.meta.requiresAuth)) {
 		if (store.getters.isLoggedIn) {
 			next()
-			return
+		} else {
+			next('/login')
 		}
-		next('/login')
+	} else if (to.matched.some(record => record.meta.guest)) {
+		if (store.getters.isLoggedIn) {
+			router.push(from)
+		} else {
+			next()
+		}
 	} else {
 		next()
 	}
@@ -60,13 +66,23 @@ Vue.prototype.$hasPasswordReset = false;
 axios.defaults.headers.common['Accept'] = 'application/json';
 
 axios.interceptors.request.use(request => {
-  console.log('Starting Request', request)
-  return request
+	console.log('Starting Request', request)
+	return request
 })
 
 axios.interceptors.response.use(response => {
-  console.log('Response:', response)
-  return response
+	console.log('Response:', response)
+	return response
+}, error => {
+	if (error.response.status == 401) {
+        store.commit('refreshToken').then(response => {
+        	return axios.request(error.config);
+        }).catch(error => {
+        	store.commit('logout')
+        })
+    }
+
+   return Promise.reject(error);
 })
 
 const app = new Vue({
@@ -101,6 +117,7 @@ const app = new Vue({
 		updateAuth() {
 			if (this.isLoggedIn) {
 				axios.defaults.headers.common['Authorization'] = 'Bearer '+this.token;
+				this.setUser()
 			} else {
 				delete axios.defaults.headers.common['Authorization'];
 			}
@@ -113,9 +130,6 @@ const app = new Vue({
 		},
 	},
 	created() {
-		this.updateAuth(this.token)
-		if (this.isLoggedIn) {
-			this.setUser()
-		}
+		this.updateAuth()
 	}
 });
