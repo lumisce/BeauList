@@ -62,15 +62,25 @@
 				return this.item ? '/images/'+this.item.image : ''
 			},
 		},
+		methods: {
+			loadData(id) {
+				let url = '/api/brands/'+id
+				this.axios.get(url).then(response => {
+					this.item = response.data.item;
+					this.products = response.data.products;
+					this.ratings = response.data.ratings;
+					this.favoriteCount = response.data.favoriteCount;
+					this.isMyFav = response.data.isMyFav;
+				});
+			}
+		},
 		created() {
-			let url = '/api/brands/'+this.$route.params.id;
-			this.axios.get(url).then(response => {
-				this.item = response.data.item;
-				this.products = response.data.products;
-				this.ratings = response.data.ratings;
-				this.favoriteCount = response.data.favoriteCount;
-				this.isMyFav = response.data.isMyFav;
-			});
-		}
+			this.loadData(this.$route.params.id)
+		},
+		beforeRouteUpdate (to, from, next) {
+			const id = to.params.id
+			this.loadData(id)
+			next()
+		},
 	}
 </script>

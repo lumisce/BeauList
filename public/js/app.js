@@ -11230,18 +11230,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     loadList: function loadList() {
-      var _this = this;
-
-      var url = '/api/lists/' + this.$route.params.id;
-      this.axios.get(url).then(function (response) {
-        _this.item = response.data.item;
-        _this.products = response.data.products;
-        _this.ratings = response.data.ratings;
-        _this.saveCount = response.data.saveCount;
-        _this.isSaved = response.data.isSaved;
-        _this.isMine = response.data.isMine;
-        _this.item.description = _this.item.description ? _this.item.description : '';
-      });
+      this.loadData(this.$route.params.id);
     },
     editProducts: function editProducts() {
       this.oldProducts = JSON.parse(JSON.stringify(this.products));
@@ -11252,7 +11241,7 @@ __webpack_require__.r(__webpack_exports__);
       this.editProductsMode = false;
     },
     updateProducts: function updateProducts() {
-      var _this2 = this;
+      var _this = this;
 
       if (this.isLoggedIn && this.isMine) {
         var formdata = {
@@ -11262,14 +11251,14 @@ __webpack_require__.r(__webpack_exports__);
         var url = '/api/lists/' + this.item.id + '/products';
         this.axios.post(url, formdata).then(function (response) {
           if (response.data.status == 'success') {
-            _this2.bsAlert('Successfully Updated!');
+            _this.bsAlert('Successfully Updated!');
 
-            _this2.editProductsMode = false;
+            _this.editProductsMode = false;
           } else {
-            _this2.bsError();
+            _this.bsError();
           }
         })["catch"](function (err) {
-          _this2.bsError();
+          _this.bsError();
         });
       }
     },
@@ -11282,7 +11271,7 @@ __webpack_require__.r(__webpack_exports__);
       this.editMode = false;
     },
     update: function update() {
-      var _this3 = this;
+      var _this2 = this;
 
       if (this.isLoggedIn && this.isMine) {
         var formdata = {
@@ -11294,21 +11283,21 @@ __webpack_require__.r(__webpack_exports__);
         var url = '/api/lists/' + this.item.id;
         this.axios.post(url, formdata).then(function (response) {
           if (response.data.status == 'success') {
-            _this3.bsAlert('Successfully Updated!');
+            _this2.bsAlert('Successfully Updated!');
 
-            _this3.editMode = false;
+            _this2.editMode = false;
           } else if (response.data.errors) {
-            _this3.bsError(response.data.errors.name[0]);
+            _this2.bsError(response.data.errors.name[0]);
           } else {
-            _this3.bsError();
+            _this2.bsError();
           }
         })["catch"](function (err) {
-          _this3.bsError();
+          _this2.bsError();
         });
       }
     },
     deleteItem: function deleteItem() {
-      var _this4 = this;
+      var _this3 = this;
 
       if (this.isLoggedIn && this.isMine) {
         var formdata = {
@@ -11318,24 +11307,43 @@ __webpack_require__.r(__webpack_exports__);
         var url = '/api/lists/' + this.item.id;
         this.axios.post(url, formdata).then(function (response) {
           if (response.data.status == 'success') {
-            _this4.$router.push({
+            _this3.$router.push({
               name: 'users.show',
               params: {
-                id: _this4.item.user_id,
+                id: _this3.item.user_id,
                 fromDelete: true
               }
             });
           } else {
-            _this4.bsError();
+            _this3.bsError();
           }
         })["catch"](function (err) {
-          _this4.bsError();
+          _this3.bsError();
         });
       }
+    },
+    loadData: function loadData(id) {
+      var _this4 = this;
+
+      var url = '/api/lists/' + id;
+      this.axios.get(url).then(function (response) {
+        _this4.item = response.data.item;
+        _this4.products = response.data.products;
+        _this4.ratings = response.data.ratings;
+        _this4.saveCount = response.data.saveCount;
+        _this4.isSaved = response.data.isSaved;
+        _this4.isMine = response.data.isMine;
+        _this4.item.description = _this4.item.description ? _this4.item.description : '';
+      });
     }
   },
   created: function created() {
     this.loadList();
+  },
+  beforeRouteUpdate: function beforeRouteUpdate(to, from, next) {
+    var id = to.params.id;
+    this.loadData(id);
+    next();
   }
 });
 
@@ -11547,17 +11555,27 @@ __webpack_require__.r(__webpack_exports__);
       return this.item ? '/images/' + this.item.image : '';
     }
   },
-  created: function created() {
-    var _this = this;
+  methods: {
+    loadData: function loadData(id) {
+      var _this = this;
 
-    var url = '/api/brands/' + this.$route.params.id;
-    this.axios.get(url).then(function (response) {
-      _this.item = response.data.item;
-      _this.products = response.data.products;
-      _this.ratings = response.data.ratings;
-      _this.favoriteCount = response.data.favoriteCount;
-      _this.isMyFav = response.data.isMyFav;
-    });
+      var url = '/api/brands/' + id;
+      this.axios.get(url).then(function (response) {
+        _this.item = response.data.item;
+        _this.products = response.data.products;
+        _this.ratings = response.data.ratings;
+        _this.favoriteCount = response.data.favoriteCount;
+        _this.isMyFav = response.data.isMyFav;
+      });
+    }
+  },
+  created: function created() {
+    this.loadData(this.$route.params.id);
+  },
+  beforeRouteUpdate: function beforeRouteUpdate(to, from, next) {
+    var id = to.params.id;
+    this.loadData(id);
+    next();
   }
 });
 
@@ -11699,15 +11717,25 @@ __webpack_require__.r(__webpack_exports__);
       return this.item ? '/images/' + this.item.image : '';
     }
   },
-  created: function created() {
-    var _this = this;
+  methods: {
+    loadData: function loadData(id) {
+      var _this = this;
 
-    var url = '/api/categories/' + this.$route.params.id;
-    this.axios.get(url).then(function (response) {
-      _this.item = response.data.item;
-      _this.products = response.data.products;
-      _this.ratings = response.data.ratings;
-    });
+      var url = '/api/categories/' + id;
+      this.axios.get(url).then(function (response) {
+        _this.item = response.data.item;
+        _this.products = response.data.products;
+        _this.ratings = response.data.ratings;
+      });
+    }
+  },
+  created: function created() {
+    this.loadData(this.$route.params.id);
+  },
+  beforeRouteUpdate: function beforeRouteUpdate(to, from, next) {
+    var id = to.params.id;
+    this.loadData(id);
+    next();
   }
 });
 
@@ -12046,21 +12074,29 @@ __webpack_require__.r(__webpack_exports__);
     },
     setAvgRating: function setAvgRating(rating) {
       this.rating = rating;
+    },
+    loadData: function loadData(id) {
+      var _this = this;
+
+      var url = '/api/products/' + id;
+      this.axios.get(url).then(function (response) {
+        _this.item = response.data.item;
+        _this.rating = response.data.rating;
+        _this.favoriteCount = response.data.favoriteCount;
+        _this.isMyFav = response.data.isMyFav;
+        _this.myRating = response.data.myRating;
+
+        _this.setQP();
+      });
     }
   },
   created: function created() {
-    var _this = this;
-
-    var url = '/api/products/' + this.$route.params.id;
-    this.axios.get(url).then(function (response) {
-      _this.item = response.data.item;
-      _this.rating = response.data.rating;
-      _this.favoriteCount = response.data.favoriteCount;
-      _this.isMyFav = response.data.isMyFav;
-      _this.myRating = response.data.myRating;
-
-      _this.setQP();
-    });
+    this.loadData(this.$route.params.id);
+  },
+  beforeRouteUpdate: function beforeRouteUpdate(to, from, next) {
+    var id = to.params.id;
+    this.loadData(id);
+    next();
   }
 });
 
@@ -12624,19 +12660,29 @@ __webpack_require__.r(__webpack_exports__);
       isMe: false
     };
   },
-  created: function created() {
-    var _this = this;
+  methods: {
+    loadData: function loadData(id) {
+      var _this = this;
 
-    if (this.fromDelete) {
-      this.bsAlert('Successfully deleted!');
+      if (this.fromDelete) {
+        this.bsAlert('Successfully deleted!');
+      }
+
+      var url = '/api/users/' + id;
+      this.axios.get(url).then(function (response) {
+        _this.user = response.data.user;
+        _this.lists = response.data.lists;
+        _this.isMe = response.data.isMe;
+      });
     }
-
-    var url = '/api/users/' + this.$route.params.id;
-    this.axios.get(url).then(function (response) {
-      _this.user = response.data.user;
-      _this.lists = response.data.lists;
-      _this.isMe = response.data.isMe;
-    });
+  },
+  created: function created() {
+    loadData(this.$route.params.id);
+  },
+  beforeRouteUpdate: function beforeRouteUpdate(to, from, next) {
+    var id = to.params.id;
+    this.loadData(id);
+    next();
   }
 });
 

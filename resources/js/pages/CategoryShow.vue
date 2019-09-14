@@ -50,13 +50,23 @@
 				return this.item ? '/images/'+this.item.image : ''
 			},
 		},
+		methods: {
+			loadData(id) {
+				let url = '/api/categories/'+id
+				this.axios.get(url).then(response => {
+					this.item = response.data.item;
+					this.products = response.data.products;
+					this.ratings = response.data.ratings;
+				});
+			}
+		},
 		created() {
-			let url = '/api/categories/'+this.$route.params.id;
-			this.axios.get(url).then(response => {
-				this.item = response.data.item;
-				this.products = response.data.products;
-				this.ratings = response.data.ratings;
-			});
-		}
+			this.loadData(this.$route.params.id)
+		},
+		beforeRouteUpdate (to, from, next) {
+			const id = to.params.id
+			this.loadData(id)
+			next()
+		},
 	}
 </script>

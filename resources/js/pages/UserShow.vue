@@ -84,17 +84,27 @@
 				isMe: false,
 			}
 		},
-		created() {
-			if (this.fromDelete) {
-				this.bsAlert('Successfully deleted!')
-			}
+		methods: {
+			loadData(id) {
+				if (this.fromDelete) {
+					this.bsAlert('Successfully deleted!')
+				}
 
-			let url = '/api/users/'+this.$route.params.id;
-			this.axios.get(url).then(response => {
-				this.user = response.data.user
-				this.lists = response.data.lists
-				this.isMe = response.data.isMe
-			});
-		}
+				let url = '/api/users/'+id
+				this.axios.get(url).then(response => {
+					this.user = response.data.user
+					this.lists = response.data.lists
+					this.isMe = response.data.isMe
+				});
+			}
+		},
+		created() {
+			loadData(this.$route.params.id)
+		},
+		beforeRouteUpdate (to, from, next) {
+			const id = to.params.id
+			this.loadData(id)
+			next()
+		},
 	}
 </script>

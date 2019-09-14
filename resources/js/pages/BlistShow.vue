@@ -155,18 +155,7 @@
 		},
 		methods: {
 			loadList() {
-				let url = '/api/lists/'+this.$route.params.id;
-				this.axios.get(url).then(response => {
-					this.item = response.data.item;
-					this.products = response.data.products;
-					this.ratings = response.data.ratings;
-					this.saveCount = response.data.saveCount;
-					this.isSaved = response.data.isSaved;
-					this.isMine = response.data.isMine;
-
-					this.item.description = 
-						this.item.description ? this.item.description : ''
-				});
+				this.loadData(this.$route.params.id)
 			},
 			editProducts() {
 				this.oldProducts = JSON.parse(JSON.stringify(this.products))
@@ -249,10 +238,29 @@
 						this.bsError()
 					})
 				}
-			}
+			},
+			loadData(id) {
+				let url = '/api/lists/'+id
+				this.axios.get(url).then(response => {
+					this.item = response.data.item;
+					this.products = response.data.products;
+					this.ratings = response.data.ratings;
+					this.saveCount = response.data.saveCount;
+					this.isSaved = response.data.isSaved;
+					this.isMine = response.data.isMine;
+
+					this.item.description = 
+						this.item.description ? this.item.description : ''
+				});
+			},
 		},
 		created() {
 			this.loadList()
-		}
+		},
+		beforeRouteUpdate (to, from, next) {
+			const id = to.params.id
+			this.loadData(id)
+			next()
+		},
 	}
 </script>

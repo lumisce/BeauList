@@ -85,17 +85,25 @@
 			setAvgRating(rating) {
 				this.rating = rating
 			},
+			loadData(id) {
+				let url = '/api/products/'+id
+				this.axios.get(url).then(response => {
+					this.item = response.data.item
+					this.rating = response.data.rating
+					this.favoriteCount = response.data.favoriteCount
+					this.isMyFav = response.data.isMyFav
+					this.myRating = response.data.myRating
+					this.setQP()
+				});
+			}
 		},
 		created() {
-			let url = '/api/products/'+this.$route.params.id;
-			this.axios.get(url).then(response => {
-				this.item = response.data.item
-				this.rating = response.data.rating
-				this.favoriteCount = response.data.favoriteCount
-				this.isMyFav = response.data.isMyFav
-				this.myRating = response.data.myRating
-				this.setQP()
-			});
-		}
+			this.loadData(this.$route.params.id)
+		}, 
+		beforeRouteUpdate (to, from, next) {
+			const id = to.params.id
+			this.loadData(id)
+			next()
+		},
 	}
 </script>
