@@ -22,6 +22,7 @@ Route::post('register', 'Auth\RegisterController@apiRegister');
 
 Route::post('login', 'APILoginController@login');
 Route::post('logout', 'APILoginController@logout');
+Route::post('refresh', 'APILoginController@refresh');
 
 Route::resource('categories', 'CategoryController')->only([
 	'index', 'show'

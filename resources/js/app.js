@@ -75,10 +75,8 @@ axios.interceptors.response.use(response => {
 	return response
 }, error => {
 	if (error.response.status == 401) {
-        store.commit('refreshToken').then(response => {
+        store.dispatch('refreshToken').then(() => {
         	return axios.request(error.config);
-        }).catch(error => {
-        	store.commit('logout')
         })
     }
 
