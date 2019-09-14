@@ -5,11 +5,11 @@
 				<router-link :to="{ name: 'home' }" class="navbar-brand">{{ title }}</router-link>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" 
 					data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" 
-					aria-expanded="false" aria-label="Toggle navigation">
+					aria-expanded="false" aria-label="Toggle navigation" @mousedown="clickMobileMenuToggle">
 					<span class="navbar-toggler-icon"></span>
 				</button>
 
-				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<div class="collapse navbar-collapse" :class="{'show': showMobileNav}" id="navbarSupportedContent">
 					<!-- Left Side Of Navbar -->
 					<ul class="navbar-nav mr-auto">
 						<li class="nav-item">
@@ -52,6 +52,7 @@
 		props: ['title', 'user'],
 		data() {
 			return {
+				showMobileNav: false,
 			}
 		},
 		computed: {
@@ -65,5 +66,14 @@
 				return this.$route.name.split('.')[0] == 'search'
 			},
 		},
+		methods: {
+			clickMobileMenuToggle() {
+				if (this.showMobileNav) {
+					this.showMobileNav = false
+				} else {
+					this.showMobileNav = true;
+				}
+			}
+		}
 	}
 </script>

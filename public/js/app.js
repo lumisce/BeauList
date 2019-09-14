@@ -9907,7 +9907,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   props: ['title', 'user'],
   data: function data() {
-    return {};
+    return {
+      showMobileNav: false
+    };
   },
   computed: {
     onBrands: function onBrands() {
@@ -9918,6 +9920,15 @@ __webpack_require__.r(__webpack_exports__);
     },
     onSearch: function onSearch() {
       return this.$route.name.split('.')[0] == 'search';
+    }
+  },
+  methods: {
+    clickMobileMenuToggle: function clickMobileMenuToggle() {
+      if (this.showMobileNav) {
+        this.showMobileNav = false;
+      } else {
+        this.showMobileNav = true;
+      }
     }
   }
 });
@@ -42433,12 +42444,28 @@ var render = function() {
               [_vm._v(_vm._s(_vm.title))]
             ),
             _vm._v(" "),
-            _vm._m(0),
+            _c(
+              "button",
+              {
+                staticClass: "navbar-toggler",
+                attrs: {
+                  type: "button",
+                  "data-toggle": "collapse",
+                  "data-target": "#navbarSupportedContent",
+                  "aria-controls": "navbarSupportedContent",
+                  "aria-expanded": "false",
+                  "aria-label": "Toggle navigation"
+                },
+                on: { mousedown: _vm.clickMobileMenuToggle }
+              },
+              [_c("span", { staticClass: "navbar-toggler-icon" })]
+            ),
             _vm._v(" "),
             _c(
               "div",
               {
                 staticClass: "collapse navbar-collapse",
+                class: { show: _vm.showMobileNav },
                 attrs: { id: "navbarSupportedContent" }
               },
               [
@@ -42508,28 +42535,7 @@ var render = function() {
     _c("main", { staticClass: "py-4" }, [_c("router-view")], 1)
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      {
-        staticClass: "navbar-toggler",
-        attrs: {
-          type: "button",
-          "data-toggle": "collapse",
-          "data-target": "#navbarSupportedContent",
-          "aria-controls": "navbarSupportedContent",
-          "aria-expanded": "false",
-          "aria-label": "Toggle navigation"
-        }
-      },
-      [_c("span", { staticClass: "navbar-toggler-icon" })]
-    )
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
