@@ -21,8 +21,13 @@
 						</div>
 						<div v-else>
 							<router-link class="mr-1 btn btn-light btn-lg"
+								:to="{ name: 'lists.create' }">
+								Create a List
+							</router-link>
+							or
+							<router-link class="ml-1 btn btn-outline-light btn-lg"
 								:to="{ name: 'search' }">
-								Browse Products and Lists
+								Browse
 							</router-link>
 						</div>
 					</div>

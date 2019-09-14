@@ -11801,6 +11801,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {};
@@ -45456,13 +45461,18 @@ var render = function() {
                       "router-link",
                       {
                         staticClass: "mr-1 btn btn-light btn-lg",
+                        attrs: { to: { name: "lists.create" } }
+                      },
+                      [_vm._v("\n\t\t\t\t\t\t\tCreate a List\n\t\t\t\t\t\t")]
+                    ),
+                    _vm._v("\n\t\t\t\t\t\tor\n\t\t\t\t\t\t"),
+                    _c(
+                      "router-link",
+                      {
+                        staticClass: "ml-1 btn btn-outline-light btn-lg",
                         attrs: { to: { name: "search" } }
                       },
-                      [
-                        _vm._v(
-                          "\n\t\t\t\t\t\t\tBrowse Products and Lists\n\t\t\t\t\t\t"
-                        )
-                      ]
+                      [_vm._v("\n\t\t\t\t\t\t\tBrowse\n\t\t\t\t\t\t")]
                     )
                   ],
                   1
@@ -66148,10 +66158,8 @@ axios__WEBPACK_IMPORTED_MODULE_5___default.a.interceptors.response.use(function 
   return response;
 }, function (error) {
   if (error.response.status == 401) {
-    _store_js__WEBPACK_IMPORTED_MODULE_7__["default"].commit('refreshToken').then(function (response) {
+    _store_js__WEBPACK_IMPORTED_MODULE_7__["default"].dispatch('refreshToken').then(function () {
       return axios__WEBPACK_IMPORTED_MODULE_5___default.a.request(error.config);
-    })["catch"](function (error) {
-      _store_js__WEBPACK_IMPORTED_MODULE_7__["default"].commit('logout');
     });
   }
 
@@ -68694,14 +68702,15 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     logout: function logout(_ref2) {
       var commit = _ref2.commit;
       return new Promise(function (resolve, reject) {
-        commit('logout');
         axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/api/logout').then(function (response) {
           localStorage.removeItem('token');
           delete axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.headers.common['Authorization'];
+          commit('logout');
           resolve(response);
         })["catch"](function (err) {
-          commit('auth_error');
-          reject(err);
+          localStorage.removeItem('token');
+          delete axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.headers.common['Authorization'];
+          resolve(response);
         });
       });
     },
