@@ -69,9 +69,12 @@
 			login() {
 				this.$store.dispatch('login', {'email':this.user.email, 
 					'password':this.user.password})
-				.then(() => this.$router.push('/search'))
+				.then((response) => {
+					this.$emit('set-token-refresh', response.data.expires_in)
+					this.$router.push('/search')
+				})
 				.catch(err => {
-					if (err.response.data.error == "invalid credentials") {
+					if (err.response.status == 401) {
 						this.bsError("Invalid Credentials")
 					} else {
 						this.bsError()

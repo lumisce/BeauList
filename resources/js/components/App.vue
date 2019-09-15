@@ -39,7 +39,7 @@
 		</nav>
 
 		<main class="py-4">
-			<router-view></router-view>
+			<router-view @set-token-refresh="setTokenRefresh"></router-view>
 		</main>
 	</div>
 </template>
@@ -73,6 +73,9 @@
 				} else {
 					this.showMobileNav = true;
 				}
+			},
+			setTokenRefresh(time) {
+				this.$emit('set-token-refresh', time)
 			}
 		}
 	}

@@ -11,7 +11,7 @@
 </head>
 <body>
     <div id="app">
-        <App title="{{ config('app.name', 'BeauList') }}" :user="user"></App>
+        <App title="{{ config('app.name', 'BeauList') }}" :user="user" @set-token-refresh="setTokenRefresh"></App>
     </div>
     
 <script src="{{ asset('js/app.js') }}"></script>

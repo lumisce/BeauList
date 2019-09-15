@@ -75,12 +75,11 @@ axios.interceptors.response.use(response => {
 	return response
 }, error => {
 	if (error.response.status == 401) {
-        store.dispatch('refreshToken').then(() => {
-        	return axios.request(error.config);
-        })
+		store.dispatch('expire').then(() => {
+			router.push('/login')
+		})
     }
 
-   return Promise.reject(error);
 })
 
 const app = new Vue({
@@ -102,9 +101,6 @@ const app = new Vue({
 		}
 	},
 	watch: {
-		token(newtoken,oldtoken) {
-			this.updateAuth(newtoken)
-		},
 		isLoggedIn(newisloggedin,oldisloggedin) {
 			if (newisloggedin) {
 				this.setUser()
@@ -114,18 +110,39 @@ const app = new Vue({
 	methods: {
 		updateAuth() {
 			if (this.isLoggedIn) {
-				axios.defaults.headers.common['Authorization'] = 'Bearer '+this.token;
-				this.setUser()
+				this.refreshToken()
 			} else {
 				delete axios.defaults.headers.common['Authorization'];
 			}
 		},
+		refreshToken() {
+			axios.defaults.headers.common['Authorization'] = 'Bearer '+this.token;
+			axios.post('/api/refresh').then(response => {
+				const token = response.data.token
+				this.$store.dispatch('refreshToken', token).then(() => {
+					axios.defaults.headers.common['Authorization'] = 'Bearer '+token;
+					this.setUser()
+					this.setTokenRefresh(response.data.expires_in)
+				})
+			}).catch(err => {
+				this.$store.dispatch('expire').then(() => {
+					this.$router.push('/login')
+				})
+			})
+		},
 		setUser() {
+			axios.defaults.headers.common['Authorization'] = 'Bearer '+this.token;
 			axios.get('/api/user').then(response => {
 				this.user = response.data.user
 				this.$store.dispatch('refresh', response.data.user)
 			})
 		},
+		setTokenRefresh(time) {
+			let _this = this;
+			setTimeout(function() {
+				_this.refreshToken()
+			}, time*1000/3)
+		}
 	},
 	created() {
 		this.updateAuth()

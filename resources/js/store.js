@@ -35,12 +35,13 @@ export default new Vuex.Store({
 		}
 	},
 	actions: {
-		login({commit}, user) {
+		login({commit, dispatch}, user) {
 			return new Promise((resolve, reject) => {
 				commit('auth_request')
 				axios.post('/api/login', user)
 				.then(response => {
 					const token = response.data.token
+					axios.defaults.headers.common['Authorization'] = 'Bearer '+token;
 					const user = response.data.user
 					localStorage.setItem('token', token)
 					commit('auth_success', token, user)
@@ -63,29 +64,29 @@ export default new Vuex.Store({
 					resolve(response)
 				})
 				.catch(err => {
+					commit('logout')
 					localStorage.removeItem('token')
 					delete axios.defaults.headers.common['Authorization']
-					resolve(response)
+					resolve(err)
 				})
 			})
 		},
-		refreshToken({commit}) {
+		expire({commit}) {
 			return new Promise((resolve, reject) => {
-				axios.post('/api/refresh')
-				.then(response => {
-					const token = response.data.token
-					localStorage.setItem('token', token)
-					axios.defaults.headers.common['Authorization'] = 'Bearer '+state.token;
-					commit('refresh_token', token)
-					resolve(response)
-				})
-				.catch(err => {
-					commit('auth_error')
-					reject(err)
-				})
+				commit('logout')
+				localStorage.removeItem('token')
+				delete axios.defaults.headers.common['Authorization']
+				resolve()
 			})
 		},
-		refresh({commit}, user) {
+		refreshToken({commit, dispatch}, token) {
+			return new Promise((resolve, reject) => {
+				localStorage.setItem('token', token)
+				commit('refresh_token', token)
+				resolve()
+			})
+		},
+		refresh({commit, dispatch}, user) {
 			commit('refresh', user)
 		}
 	},
