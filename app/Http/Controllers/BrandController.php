@@ -16,8 +16,12 @@ class BrandController extends Controller
 
 	public function index()
 	{
+		$pagination = Brand::all()->sortBy('name')->paginate(20)->toArray();
+        $items = array_values($pagination['data']);
+        unset($pagination['data']);
+
 		return response()
-			->json(['items' => Brand::all()->sortBy('name')->values()]);
+			->json(compact('items', 'pagination'));
 	}
 
 	public function show($id)

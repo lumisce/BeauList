@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<p v-if="!isLoggedIn" class="sub-info">Login to Add to List</p>
-		<p v-else-if="!lists.length" class="sub-info">Create a List to Add Item in</p>
+		<p v-else-if="!lists || !lists.length" class="sub-info">Create a List to Add Item in</p>
 		<div v-else class="btn-group">
 			<button class="btn btn-sm btn-primary dropdown-toggle" 
 				type="button" @click.prevent="dropdown" @blur="hideDropdown">
