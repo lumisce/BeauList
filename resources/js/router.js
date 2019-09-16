@@ -21,6 +21,7 @@ import UserRatedProducts from './pages/UserRatedProducts'
 import ProductSearch from './pages/ProductSearch'
 import BrandSearch from './pages/BrandSearch'
 import BlistSearch from './pages/BlistSearch'
+import ErrorShow from './pages/ErrorShow'
 
 export default new VueRouter({
 	mode: 'history',
@@ -111,6 +112,19 @@ export default new VueRouter({
 			path: '/search/lists',
 			name: 'search.lists',
 			component: BlistSearch,
+		}, {
+			path: '/404',
+			name: 'notfound',
+			component: ErrorShow,
+			props: { code: 404, message: "Not Found" },
+		}, {
+			path: '/error',
+			name: 'error',
+			component: ErrorShow,
+			props: true,
+		}, {
+			path: '*',
+			redirect: '/404'
 		}
 	]
 });

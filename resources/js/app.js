@@ -78,6 +78,16 @@ axios.interceptors.response.use(response => {
 		store.dispatch('expire').then(() => {
 			router.push('/login')
 		})
+    } else if (error.response.status == 404) {
+    	router.push('/404')
+    } else {
+    	router.push({
+			name: 'error', 
+			params: {
+				code: error.response.status,
+				message: error.response.statusText,
+			}
+		})
     }
 
 })
