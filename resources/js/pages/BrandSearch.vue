@@ -2,6 +2,9 @@
 	<div class="container">
 		<SearchNav index="1"/>
 		<ais-instant-search :search-client="searchClient" :index-name="index">
+			<ais-configure
+			  :hits-per-page.camel="20"
+			/>
 			<div class="row justify-content-center">
 				<div class="col-md-8 offset-md-4">
 					<ais-search-box :placeholder="'Search '+indexName+'...'" v-model="query"/>
@@ -12,21 +15,23 @@
 					<RefineBrandSearch />
 				</div>
 				<div class="col-md-8">
-					<ais-hits class="mt-4">
-						<div slot-scope="{items}">
-							<div v-if="items.length" class="list-group list-small">
-								<router-link v-for="item in items" 
-									:to="{ name: 'brands.show', params: {id: item.id} }" 
-									:key="item.id" class="list-group-item">
-									<img :src="imageUrl(item.image)">
-									{{item.name}}
-								</router-link>
-							</div>
-							<div v-else class="card">
-								<EmptyList></EmptyList>
-							</div>
+					<ais-infinite-hits class="mt-4" :classNames="{
+						'ais-InfiniteHits-item': 'list-group-item',
+						'ais-InfiniteHits-list': 'small-list-group'}">
+						<router-link slot="item" slot-scope="{ item, index }"
+							:to="{ name: 'brands.show', params: {id: item.id} }" 
+							class="list-group-item">
+							<img :src="imageUrl(item.image)">
+							{{item.name}}
+						</router-link>
+						<div slot="loadMore" slot-scope="{ page, isLastPage, refineNext }" 
+							class="w-100 d-flex justify-content-center">
+							<button :disabled="isLastPage" @click="refineNext" 
+								class="btn-primary mt-2 p-1 px-2 showMore">
+								Show more results
+							</button>
 						</div>
-					</ais-hits>
+					</ais-infinite-hits>
 				</div>
 			</div>
 		</ais-instant-search>

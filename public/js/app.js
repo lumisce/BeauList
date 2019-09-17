@@ -11134,6 +11134,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -11531,6 +11538,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_EmptyList__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/EmptyList */ "./resources/js/components/EmptyList.vue");
 /* harmony import */ var _searchMixin__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../searchMixin */ "./resources/js/searchMixin.js");
 /* harmony import */ var _searchMixin__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_searchMixin__WEBPACK_IMPORTED_MODULE_4__);
+//
+//
+//
+//
+//
 //
 //
 //
@@ -12082,6 +12094,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _pageMixin__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_pageMixin__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _searchMixin__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../searchMixin */ "./resources/js/searchMixin.js");
 /* harmony import */ var _searchMixin__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_searchMixin__WEBPACK_IMPORTED_MODULE_6__);
+//
+//
+//
+//
+//
 //
 //
 //
@@ -44629,6 +44646,8 @@ var render = function() {
           attrs: { "search-client": _vm.searchClient, "index-name": _vm.index }
         },
         [
+          _c("ais-configure", { attrs: { hitsPerPage: 20 } }),
+          _vm._v(" "),
           _c("div", { staticClass: "row justify-content-center" }, [
             _c(
               "div",
@@ -44661,107 +44680,118 @@ var render = function() {
               "div",
               { staticClass: "col-md-8" },
               [
-                _c("ais-hits", {
+                _c("ais-infinite-hits", {
                   staticClass: "mt-4",
+                  attrs: {
+                    classNames: {
+                      "ais-InfiniteHits-item": "list-group-item",
+                      "ais-InfiniteHits-list": "small-list-group"
+                    }
+                  },
                   scopedSlots: _vm._u([
                     {
-                      key: "default",
+                      key: "item",
                       fn: function(ref) {
-                        var items = ref.items
-                        return _c("div", {}, [
-                          items.length
-                            ? _c(
-                                "div",
-                                { staticClass: "list-group" },
-                                _vm._l(items, function(item) {
-                                  return _c(
-                                    "div",
-                                    {
-                                      key: item.id,
-                                      staticClass: "list-group-item d-flex"
-                                    },
-                                    [
-                                      _c(
-                                        "router-link",
-                                        {
-                                          attrs: {
-                                            to: {
-                                              name: "lists.show",
-                                              params: { id: item.id }
-                                            }
+                        var item = ref.item
+                        var index = ref.index
+                        return _c(
+                          "div",
+                          { staticClass: "d-flex list-group-item" },
+                          [
+                            _c(
+                              "router-link",
+                              {
+                                attrs: {
+                                  to: {
+                                    name: "lists.show",
+                                    params: { id: item.id }
+                                  }
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\n\t\t\t\t\t\t\t" +
+                                    _vm._s(item.name) +
+                                    " \n\t\t\t\t\t\t\t"
+                                ),
+                                item.products
+                                  ? _c(
+                                      "p",
+                                      { staticClass: "sub-info d-inline" },
+                                      [
+                                        _vm._v(
+                                          "\n\t\t\t\t\t\t\t\t(" +
+                                            _vm._s(item.products.length) +
+                                            ")\n\t\t\t\t\t\t\t"
+                                        )
+                                      ]
+                                    )
+                                  : _vm._e()
+                              ]
+                            ),
+                            _vm._v(" "),
+                            item.user_id
+                              ? _c(
+                                  "span",
+                                  { staticClass: "ml-auto sub-info" },
+                                  [
+                                    _vm._v("by \n\t\t\t\t\t\t\t"),
+                                    _c(
+                                      "router-link",
+                                      {
+                                        staticClass: "text-secondary",
+                                        attrs: {
+                                          to: {
+                                            name: "users.show",
+                                            params: { id: item.user_id }
                                           }
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n\t\t\t\t\t\t\t\t\t" +
-                                              _vm._s(item.name) +
-                                              " \n\t\t\t\t\t\t\t\t\t"
-                                          ),
-                                          item.products
-                                            ? _c(
-                                                "p",
-                                                {
-                                                  staticClass:
-                                                    "sub-info d-inline"
-                                                },
-                                                [
-                                                  _vm._v(
-                                                    "\n\t\t\t\t\t\t\t\t\t\t(" +
-                                                      _vm._s(
-                                                        item.products.length
-                                                      ) +
-                                                      ")\n\t\t\t\t\t\t\t\t\t"
-                                                  )
-                                                ]
-                                              )
-                                            : _vm._e()
-                                        ]
-                                      ),
-                                      _vm._v(" "),
-                                      item.user_id
-                                        ? _c(
-                                            "span",
-                                            { staticClass: "ml-auto sub-info" },
-                                            [
-                                              _vm._v("by \n\t\t\t\t\t\t\t\t\t"),
-                                              _c(
-                                                "router-link",
-                                                {
-                                                  staticClass: "text-secondary",
-                                                  attrs: {
-                                                    to: {
-                                                      name: "users.show",
-                                                      params: {
-                                                        id: item.user_id
-                                                      }
-                                                    }
-                                                  }
-                                                },
-                                                [
-                                                  _vm._v(
-                                                    "\n\t\t\t\t\t\t\t\t\t\t" +
-                                                      _vm._s(item.user_name) +
-                                                      "\n\t\t\t\t\t\t\t\t\t"
-                                                  )
-                                                ]
-                                              )
-                                            ],
-                                            1
-                                          )
-                                        : _vm._e()
-                                    ],
-                                    1
-                                  )
-                                }),
-                                0
-                              )
-                            : _c(
-                                "div",
-                                { staticClass: "card" },
-                                [_c("EmptyList")],
-                                1
-                              )
-                        ])
+                                        }
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n\t\t\t\t\t\t\t\t" +
+                                            _vm._s(item.user_name) +
+                                            "\n\t\t\t\t\t\t\t"
+                                        )
+                                      ]
+                                    )
+                                  ],
+                                  1
+                                )
+                              : _vm._e()
+                          ],
+                          1
+                        )
+                      }
+                    },
+                    {
+                      key: "loadMore",
+                      fn: function(ref) {
+                        var page = ref.page
+                        var isLastPage = ref.isLastPage
+                        var refineNext = ref.refineNext
+                        return _c(
+                          "div",
+                          {
+                            staticClass: "w-100 d-flex justify-content-center"
+                          },
+                          [
+                            _c(
+                              "button",
+                              {
+                                staticClass:
+                                  "btn-primary mt-2 p-1 px-2 showMore",
+                                attrs: { disabled: isLastPage },
+                                on: { click: refineNext }
+                              },
+                              [
+                                _vm._v(
+                                  "\n\t\t\t\t\t\t\tShow more results\n\t\t\t\t\t\t"
+                                )
+                              ]
+                            )
+                          ]
+                        )
                       }
                     }
                   ])
@@ -44770,7 +44800,8 @@ var render = function() {
               1
             )
           ])
-        ]
+        ],
+        1
       )
     ],
     1
@@ -45302,6 +45333,8 @@ var render = function() {
           attrs: { "search-client": _vm.searchClient, "index-name": _vm.index }
         },
         [
+          _c("ais-configure", { attrs: { hitsPerPage: 20 } }),
+          _vm._v(" "),
           _c("div", { staticClass: "row justify-content-center" }, [
             _c(
               "div",
@@ -45334,52 +45367,72 @@ var render = function() {
               "div",
               { staticClass: "col-md-8" },
               [
-                _c("ais-hits", {
+                _c("ais-infinite-hits", {
                   staticClass: "mt-4",
+                  attrs: {
+                    classNames: {
+                      "ais-InfiniteHits-item": "list-group-item",
+                      "ais-InfiniteHits-list": "small-list-group"
+                    }
+                  },
                   scopedSlots: _vm._u([
                     {
-                      key: "default",
+                      key: "item",
                       fn: function(ref) {
-                        var items = ref.items
-                        return _c("div", {}, [
-                          items.length
-                            ? _c(
-                                "div",
-                                { staticClass: "list-group list-small" },
-                                _vm._l(items, function(item) {
-                                  return _c(
-                                    "router-link",
-                                    {
-                                      key: item.id,
-                                      staticClass: "list-group-item",
-                                      attrs: {
-                                        to: {
-                                          name: "brands.show",
-                                          params: { id: item.id }
-                                        }
-                                      }
-                                    },
-                                    [
-                                      _c("img", {
-                                        attrs: { src: _vm.imageUrl(item.image) }
-                                      }),
-                                      _vm._v(
-                                        "\n\t\t\t\t\t\t\t\t" +
-                                          _vm._s(item.name) +
-                                          "\n\t\t\t\t\t\t\t"
-                                      )
-                                    ]
-                                  )
-                                }),
-                                1
-                              )
-                            : _c(
-                                "div",
-                                { staticClass: "card" },
-                                [_c("EmptyList")],
-                                1
-                              )
-                        ])
+                        var item = ref.item
+                        var index = ref.index
+                        return _c(
+                          "router-link",
+                          {
+                            staticClass: "list-group-item",
+                            attrs: {
+                              to: {
+                                name: "brands.show",
+                                params: { id: item.id }
+                              }
+                            }
+                          },
+                          [
+                            _c("img", {
+                              attrs: { src: _vm.imageUrl(item.image) }
+                            }),
+                            _vm._v(
+                              "\n\t\t\t\t\t\t" +
+                                _vm._s(item.name) +
+                                "\n\t\t\t\t\t"
+                            )
+                          ]
+                        )
+                      }
+                    },
+                    {
+                      key: "loadMore",
+                      fn: function(ref) {
+                        var page = ref.page
+                        var isLastPage = ref.isLastPage
+                        var refineNext = ref.refineNext
+                        return _c(
+                          "div",
+                          {
+                            staticClass: "w-100 d-flex justify-content-center"
+                          },
+                          [
+                            _c(
+                              "button",
+                              {
+                                staticClass:
+                                  "btn-primary mt-2 p-1 px-2 showMore",
+                                attrs: { disabled: isLastPage },
+                                on: { click: refineNext }
+                              },
+                              [
+                                _vm._v(
+                                  "\n\t\t\t\t\t\t\tShow more results\n\t\t\t\t\t\t"
+                                )
+                              ]
+                            )
+                          ]
+                        )
                       }
                     }
                   ])
@@ -45388,7 +45441,8 @@ var render = function() {
               1
             )
           ])
-        ]
+        ],
+        1
       )
     ],
     1
@@ -46128,6 +46182,8 @@ var render = function() {
           attrs: { "search-client": _vm.searchClient, "index-name": _vm.index }
         },
         [
+          _c("ais-configure", { attrs: { hitsPerPage: 20 } }),
+          _vm._v(" "),
           _c("div", { staticClass: "row justify-content-center" }, [
             _c(
               "div",
@@ -46160,41 +46216,61 @@ var render = function() {
               "div",
               { staticClass: "col-md-8" },
               [
-                _c("ais-hits", {
+                _c("ais-infinite-hits", {
                   staticClass: "mt-4",
+                  attrs: {
+                    classNames: {
+                      "ais-InfiniteHits-item": "list-group-item",
+                      "ais-InfiniteHits-list": "list-group"
+                    }
+                  },
                   scopedSlots: _vm._u([
                     {
-                      key: "default",
+                      key: "item",
                       fn: function(ref) {
-                        var items = ref.items
-                        return _c("div", {}, [
-                          items.length
-                            ? _c(
-                                "div",
-                                { staticClass: "list-group" },
-                                _vm._l(items, function(item, index) {
-                                  return _c("ProductListItem", {
-                                    key: item.id,
-                                    staticClass: "w-100",
-                                    attrs: {
-                                      index: index,
-                                      item: item,
-                                      withBrand: true,
-                                      ratings: [],
-                                      isRanked: false
-                                    },
-                                    on: { bsAlert: _vm.bsAlert }
-                                  })
-                                }),
-                                1
-                              )
-                            : _c(
-                                "div",
-                                { staticClass: "card" },
-                                [_c("EmptyList")],
-                                1
-                              )
-                        ])
+                        var item = ref.item
+                        var index = ref.index
+                        return _c("ProductListItem", {
+                          key: item.id,
+                          attrs: {
+                            index: index,
+                            item: item,
+                            withBrand: true,
+                            ratings: [],
+                            isRanked: false
+                          },
+                          on: { bsAlert: _vm.bsAlert }
+                        })
+                      }
+                    },
+                    {
+                      key: "loadMore",
+                      fn: function(ref) {
+                        var page = ref.page
+                        var isLastPage = ref.isLastPage
+                        var refineNext = ref.refineNext
+                        return _c(
+                          "div",
+                          {
+                            staticClass: "w-100 d-flex justify-content-center"
+                          },
+                          [
+                            _c(
+                              "button",
+                              {
+                                staticClass:
+                                  "btn-primary mt-2 p-1 px-2 showMore",
+                                attrs: { disabled: isLastPage },
+                                on: { click: refineNext }
+                              },
+                              [
+                                _vm._v(
+                                  "\n\t\t\t\t\t\t\tShow more results\n\t\t\t\t\t\t"
+                                )
+                              ]
+                            )
+                          ]
+                        )
                       }
                     }
                   ])
@@ -46203,7 +46279,8 @@ var render = function() {
               1
             )
           ])
-        ]
+        ],
+        1
       )
     ],
     1

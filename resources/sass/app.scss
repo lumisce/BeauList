@@ -189,9 +189,35 @@
   opacity: 0;
 }
 
-.ais-Hits-item {
-	width: 100%;
+.ais-InfiniteHits-list {
+	margin: 0;
 }
+
+.small-list-group {
+	@extend .list-group;
+	@extend .list-small;
+}
+
+.ais-InfiniteHits-item {
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	box-shadow: 0;
+	margin-bottom: -1px;
+
+	.list-group-item {
+		border: 0;
+	}
+}
+
+.showMore {
+	box-shadow: $box-shadow;
+
+	&:disabled {
+		display: none;
+	}
+}
+
 .input-inline {
 	margin-right: 1rem;
 }
@@ -311,7 +337,7 @@ body {
 	box-shadow: $box-shadow;
 }
 
-.ais-Hits .list-group {
+.ais-Infinite-Hits .list-group {
 	box-shadow: $box-shadow;
 }
 
@@ -422,3 +448,6 @@ body {
 	}
 }
 
+.blank {
+
+}
