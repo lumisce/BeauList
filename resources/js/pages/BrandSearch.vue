@@ -21,7 +21,7 @@
 						<router-link slot="item" slot-scope="{ item, index }"
 							:to="{ name: 'brands.show', params: {id: item.id} }" 
 							class="list-group-item">
-							<img :src="imageUrl(item.image)">
+							<img :src="item.image">
 							{{item.name}}
 						</router-link>
 						<div slot="loadMore" slot-scope="{ page, isLastPage, refineNext }" 
@@ -60,11 +60,6 @@
 				),
 				index: 'brands',
 				query: '',
-			}
-		},
-		methods: {
-			imageUrl(path) {
-				return '/images/'+path
 			}
 		},
 	}

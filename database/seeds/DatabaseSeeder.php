@@ -17,6 +17,9 @@ class DatabaseSeeder extends Seeder
                 $product = factory(App\Product::class)->make();
                 $brand->products()->save($product);
                 $product->quantityprices()->save(factory(App\QuantityPrice::class)->make());
+                if ($i % 2) {
+                    $product->quantityprices()->save(factory(App\QuantityPrice::class)->make());
+                }
             }
         });
         factory(App\User::class)->create(['email' => 'abc@abc.com']);

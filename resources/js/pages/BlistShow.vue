@@ -143,9 +143,6 @@
 			}
 		},
 		computed: {
-			imageUrl() {
-				return this.item ? '/images/'+this.item.image : ''
-			},
 			rowSize() {
 				return Math.max(3, this.item.description.split('\n').length)
 			},

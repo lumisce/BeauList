@@ -13,7 +13,7 @@
 						<router-link v-for="item in items" 
 							:to="{ name: 'brands.show', params: {id: item.id} }" 
 							:key="item.id" class="list-group-item">
-							<img :src="imageUrl(item.image)">
+							<img :src="item.image">
 							{{item.name}}
 						</router-link>
 					</div>
@@ -45,9 +45,6 @@
 			}
 		},
 		methods: {
-			imageUrl(path) {
-				return '/images/'+path
-			},
 			loadList() {
 				const id = this.$route.params.id
 				const page = this.pagination.current_page

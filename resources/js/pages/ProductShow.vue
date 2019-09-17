@@ -11,8 +11,8 @@
 					</div>
 					</transition>
 				</div>
-				<div class="card text-center" style="padding:40px;">
-					<img :src="imageUrl" class="mx-auto w-50 h-50">
+				<div v-if="item" class="card text-center" style="padding:40px;">
+					<img :src="item.image" class="mx-auto w-50 h-50">
 					<h2>{{item.name}}</h2>
 					<router-link :to="{ name: 'brands.show', params: {id: item.brand.id} }" :key="item.brand.id">{{item.brand.name}}</router-link>
 					<p>{{item.description}}</p>
@@ -70,9 +70,6 @@
 			}
 		},
 		computed: {
-			imageUrl() {
-				return this.item ? '/images/'+this.item.image : ''
-			},
 			avgRating() {
 				return this.rating[0] ? this.rating[0].toFixed(2) : '0.00'
 			},

@@ -6,11 +6,11 @@
 	
 		<router-link v-if="withBrand" class="d-none d-md-block"
 			:to="{ name: 'brands.show', params: {id: item.brand.id} }" >
-			<img :src="brandImageUrl">
+			<img :src="item.brand.image">
 		</router-link>
 		<router-link :to="{ name: 'products.show', params: {id: item.id} }" class="align-items-center">
-			<img :src="imageUrl" class="d-none d-md-block">
-			<img :src="imageUrl" class="img-small d-md-none">
+			<img :src="item.image" class="d-none d-md-block">
+			<img :src="item.image" class="img-small d-md-none">
 			<div class="product-info">
 				<p class="name"><b>{{item.name}}</b></p>
 				<p v-if="withBrand" class="sub-info d-md-none"><b>{{item.brand.name}}</b></p>
@@ -80,12 +80,6 @@
 					price: '-'
 				}
 				return qps && qps.length ? qps[0] : unknown
-			},
-			imageUrl() {
-				return '/images/'+this.item.image
-			},
-			brandImageUrl() {
-				return '/images/'+this.item.brand.image
 			},
 			productUrl() {
 				return '/products/'+this.item.id

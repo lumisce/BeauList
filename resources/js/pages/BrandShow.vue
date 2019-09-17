@@ -11,8 +11,8 @@
 					</div>
 					</transition>
 				</div>
-				<div class="card text-center" style="padding:40px;">
-					<img :src="imageUrl" class="mx-auto w-50 h-50">
+				<div v-if="item" class="card text-center" style="padding:40px;">
+					<img :src="item.image" class="mx-auto w-50 h-50">
 					<h2>{{item.name}}</h2>
 					<p>{{item.description}}</p>
 					<Favorite :isBrand="true" :favoriteCount="favoriteCount" 
@@ -56,11 +56,6 @@
 				favoriteCount: 0,
 				isMyFav: false,
 			}
-		},
-		computed: {
-			imageUrl() {
-				return this.item ? '/images/'+this.item.image : ''
-			},
 		},
 		methods: {
 			loadData(id) {

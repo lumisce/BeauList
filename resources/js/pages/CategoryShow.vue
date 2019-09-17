@@ -45,11 +45,6 @@
 				ratings: [],
 			}
 		},
-		computed: {
-			imageUrl() {
-				return this.item ? '/images/'+this.item.image : ''
-			},
-		},
 		methods: {
 			loadData(id) {
 				let url = '/api/categories/'+id

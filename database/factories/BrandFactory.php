@@ -3,6 +3,7 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 use App\Brand;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 use Faker\Generator as Faker;
 
 /*
@@ -17,9 +18,13 @@ use Faker\Generator as Faker;
 */
 
 $factory->define(Brand::class, function (Faker $faker) {
+	$name = $faker->company;
+	$filepath = 'images/brands/'.preg_replace('/\W+/', '', $name).'.jpg';
+	Storage::put($filepath, file_get_contents('http://lorempixel.com/200/200/cats/'));
+
     return [
-        'name' => $faker->company,
+        'name' => $name,
         'description' => $faker->catchPhrase,
-		'image' => $faker->image('public/storage/images', 200, 200, 'cats', false, false),
+		'image' => Storage::url($filepath)
     ];
 });
