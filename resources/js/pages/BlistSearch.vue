@@ -7,7 +7,7 @@
 			/>
 			<div class="row justify-content-center">
 				<div class="col-md-8 offset-md-4">
-					<ais-search-box :placeholder="'Search '+indexName+'...'" v-model="query" />
+					<ais-search-box placeholder="Search Lists..." v-model="query" />
 				</div>
 			</div>
 			<div class="row justify-content-center">
@@ -53,10 +53,8 @@
 	import RefineBlistSearch from '../components/RefineBlistSearch'
 	import SearchNav from '../components/SearchNav'
 	import EmptyList from '../components/EmptyList'
-	import searchMixin from '../searchMixin'
 
 	export default {
-		mixins: [searchMixin],
 		components: {
 			RefineBlistSearch,
 			SearchNav,
@@ -68,7 +66,7 @@
 					process.env.MIX_ALGOLIA_APP_ID,
 					process.env.MIX_ALGOLIA_SEARCH
 				),
-				index: 'blists',
+				index: process.env.MIX_ALGOLIA_PREFIX+'blists',
 				query: '',
 			}
 		},

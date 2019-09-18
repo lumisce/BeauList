@@ -1,6 +1,6 @@
 <template>
 	<div class="mt-4">
-		<ais-instant-search :search-client="searchClient" index-name="products">
+		<ais-instant-search :search-client="searchClient" :index-name="index">
 			<ais-configure :hitsPerPage="5" />
 			
 			<ais-search-box :placeholder="'Search Products...'" v-model="query"/>
@@ -39,6 +39,7 @@
 					process.env.MIX_ALGOLIA_APP_ID,
 					process.env.MIX_ALGOLIA_SEARCH
 				),
+				index: process.env.MIX_ALGOLIA_PREFIX+'products',
 				query: '',
 			}
 		},

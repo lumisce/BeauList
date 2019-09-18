@@ -41,4 +41,9 @@ class Blist extends Model
         
         return $array;
     }
+
+    public function searchableAs()
+    {
+        return \Config::get('scout.prefix').'blists';
+    }
 }

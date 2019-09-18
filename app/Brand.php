@@ -33,4 +33,9 @@ class Brand extends Model
         
         return $array;
     }
+
+    public function searchableAs()
+    {
+        return \Config::get('scout.prefix').'brands';
+    }
 }

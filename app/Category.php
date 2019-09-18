@@ -7,8 +7,6 @@ use Laravel\Scout\Searchable;
 
 class Category extends Model
 {
-    use Searchable;
-    
     public function scopeParents($query)
     {
         return $query->whereNull('parent');

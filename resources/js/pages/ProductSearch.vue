@@ -7,7 +7,7 @@
 			/>
 			<div class="row justify-content-center">
 				<div class="col-md-8 offset-md-4">
-					<ais-search-box :placeholder="'Search '+indexName+'...'" v-model="query"/>
+					<ais-search-box placeholder="Search Products..." v-model="query"/>
 				</div>
 			</div>
 			<div class="row justify-content-center">
@@ -43,10 +43,9 @@
 	import SearchNav from '../components/SearchNav'
 	import EmptyList from '../components/EmptyList'
 	import pageMixin from '../pageMixin'
-	import searchMixin from '../searchMixin'
 
 	export default {
-		mixins: [searchMixin, pageMixin],
+		mixins: [pageMixin],
 		components: {
 			RefineProductSearch,
 			ProductListItem,
@@ -59,7 +58,7 @@
 					process.env.MIX_ALGOLIA_APP_ID,
 					process.env.MIX_ALGOLIA_SEARCH
 				),
-				index: 'products',
+				index: process.env.MIX_ALGOLIA_PREFIX+'products',
 				query: '',
 			}
 		},

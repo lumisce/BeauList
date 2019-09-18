@@ -44,6 +44,10 @@ class Product extends Model
         ->withTimestamps();
     }
 
+    public function searchableAs()
+    {
+        return \Config::get('scout.prefix').'products';
+    }
     public function toSearchableArray()
     {
         $array = $this->toArray();
@@ -63,4 +67,5 @@ class Product extends Model
         
         return $array;
     }
+
 }
